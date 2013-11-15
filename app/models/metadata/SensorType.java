@@ -2,11 +2,17 @@ package metadata;
 
 import java.util.*;
 
+import javax.persistence.*;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
+import play.db.ebean.Model;
+import play.libs.F.Promise;
 import play.libs.WS;
 import play.libs.F.Function;
 import play.mvc.*;
 
-public class SensorType {
+public class SensorType extends Model {
 
 	public Long id;
 	private String sensorTypeName;
@@ -16,12 +22,12 @@ public class SensorType {
 	private double minValue;
 	private String unit;
 	private String interpreter;
-	
-	public static String apiURL;
-	
+
+	final static String getAllSensorsURL = "http://einstein.sv.cmu.edu/get_sensor_types/firefly_v3/json"; // hard-coded
+
 	public SensorType() {
 		// TODO Auto-generated constructor stub
-		
+
 	}
 
 	public SensorType(Long id, String sensorTypeName, String manufacturer,
@@ -94,41 +100,36 @@ public class SensorType {
 		this.interpreter = interpreter;
 	}
 
-
 	public static List<SensorType> all() {
 		List<SensorType> allSensorTypes = new ArrayList<SensorType>();
+
+		// Call the API to get the json string
+		JsonNode sensorsNode = APICall.callAPI(getAllSensorsURL);
 		
-		// Just for testing right now
-		SensorType tmpSensorType = new SensorType(new Long(1), "testTemperatureSensor", "test Manufacturer", 1.0, 0, 0, "fahrenheit", "");
+		// parse the json string into object
+		String[] sensorsStrings = sensorsNode.findPath("sensor_type")
+				.toString().replaceAll("\"","").split(",");
 		
-		allSensorTypes.add(tmpSensorType);
+		for (int i = 0; i < sensorsStrings.length; i++) {
+			SensorType newSensorType = new SensorType();
+			
+			newSensorType.id = new Long(i); // just for temporary id generation
+			newSensorType.setSensorTypeName(sensorsStrings[i]);
+			allSensorTypes.add(newSensorType);
+		}
 
 		return allSensorTypes;
-		
-//		return async(
-//			      WS.url(apiURL).get().map(
-//			        new Function<WS.Response, Result>() {
-//			          public Result apply(WS.Response response) {
-//			        	  
-//			            return ("Feed title:" + response.asJson().findPath("title"));
-//			          }
-//			        }
-//			      )
-//			    );
+
 	}
 
 	public static void create(SensorType sensorType) {
+		
 	}
 
 	public static void delete(Long id) {
 	}
-
-	public String getApiURL() {
-		return apiURL;
-	}
-
-	public void setApiURL(String apiURL) {
-		this.apiURL = apiURL;
-	}
+	  public static Finder<Long,SensorType> find = new Finder<Long,SensorType>(
+			    Long.class, SensorType.class
+			  ); 
 
 }

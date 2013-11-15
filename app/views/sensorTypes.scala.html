@@ -1,0 +1,49 @@
+@(sensorTypes: List[metadata.SensorType], sensorTypeForm: play.data.Form[metadata.SensorType])
+
+@import helper._
+
+@main("Sensor Types") {
+    
+    <h1>@sensorTypes.size() Sensor Type(s)</h1>
+    <table>
+    <tr>
+    	<td>Sensor Type Name</td>
+    	<td>Manufacturer</td>
+    	<td>Version</td>
+    	<td>Max Value</td>
+    	<td>Min Value</td>
+    	<td>Unit</td>
+    	<td>Interpreter</td>
+    	<td>Operation</td>
+    </tr>
+
+        @for(sensorType <- sensorTypes) {
+    <tr>
+            <td>@sensorType.getSensorTypeName()</td>
+                <td>@sensorType.getManufacturer()</td>
+                <td>@sensorType.getVersion()</td>
+                <td>@sensorType.getMaxValue()</td>
+                <td>@sensorType.getMinValue()</td>
+                <td>@sensorType.getUnit()</td>
+                <td>@sensorType.getInterpreter()</td>
+                
+                <td>
+                @form(routes.Application.deleteSensorType(sensorType.id)) {
+                    <input type="submit" value="Delete">
+                }
+            </td>
+            
+    </tr>
+        }
+    </table>
+    <h2>Add a new sensor type</h2>
+    
+    @form(routes.Application.newSensorType()) {
+        
+        @inputText(sensorTypeForm("label")) 
+        
+        <input type="submit" value="Create">
+        
+    }
+    
+}
