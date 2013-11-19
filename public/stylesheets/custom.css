@@ -1,0 +1,10 @@
+.jumbotron {  
+  background-color: transparent;
+}
+.footer {
+  border-top: 1px solid #eee;
+  margin-top: 25px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  text-align: right;
+}
