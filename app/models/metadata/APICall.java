@@ -1,4 +1,4 @@
-package metadata;
+package models.metadata;
 import play.libs.WS;
 import play.libs.F.Function;
 import play.libs.F.Promise;

@@ -1,18 +1,11 @@
-package metadata;
+package models.metadata;
 
 import java.util.*;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.databind.JsonNode;
 
-import play.db.ebean.Model;
-import play.libs.F.Promise;
-import play.libs.WS;
-import play.libs.F.Function;
-import play.mvc.*;
 
-public class SensorType extends Model {
+public class SensorType {
 
 	public Long id;
 	private String sensorTypeName;
@@ -128,8 +121,5 @@ public class SensorType extends Model {
 
 	public static void delete(Long id) {
 	}
-	  public static Finder<Long,SensorType> find = new Finder<Long,SensorType>(
-			    Long.class, SensorType.class
-			  ); 
 
 }
