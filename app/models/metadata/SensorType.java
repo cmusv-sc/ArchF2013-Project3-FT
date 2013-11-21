@@ -4,7 +4,6 @@ import java.util.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-
 public class SensorType {
 
 	public Long id;
@@ -16,7 +15,9 @@ public class SensorType {
 	private String unit;
 	private String interpreter;
 
-	final static String getAllSensorsURL = "http://einstein.sv.cmu.edu/get_sensor_types/firefly_v3/json"; // hard-coded
+	// http://einstein.sv.cmu.edu/get_devices/json
+	private static final String API_CALL = util.Constants.API_URL
+			+ util.Constants.GET_SENSOR_TYPES + util.Constants.FORMAT;
 
 	public SensorType() {
 		// TODO Auto-generated constructor stub
@@ -97,15 +98,19 @@ public class SensorType {
 		List<SensorType> allSensorTypes = new ArrayList<SensorType>();
 
 		// Call the API to get the json string
-		JsonNode sensorsNode = APICall.callAPI(getAllSensorsURL);
+		JsonNode sensorTypesNode = APICall.callAPI(API_CALL);
+
+		if(sensorTypesNode==null){
+			return allSensorTypes;
+		}
 		
 		// parse the json string into object
-		String[] sensorsStrings = sensorsNode.findPath("sensor_type")
-				.toString().replaceAll("\"","").split(",");
-		
+		String[] sensorsStrings = sensorTypesNode.findPath("sensor_type")
+				.toString().replaceAll("\"", "").split(",");
+
 		for (int i = 0; i < sensorsStrings.length; i++) {
 			SensorType newSensorType = new SensorType();
-			
+
 			newSensorType.id = new Long(i); // just for temporary id generation
 			newSensorType.setSensorTypeName(sensorsStrings[i]);
 			allSensorTypes.add(newSensorType);
@@ -116,7 +121,7 @@ public class SensorType {
 	}
 
 	public static void create(SensorType sensorType) {
-		
+
 	}
 
 	public static void delete(Long id) {

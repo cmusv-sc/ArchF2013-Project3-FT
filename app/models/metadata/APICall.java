@@ -1,9 +1,13 @@
 package models.metadata;
+import java.io.IOException;
+
 import play.libs.WS;
 import play.libs.F.Function;
 import play.libs.F.Promise;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class APICall {
 
@@ -15,11 +19,18 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
-						return response.asJson();// assumed you checked the
-													// response code for 200
+						
+							if(response.getStatus()==200){
+								return response.asJson();
+							}else{ // no response from the server
+								return null;
+							}
 					}
 				});
-
+		
 		return bodyPromise.get(play.mvc.Http.Status.REQUEST_TIMEOUT);
+		
+		
 	}
+
 }
