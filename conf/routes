@@ -13,3 +13,8 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET		/sensorTypes				controllers.SensorTypeController.sensorTypes()
 POST    /sensorTypes                controllers.SensorTypeController.newSensorType()
 POST    /sensorTypes/:id/delete     controllers.SensorTypeController.deleteSensorType(id: Long)
+
+# devices
+GET		/devices				controllers.DeviceController.devices()
+POST    /devices                controllers.DeviceController.newDevice()
+POST    /devices/:id/delete     controllers.DeviceController.deleteDevice(id: Long)

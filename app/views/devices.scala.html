@@ -1,0 +1,30 @@
+@(devices: List[metadata.Device], deviceForm: play.data.Form[metadata.Device])
+
+@import helper._
+
+@main("Devices") {
+    
+    <h1>@devices.size() Devices(s)</h1>
+    <table>
+	    <tr>
+	    	<td>Device Type</td>    	
+	    </tr>
+
+    	@for(device <- devices) {
+    	<tr>
+            <td>@device.getDeviceType()</td>
+    	</tr>
+        }
+    </table>
+    
+    <h2>Add a new device</h2>
+    
+    @form(routes.DeviceController.newDevice()) {
+        
+        @inputText(deviceForm("label")) 
+        
+        <input type="submit" value="Create">
+        
+    }
+    
+}
