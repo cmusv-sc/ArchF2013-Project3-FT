@@ -20,4 +20,6 @@ public class Constants {
 	// Get sensors action
 	public static final String GET_SENSORS = "/get_sensors";
 
+	public static final String GET_DEVICE_TYPES = "/get_device_types";
+
 }

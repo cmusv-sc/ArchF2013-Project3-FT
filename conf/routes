@@ -14,12 +14,17 @@ GET		/sensorTypes				controllers.SensorTypeController.sensorTypes()
 POST    /sensorTypes                controllers.SensorTypeController.newSensorType()
 POST    /sensorTypes/:id/delete     controllers.SensorTypeController.deleteSensorType(id: Long)
 
+# device_types
+GET		/deviceTypes				controllers.DeviceTypeController.deviceTypes()
+POST    /deviceTypes                controllers.DeviceTypeController.newDeviceType()
+POST    /deviceTypes/:id/delete     controllers.DeviceTypeController.deleteDeviceType(id: Long)
+
 # devices
 GET		/devices				controllers.DeviceController.devices()
 POST    /devices                controllers.DeviceController.newDevice()
 POST    /devices/:id/delete     controllers.DeviceController.deleteDevice(id: Long)
 
 # sensors
-GET		/sensors				controllers.SensorController.sensors()
-POST    /sensors                controllers.SensorController.newSensor()
-POST    /sensors/:id/delete     controllers.SensorController.deleteSensor(id: Long)
+#GET		/sensors				controllers.SensorController.sensors()
+#POST    /sensors                controllers.SensorController.newSensor()
+#POST    /sensors/:id/delete     controllers.SensorController.deleteSensor(id: Long)
