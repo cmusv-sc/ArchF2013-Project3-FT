@@ -9,9 +9,8 @@ public class Device {
 	
 	public Long id;
 	private String uri;
-	private String deviceType;
-	private String deviceLocation;
-	private String deviceAgent;
+	private DeviceType deviceType;
+	private String regTimestamp;
 	
 	// http://einstein.sv.cmu.edu/get_devices/json
 	private static final String API_CALL = util.Constants.API_URL + util.Constants.GET_DEVICES + util.Constants.FORMAT;
@@ -19,15 +18,6 @@ public class Device {
 	// Constructors
 	
 	public Device() {
-	}
-	
-	public Device(Long id, String uri, String deviceType, String deviceLocation, 
-				String deviceAgent) {
-		this.id = id;
-		this.uri = uri;
-		this.deviceType = deviceType;
-		this.deviceLocation = deviceLocation;
-		this.deviceAgent = deviceAgent;
 	}
 	
 	public static void create(Device device) {		
@@ -46,33 +36,32 @@ public class Device {
 
 		// API Call: http://einstein.sv.cmu.edu/get_devices/json
 		final JsonNode devicesNode = APICall.callAPI(API_CALL);		
-						
-		String[] devices = devicesNode.path("device_type").toString().replaceAll("\"","").split(",");		
 		
-		for (int i=0; i<devices.length; i++) {
-			
-			Device device = new Device();
-			
-			device.setId(new Long(i)); // temporary id generation
-			device.setDeviceType("tmp device type");
-						
-			allDevices.add(device);
-			//System.out.println(devices[i]);
-		}
+		// If no value is returned
+		if (devicesNode == null) {
+			return allDevices;
+		}		
+		
+
+		// Not Reached code below!!
+//		String[] devices = devicesNode.path("device_type").toString().replaceAll("\"","").split(",");		
+//		
+//		for (int i=0; i<devices.length; i++) {
+//			
+//			Device device = new Device();
+//			
+//			device.setId(new Long(i)); // temporary id generation
+//						
+//			allDevices.add(device);
+//			//System.out.println(devices[i]);
+//		}
 					
 		return allDevices;
 
 	}
 	
 	// Getters
-		
-	public String getDeviceAgent() {
-		return deviceAgent;
-	}	
-	public String getDeviceLocation() {
-		return deviceLocation;
-	}	
-	public String getDeviceType() {
+	public DeviceType getDeviceType() {
 		return deviceType;
 	}
 	public Long getId() {
@@ -83,14 +72,7 @@ public class Device {
 	}
 	
 	// Setters
-	
-	public void setDeviceAgent(String deviceAgent) {
-		this.deviceAgent = deviceAgent;
-	}
-	public void setDeviceLocation(String deviceLocation) {
-		this.deviceLocation = deviceLocation;
-	}
-	public void setDeviceType(String deviceType) {
+	public void setDeviceType(DeviceType deviceType) {
 		this.deviceType = deviceType;
 	}
 	public void setId(Long id) {
@@ -98,6 +80,14 @@ public class Device {
 	}
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+
+	public String getRegTimestamp() {
+		return regTimestamp;
+	}
+
+	public void setRegTimestamp(String regTimestamp) {
+		this.regTimestamp = regTimestamp;
 	}
 
 

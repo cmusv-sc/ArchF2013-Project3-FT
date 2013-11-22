@@ -5,14 +5,22 @@
 @main("Devices") {
     
     <h1>@devices.size() Devices(s)</h1>
-    <table>
-	    <tr>
-	    	<td>Device Type</td>    	
+		<table class="table table-striped table-bordered table-condensed">
+			<tr>
+	    	<td>URI</td>
+	    	<td>Device Type</td>
+	    	<td>Registration Time</td>    	
 	    </tr>
 
     	@for(device <- devices) {
     	<tr>
-            <td>@device.getDeviceType()</td>
+            <td>@device.getUri()</td>
+            <td>@{ 
+							val deviceType = device.getDeviceType()
+							if(deviceType!=null) deviceType.getDeviceTypeName()
+							}
+						</td>
+						<td>@device.getRegTimestamp()</td>
     	</tr>
         }
     </table>

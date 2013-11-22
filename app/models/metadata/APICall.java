@@ -1,13 +1,9 @@
 package models.metadata;
-import java.io.IOException;
-
 import play.libs.WS;
 import play.libs.F.Function;
 import play.libs.F.Promise;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class APICall {
 
