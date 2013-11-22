@@ -1,0 +1,46 @@
+@(sensors: List[metadata.Sensor], sensorForm: play.data.Form[metadata.Sensor]) 
+
+@import helper._ 
+
+@main("Sensors") {
+
+	<h1>@sensors.size() Sensor (s)</h1>
+	<table class="table table-striped table-bordered table-condensed">
+		<tr>
+			<td>Sensor Name</td>
+			<td>Sensor Type</td>
+			<td>Device URI</td>
+		</tr>
+	
+		@for(sensor <- sensors) {
+		<tr>
+			<td>@sensor.getSensorName()</td>
+			<td>@{ 
+				val sensorType = sensor.getSensorType()
+				if(sensorType!=null) sensorType.getSensorTypeName()
+				}
+			</td>
+			<td>@{ 
+				val device = sensor.getDevice()
+				if(device!=null) device.getUri()
+				}
+			</td>
+	
+			<td>
+				@form(routes.SensorController.deleteSensor(sensor.id)) {
+				<input type="submit" value="Delete"> }
+			</td>
+	
+		</tr>
+		}
+	</table>
+	<h2>Add a new sensor</h2>
+	
+	@form(routes.SensorController.newSensor()) {
+	
+	@inputText(sensorForm("label"))
+	
+	<input type="submit" value="Create">
+	
+	} 
+}
