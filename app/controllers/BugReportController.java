@@ -12,7 +12,14 @@ public class BugReportController extends Controller {
     	return ok(bugReporting.render(BugReport.getAll(), bugReportForm));
     }
     public static Result newReport() {
-    	return ok(bugReporting.render(BugReport.getAll(), bugReportForm));
+    	Form<BugReport> filledForm = bugReportForm.bindFromRequest();
+        
+    	// Validations
+    	
+    	
+        
+        
+    	return TODO;
     }
 
     public static Result solveReport(){
