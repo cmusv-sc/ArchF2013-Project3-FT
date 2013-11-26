@@ -1,0 +1,50 @@
+@(bugReports: List[BugReport], bugReportForm: play.data.Form[BugReport])
+
+@import helper._
+
+@main("BugReports") {
+    
+    <h2>Add a new device type</h2>
+    
+    <div class="row">
+
+        <h2>Bug report</h2>
+
+        <div class="col-lg-8">          
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="inputName" class="col-sm-3 control-label">Your name</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" id="inputName" placeholder="Your name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEmail" class="col-sm-3 control-label">Email</label>
+              <div class="col-sm-5">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputOrg" class="col-sm-3 control-label">Organization</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" id="inputOrg" placeholder="Organization">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputBug" class="col-sm-3 control-label">Report</label>
+              <div class="col-sm-5">
+                <textarea class="form-control" rows="3" placeholder="Please indicate the problem here"></textarea>
+              </div>
+            </div>            
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-5">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>        
+        
+      </div>
+    
+}
+
