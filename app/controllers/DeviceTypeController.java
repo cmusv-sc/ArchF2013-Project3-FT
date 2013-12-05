@@ -19,7 +19,7 @@ public class DeviceTypeController extends Controller {
     public static Result newDeviceType() {
     	return TODO;
     }
-    public static Result deleteDeviceType(Long id) {
+    public static Result deleteDeviceType(String id) {
         return TODO;
     }
 }

@@ -2,12 +2,15 @@ package models.metadata;
 
 import java.util.*;
 
+import util.APICall;
+
+
 //import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.*;
 
 public class Device {
 	
-	public Long id;
+	private String id;
 	private String uri;
 	private DeviceType deviceType;
 	private String regTimestamp;
@@ -23,7 +26,7 @@ public class Device {
 	public static void create(Device device) {		
 	}
 
-	public static void delete(Long id) {
+	public static void delete(String id) {
 	}
 	
 	/**
@@ -64,7 +67,7 @@ public class Device {
 	public DeviceType getDeviceType() {
 		return deviceType;
 	}
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 	public String getUri() {
@@ -75,7 +78,7 @@ public class Device {
 	public void setDeviceType(DeviceType deviceType) {
 		this.deviceType = deviceType;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public void setUri(String uri) {
@@ -89,6 +92,12 @@ public class Device {
 	public void setRegTimestamp(String regTimestamp) {
 		this.regTimestamp = regTimestamp;
 	}
-
+	
+	public static Device find(String id){
+		// TODO
+		Device result = new Device();
+		result.setId(id);
+		return result;
+	}
 
 }

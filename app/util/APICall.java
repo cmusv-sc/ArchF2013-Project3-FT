@@ -1,4 +1,5 @@
-package models.metadata;
+package util;
+import play.Logger;
 import play.libs.WS;
 import play.libs.F.Function;
 import play.libs.F.Promise;
@@ -23,7 +24,6 @@ public class APICall {
 							}
 					}
 				});
-		
 		return bodyPromise.get(play.mvc.Http.Status.REQUEST_TIMEOUT);
 		
 		

@@ -14,7 +14,7 @@ public class DeviceController extends Controller {
     public static Result newDevice() {
     	return TODO;
     }
-    public static Result deleteDevice(Long id) {
+    public static Result deleteDevice(String id) {
         return TODO;
     }
 }

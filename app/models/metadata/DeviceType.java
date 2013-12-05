@@ -2,12 +2,14 @@ package models.metadata;
 
 import java.util.*;
 
+import util.APICall;
+
 //import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.*;
 
 public class DeviceType {
 	
-	public Long id;
+	private String id;
 	private String deviceTypeName;
 	private String manufacturer;
 	private double version;
@@ -20,7 +22,7 @@ public class DeviceType {
 	public DeviceType() {
 	}
 	
-	public DeviceType(Long id, String deviceTypeName, String manufacturer,
+	public DeviceType(String id, String deviceTypeName, String manufacturer,
 			double version) {
 		super();
 		this.id = id;
@@ -32,7 +34,7 @@ public class DeviceType {
 	public static void create(DeviceType deviceType) {		
 	}
 
-	public static void delete(Long id) {
+	public static void delete(String id) {
 	}
 	
 	/**
@@ -53,12 +55,12 @@ public class DeviceType {
 		}		
 		
 		
-		// Not Reached code below!!
-		for (int i=0; i < 3; i++) {
-			DeviceType devicetype = new DeviceType();
-			devicetype.setId(new Long(i)); // temporary id generation
-			allDeviceTypes.add(devicetype);
-		}
+//		// Not Reached code below!!
+//		for (int i=0; i < 3; i++) {
+//			DeviceType devicetype = new DeviceType();
+//			devicetype.setId(new String(i)); // temporary id generation
+//			allDeviceTypes.add(devicetype);
+//		}
 					
 		return allDeviceTypes;
 
@@ -70,7 +72,7 @@ public class DeviceType {
 	}	
 	
 	// Setters
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -92,6 +94,10 @@ public class DeviceType {
 
 	public void setVersion(double version) {
 		this.version = version;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 }

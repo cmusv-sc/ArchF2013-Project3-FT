@@ -2,11 +2,13 @@ package models.metadata;
 
 import java.util.*;
 
+import util.APICall;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class SensorType {
 
-	public Long id;
+	private String id;
 	private String sensorTypeName;
 	private String manufacturer;
 	private double version;
@@ -24,7 +26,7 @@ public class SensorType {
 
 	}
 
-	public SensorType(Long id, String sensorTypeName, String manufacturer,
+	public SensorType(String id, String sensorTypeName, String manufacturer,
 			double version, double maxValue, double minValue, String unit,
 			String interpreter) {
 		super();
@@ -38,6 +40,14 @@ public class SensorType {
 		this.interpreter = interpreter;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public String getSensorTypeName() {
 		return sensorTypeName;
 	}
@@ -105,16 +115,16 @@ public class SensorType {
 		}
 		
 		// parse the json string into object
-		String[] sensorsStrings = sensorTypesNode.findPath("sensor_type")
-				.toString().replaceAll("\"", "").split(",");
-
-		for (int i = 0; i < sensorsStrings.length; i++) {
-			SensorType newSensorType = new SensorType();
-
-			newSensorType.id = new Long(i); // just for temporary id generation
-			newSensorType.setSensorTypeName(sensorsStrings[i]);
-			allSensorTypes.add(newSensorType);
-		}
+//		String[] sensorsStrings = sensorTypesNode.findPath("sensor_type")
+//				.toString().replaceAll("\"", "").split(",");
+//
+//		for (int i = 0; i < sensorsStrings.length; i++) {
+//			SensorType newSensorType = new SensorType();
+//
+//			newSensorType.setId(new Long(i)); // just for temporary id generation
+//			newSensorType.setSensorTypeName(sensorsStrings[i]);
+//			allSensorTypes.add(newSensorType);
+//		}
 
 		return allSensorTypes;
 
@@ -124,7 +134,14 @@ public class SensorType {
 
 	}
 
-	public static void delete(Long id) {
+	public static void delete(String id) {
+	}
+
+	public static SensorType find(String id){
+		// TODO
+		SensorType result = new SensorType();
+		result.setId(id);
+		return result;
 	}
 
 }

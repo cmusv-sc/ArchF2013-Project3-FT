@@ -16,7 +16,7 @@ public class SensorTypeController extends Controller {
     public static Result newSensorType() {
     	return TODO;
     }
-    public static Result deleteSensorType(Long id) {
+    public static Result deleteSensorType(String id) {
         return TODO;
     }
 }
