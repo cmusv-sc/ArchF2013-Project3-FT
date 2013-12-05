@@ -95,13 +95,6 @@ public class Sensor {
 			 allSensors.add(newSensor);
 		 }
 		 
-//		 for (int i = 0; i < dataNode.size(); i++) {
-//		 Sensor newSensor = new Sensor();
-//		
-//		 newSensor.id = new Long(i); // just for temporary id generation
-//		 allSensors.add(newSensor);
-//		 }
-
 		return allSensors;
 
 	}

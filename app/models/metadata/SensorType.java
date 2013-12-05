@@ -19,7 +19,7 @@ public class SensorType {
 	private SensorCategory sensorCategory;
 
 	// http://einstein.sv.cmu.edu/get_devices/json
-	private static final String API_CALL = util.Constants.API_URL
+	private static final String GET_SENSOR_TYPES_CALL = util.Constants.API_URL
 			+ util.Constants.GET_SENSOR_TYPES + util.Constants.FORMAT;
 
 	public SensorType() {
@@ -118,23 +118,30 @@ public class SensorType {
 		List<SensorType> allSensorTypes = new ArrayList<SensorType>();
 
 		// Call the API to get the json string
-		JsonNode sensorTypesNode = APICall.callAPI(API_CALL);
+		JsonNode sensorTypesNode = APICall.callAPI(GET_SENSOR_TYPES_CALL);
 
 		if(sensorTypesNode==null){
 			return allSensorTypes;
 		}
 		
 		// parse the json string into object
-//		String[] sensorsStrings = sensorTypesNode.findPath("sensor_type")
-//				.toString().replaceAll("\"", "").split(",");
-//
-//		for (int i = 0; i < sensorsStrings.length; i++) {
-//			SensorType newSensorType = new SensorType();
-//
-//			newSensorType.setId(new Long(i)); // just for temporary id generation
-//			newSensorType.setSensorTypeName(sensorsStrings[i]);
-//			allSensorTypes.add(newSensorType);
-//		}
+		 //parse the json string into object
+		 for (int i=0;i<sensorTypesNode.size();i++) {
+			 JsonNode json = sensorTypesNode.path(i);
+			 SensorType newSensorType = new SensorType();
+			 
+			 newSensorType.setId(json.findPath("sensor_type_id").asText());
+			 newSensorType.setSensorTypeName(json.findPath("sensor_type_name").asText());
+			 newSensorType.setManufacturer(json.findPath("sensor_type_name").asText());
+			 newSensorType.setVersion(json.findPath("sensor_type_name").asDouble());
+			 newSensorType.setMaxValue(json.findPath("max_value").asDouble());
+			 newSensorType.setMinValue(json.findPath("min_value").asDouble());
+			 newSensorType.setUnit(json.findPath("unit").asText());
+			 newSensorType.setInterpreter(json.findPath("interpreter").asText());
+			 
+			 
+			 allSensorTypes.add(newSensorType);
+		 }
 
 		return allSensorTypes;
 
