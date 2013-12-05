@@ -11,7 +11,7 @@ public class Constants {
 	public static final String FORMAT = "/json";
 
 	// Get sensor types action
-	public static final String GET_SENSOR_TYPES = "/get_sensor_types/firefly_v3";
+	public static final String GET_SENSOR_TYPES = "/get_all_sensor_types";
 
 	// Get devices action
 	public static final String GET_DEVICES = "/get_devices";
