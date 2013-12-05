@@ -17,7 +17,9 @@
 			<td>@sensor.getSensorName()</td>
 			<td>@{ 
 				val sensorType = sensor.getSensorType()
-				if(sensorType!=null) sensorType.getSensorTypeName()
+					if(sensorType!=null) {
+						sensorType.getSensorTypeName()
+					}
 				}
 			</td>
 			<td>@{ 

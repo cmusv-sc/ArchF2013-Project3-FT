@@ -3,9 +3,9 @@ package models.metadata;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.APICall;
-
 import com.fasterxml.jackson.databind.JsonNode;
+
+import util.APICall;
 
 public class Sensor {
 	private String id;
@@ -62,6 +62,7 @@ public class Sensor {
 		this.device = device;
 	}
 
+	// NEED TO CALL DEVICE AND SENSORTYPE API!
 	public static List<Sensor> all() {
 		List<Sensor> allSensors = new ArrayList<Sensor>();
 
@@ -77,20 +78,21 @@ public class Sensor {
 		if (!sensorsNode.isArray()){
 			return null;
 		}
-
 		 //parse the json string into object
-		 for (final JsonNode sensorNode : sensorsNode) {
+		 for (int i=0;i<sensorsNode.size();i++) {
+			 JsonNode json = sensorsNode.path(i);
 			 Sensor newSensor = new Sensor();
 			 
-			 newSensor.setSensorName(sensorNode.get("sensor_name").toString());
-			 newSensor.setId(sensorNode.get("sensor_id").toString());
+			 newSensor.setSensorName(json.findPath("sensor_name").asText());
+			 newSensor.setId(json.findPath("sensor_id").asText());
 			 
-			 String sensor_type_id = sensorNode.get("sensor_type").toString();
+			 String sensor_type_id = json.findPath("sensor_type").asText();
 			 newSensor.setSensorType(SensorType.find(sensor_type_id));
 			 
-			 String device_id = sensorNode.get("device_id").toString();
+			 String device_id = json.findPath("device_id").asText();
 			 newSensor.setDevice(Device.find(device_id));
 			 
+			 allSensors.add(newSensor);
 		 }
 		 
 //		 for (int i = 0; i < dataNode.size(); i++) {
