@@ -1,0 +1,38 @@
+@(sensorCategories: List[metadata.SensorCategory], sensorCategoryForm: play.data.Form[metadata.SensorCategory])
+
+@import helper._
+
+@main("Sensor Categories") {
+    
+    <h1>@sensorCategories.size() Sensor Categories(s)</h1>
+		<table class="table table-striped table-bordered table-condensed">
+		<tr>
+	    	<td>Sensor Category Name</td>
+	    	<td>Purpose</td>
+	    	<td>Operation</td>    	
+	    </tr>
+
+    	@for(sensorCategory <- sensorCategories) {
+    	<tr>
+            <td>@sensorCategory.getName()</td>
+            <td>@sensorCategory.getPurpose()</td>
+            <td>
+            	<button type="edit" class="btn btn-xs btn-default">Edit</button>
+            	<button type="delete" class="btn btn-xs btn-default">Delete</button>
+            </td>
+    	</tr>
+        }
+    </table>
+    
+    <h2>Add a new sensor category</h2>
+    
+    @form(routes.SensorCategoryController.newSensorCategory()) {
+        
+        @inputText(sensorCategoryForm("Name"))
+        @inputText(sensorCategoryForm("Purpose")) 
+
+        <input type="submit" value="Create">
+        
+    }
+    
+}

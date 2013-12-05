@@ -25,8 +25,9 @@
     <h2>Add a new device type</h2>
     
     @form(routes.DeviceTypeController.newDeviceType()) {
-        
-        @inputText(deviceTypeForm("label")) 
+                
+        @inputText(deviceTypeForm("Name"))
+         
         
         <input type="submit" value="Create">
         
