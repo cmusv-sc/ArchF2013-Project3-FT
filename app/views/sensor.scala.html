@@ -38,11 +38,33 @@
 	</table>
 	<h2>Add a new sensor</h2>
 	
-	@form(routes.SensorController.newSensor()) {
-	
-	@inputText(sensorForm("label"))
-	
-	<input type="submit" value="Create">
-	
-	} 
+	@helper.form(action = routes.SensorController.newSensor) {
+        
+        <fieldset>          
+            
+            @inputText(
+                sensorForm("name"), 
+                '_label -> "Sensor name",                 
+                '_error -> sensorForm.globalError                                
+            )
+            
+            <select>
+		        <option>Sensor Type 1</option>
+		        <option>Sensor Type 2</option>		        
+		    </select>
+    
+            <select>
+		        <option>Device 1</option>
+		        <option>Device 2</option>		        
+		    </select>            
+           
+        </fieldset>
+        
+      
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Create">
+            <a href="@routes.Application.index" class="btn">Cancel</a>
+        </div>
+         
+     }
 }
