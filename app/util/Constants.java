@@ -19,7 +19,6 @@ public class Constants {
 	// Get sensors action
 	public static final String GET_SENSORS = "get_sensors/";
 
-	// NOT IMPLEMENTED!!
 	// Get device types action
 	public static final String GET_DEVICE_TYPES = "get_device_types/";
 	
@@ -40,5 +39,7 @@ public class Constants {
 	// create a sensor type
 	public static final String ADD_SENSOR_TYPE = "add_sensor_type";
 
+	//create a device type
+	public static final String ADD_DEVICE_TYPE = "add_device_type";
 
 }

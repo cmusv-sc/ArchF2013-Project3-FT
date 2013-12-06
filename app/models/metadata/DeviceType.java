@@ -16,7 +16,8 @@ public class DeviceType {
 
 	// http://einstein.sv.cmu.edu/get_devices/json
 	private static final String API_CALL = util.Constants.API_URL + util.Constants.GET_DEVICE_TYPES + util.Constants.FORMAT;
-	
+	private static final String GET_DEVICE_TYPES_CALL =  util.Constants.API_URL + util.Constants.GET_DEVICE_TYPES + util.Constants.FORMAT;
+	private static final String ADD_DEVICE_TYPE_CALL = util.Constants.API_URL + util.Constants.ADD_DEVICE_TYPE;
 	// Constructors
 	
 	public DeviceType() {
@@ -31,7 +32,9 @@ public class DeviceType {
 		this.version = version;
 	}
 
-	public static void create(DeviceType deviceType) {		
+	public static JsonNode create(JsonNode jsonData) {
+		String tmpTest = "http://einstein.sv.cmu.edu/add_device_type";
+		return APICall.postAPI(ADD_DEVICE_TYPE_CALL, jsonData);	
 	}
 
 	public static void delete(String id) {
@@ -46,21 +49,21 @@ public class DeviceType {
 		List<DeviceType> allDeviceTypes = new ArrayList<DeviceType>();
 
 		// API Call: http://einstein.sv.cmu.edu/get_device_types/json
-		final JsonNode deviceTypesNode = APICall.callAPI(API_CALL);		
-		//String[] devices = devicesNode.path("device_type").toString().replaceAll("\"","").split(",");		
-		
-		// If no value is returned
-		if (deviceTypesNode == null) {
+		JsonNode deviceTypesNode = APICall.callAPI(GET_DEVICE_TYPES_CALL);
+
+		if(deviceTypesNode == null)
 			return allDeviceTypes;
-		}		
 		
-		
-//		// Not Reached code below!!
-//		for (int i=0; i < 3; i++) {
-//			DeviceType devicetype = new DeviceType();
-//			devicetype.setId(new String(i)); // temporary id generation
-//			allDeviceTypes.add(devicetype);
-//		}
+		//id, name, manufacturer, version
+		for (int i=0;i<deviceTypesNode.size();i++) {
+			 JsonNode json = deviceTypesNode.path(i);
+			 DeviceType newDeviceType = new DeviceType();
+			 newDeviceType.setId(json.findPath("device_type_key").asText());
+			 newDeviceType.setDeviceTypeName(json.findPath("device_type_name").asText());
+			 newDeviceType.setManufacturer(json.findPath("manufacturer").asText());
+			 newDeviceType.setVersion(json.findPath("version").asDouble());
+			 allDeviceTypes.add(newDeviceType);
+		}
 					
 		return allDeviceTypes;
 

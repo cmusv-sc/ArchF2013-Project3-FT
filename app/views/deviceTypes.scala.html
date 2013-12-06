@@ -25,13 +25,32 @@
     </table>
     
     <h2>Add a new device type</h2>
-    
-    @form(routes.DeviceTypeController.newDeviceType()) {
+
+    @form(action = routes.DeviceTypeController.newDeviceType()) {
         
-        @inputText(deviceTypeForm("label")) 
-        
-        <input type="submit" value="Create">
+        <fieldset>
+            @inputText(
+                deviceTypeForm("deviceTypeName"), 
+                '_label -> "Name",                 
+                '_error -> deviceTypeForm.globalError                                
+            )
+            @inputText(
+                deviceTypeForm("deviceTypeManufacturer"), 
+                '_label -> "Manufacturer", 
+                '_error -> deviceTypeForm.globalError                                
+            )
+            @inputText(
+                deviceTypeForm("deviceTypeVersion"), 
+                '_label -> "Version",
+                '_error -> deviceTypeForm.globalError                                
+            )
+        </fieldset>
+      
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Register">
+            <a href="@routes.Application.index" class="btn">Cancel</a>
+        </div>
         
     }
-    
+
 }
