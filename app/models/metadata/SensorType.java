@@ -129,8 +129,8 @@ public class SensorType {
 			 
 			 newSensorType.setId(json.findPath("sensor_type_id").asText());
 			 newSensorType.setSensorTypeName(json.findPath("sensor_type_name").asText());
-			 newSensorType.setManufacturer(json.findPath("sensor_type_name").asText());
-			 newSensorType.setVersion(json.findPath("sensor_type_name").asDouble());
+			 newSensorType.setManufacturer(json.findPath("manufacturer").asText());
+			 newSensorType.setVersion(json.findPath("version").asDouble());
 			 newSensorType.setMaxValue(json.findPath("max_value").asDouble());
 			 newSensorType.setMinValue(json.findPath("min_value").asDouble());
 			 newSensorType.setUnit(json.findPath("unit").asText());
