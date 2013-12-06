@@ -46,10 +46,13 @@
     <h2>Add a new sensor type</h2>
     
     @form(routes.SensorTypeController.newSensorType()) {
-        
-        @inputText(sensorTypeForm("label")) 
-        
-        <input type="submit" value="Create">
+         
+        @inputText(
+                sensorTypeForm("sensorTypeName"), 
+                '_label -> "Sensor Type Name",                 
+                '_error -> sensorTypeForm.globalError                                
+            )
+        <input class="btn" type="submit" value="Create">
         
     }
     

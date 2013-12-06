@@ -144,13 +144,13 @@ public class SensorType {
 
 	}
 
-	public static void create(SensorType sensorType) {
-		//APICall.postAPI(ADD_SENSOR_TYPE_CALL, jsonData);
+	public static JsonNode create(JsonNode jsonData) {
+		String tmpTest = "http://einstein.sv.cmu.edu/add_sensor_type";
+		return APICall.postAPI(ADD_SENSOR_TYPE_CALL, jsonData);
 	}
 
 	public static JsonNode delete(String id) {
-		JsonNode responseResult = APICall.callAPI(DELETE_SENSOR_TYPE_CALL+id);
-		return responseResult;
+		return APICall.callAPI(DELETE_SENSOR_TYPE_CALL+id);
 	}
 
 	public static SensorType find(String id){

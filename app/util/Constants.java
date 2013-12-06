@@ -38,7 +38,7 @@ public class Constants {
 
 	
 	// create a sensor type
-	public static final String ADD_SENSOR_TYPE = "add_sensor_type/";
+	public static final String ADD_SENSOR_TYPE = "add_sensor_type";
 
 
 }

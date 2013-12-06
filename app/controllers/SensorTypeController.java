@@ -1,9 +1,13 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import java.util.UUID;
+
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.node.*;
 
 import models.metadata.SensorType;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.*;
 import views.html.*;
 
@@ -14,8 +18,27 @@ public class SensorTypeController extends Controller {
 		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
 
 	}
+
 	public static Result newSensorType() {
-		return TODO;
+		SensorType st = sensorTypeForm.bindFromRequest().get();
+		
+		ObjectNode jsonData = Json.newObject();
+		jsonData.put("id", UUID.randomUUID().toString());
+		jsonData.put("sensor_type", st.getSensorTypeName());
+
+		// create the item by calling the API
+		JsonNode response = SensorType.create(jsonData);
+		if (response == null) {
+			flash("error", "Error in creation: No reponse from server");
+		} else {
+			if (response.has("message")) {
+				flash("success", "A new item has been created");
+			} else {
+				flash("error",
+						"Error in creation: " + response.findPath("error"));
+			}
+		}
+		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
 	}
 
 	public static Result deleteSensorType(String id) {
@@ -26,12 +49,16 @@ public class SensorTypeController extends Controller {
 		} else {
 
 			JsonNode response = SensorType.delete(id);
-			if (response.has("message")) {
-				flash("success", "This item has been deleted");
+			if (response == null) {
+				flash("error", "Error in creation: No reponse from server");
 			} else {
-				flash("error",
-						"Error in deleting: "
-								+ response.findPath("error").textValue());
+				if (response.has("message")) {
+					flash("success", "This item has been deleted");
+				} else {
+					flash("error",
+							"Error in deleting: "
+									+ response.findPath("error").textValue());
+				}
 			}
 		}
 		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
