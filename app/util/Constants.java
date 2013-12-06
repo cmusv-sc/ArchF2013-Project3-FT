@@ -16,7 +16,6 @@ public class Constants {
 	// Get devices action
 	public static final String GET_DEVICES = "/get_devices";
 
-	// NOT IMPLEMENTED!!
 	// Get sensors action
 	public static final String GET_SENSORS = "/get_sensors";
 
@@ -27,6 +26,12 @@ public class Constants {
 	// NOT IMPLEMENTED!!
 	// Get device agents action
 	public static final String GET_DEVICE_AGENTS = "/get_device_agents";
+
+	// delete a sensor type
+	public static final String DELETE_SENSOR_TYPE = "/delete_sensor_type/";
+
+	// create a sensor type
+	public static final String ADD_SENSOR_TYPE = "/add_sensor_type";
 
 
 }

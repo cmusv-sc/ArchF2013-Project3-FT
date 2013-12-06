@@ -20,6 +20,11 @@ public class SensorType {
 	// http://einstein.sv.cmu.edu/get_devices/json
 	private static final String GET_SENSOR_TYPES_CALL = util.Constants.API_URL
 			+ util.Constants.GET_SENSOR_TYPES + util.Constants.FORMAT;
+	private static final String DELETE_SENSOR_TYPE_CALL = util.Constants.API_URL
+			+ util.Constants.DELETE_SENSOR_TYPE;
+	private static final String ADD_SENSOR_TYPE_CALL = util.Constants.API_URL
+			+ util.Constants.ADD_SENSOR_TYPE;
+	
 
 	public SensorType() {
 		// TODO Auto-generated constructor stub
@@ -138,17 +143,23 @@ public class SensorType {
 	}
 
 	public static void create(SensorType sensorType) {
-
+		//APICall.postAPI(ADD_SENSOR_TYPE_CALL, jsonData);
 	}
 
-	public static void delete(String id) {
+	public static String delete(String id) {
+		JsonNode reponseResult = APICall.callAPI(DELETE_SENSOR_TYPE_CALL+id);
+		return reponseResult.findPath("message").asText();
 	}
 
 	public static SensorType find(String id){
 		// TODO
-		SensorType result = new SensorType();
-		result.setId(id);
-		return result;
+		List<SensorType> sensorTypeList = SensorType.all();
+		for (SensorType s:sensorTypeList){
+			if (s.getId().equals(id)){
+				return s;
+			}
+		}
+		return null;
 	}
 
 }
