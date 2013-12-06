@@ -3,13 +3,16 @@
 @import helper._ 
 
 @main("Sensors") {
-
+	
+	@flash_message()
+	
 	<h1>@sensors.size() Sensor (s)</h1>
 	<table class="table table-striped table-bordered table-condensed">
 		<tr>
 			<td>Sensor Name</td>
 			<td>Sensor Type</td>
 			<td>Device URI</td>
+			<td>Operation</td>
 		</tr>
 	
 		@for(sensor <- sensors) {
@@ -29,8 +32,14 @@
 			</td>
 	
 			<td>
-				@form(routes.SensorController.deleteSensor(sensor.getId())) {
-				<input type="submit" value="Delete"> }
+			 @if(!sensor.getId()) {
+                	<a href='@routes.SensorController.deleteSensor("error")' 
+   									class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+                	
+       }else{
+                	<a href="@routes.SensorController.deleteSensor(sensor.getId())" 
+   									class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+       }
 			</td>
 	
 		</tr>

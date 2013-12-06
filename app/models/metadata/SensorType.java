@@ -2,6 +2,8 @@ package models.metadata;
 
 import java.util.*;
 
+
+import play.libs.Json;
 import util.APICall;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -24,7 +26,7 @@ public class SensorType {
 			+ util.Constants.DELETE_SENSOR_TYPE;
 	private static final String ADD_SENSOR_TYPE_CALL = util.Constants.API_URL
 			+ util.Constants.ADD_SENSOR_TYPE;
-	
+	private static List<SensorType> sensorTypeList =null;
 
 	public SensorType() {
 		// TODO Auto-generated constructor stub
@@ -146,14 +148,15 @@ public class SensorType {
 		//APICall.postAPI(ADD_SENSOR_TYPE_CALL, jsonData);
 	}
 
-	public static String delete(String id) {
-		JsonNode reponseResult = APICall.callAPI(DELETE_SENSOR_TYPE_CALL+id);
-		return reponseResult.findPath("message").asText();
+	public static JsonNode delete(String id) {
+		JsonNode responseResult = APICall.callAPI(DELETE_SENSOR_TYPE_CALL+id);
+		return responseResult;
 	}
 
 	public static SensorType find(String id){
 		// TODO
-		List<SensorType> sensorTypeList = SensorType.all();
+		if(sensorTypeList==null)
+			sensorTypeList = SensorType.all();
 		for (SensorType s:sensorTypeList){
 			if (s.getId().equals(id)){
 				return s;

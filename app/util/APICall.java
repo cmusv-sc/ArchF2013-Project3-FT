@@ -24,7 +24,7 @@ public class APICall {
 						}
 					}
 				});
-		return bodyPromise.get(play.mvc.Http.Status.REQUEST_TIMEOUT);
+		return bodyPromise.get();
 	}
 
 	public static String postAPI(String apiString, JsonNode jsonData) {
