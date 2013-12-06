@@ -16,6 +16,7 @@ public class DeviceType {
 
 	// http://einstein.sv.cmu.edu/get_devices/json
 	private static final String API_CALL = util.Constants.API_URL + util.Constants.GET_DEVICE_TYPES + util.Constants.FORMAT;
+	private static final String GET_DEVICE_TYPES_CALL =  util.Constants.API_URL + util.Constants.GET_SENSOR_TYPES + util.Constants.FORMAT;
 	
 	// Constructors
 	
@@ -45,22 +46,20 @@ public class DeviceType {
 		
 		List<DeviceType> allDeviceTypes = new ArrayList<DeviceType>();
 
+		/*
 		// API Call: http://einstein.sv.cmu.edu/get_device_types/json
-		final JsonNode deviceTypesNode = APICall.callAPI(API_CALL);		
-		//String[] devices = devicesNode.path("device_type").toString().replaceAll("\"","").split(",");		
+		JsonNode deviceTypesNode = APICall.callAPI(GET_DEVICE_TYPES_CALL);
+
+		if(sensorTypesNode == null)
+			return allSensorTypes;
 		
-		// If no value is returned
-		if (deviceTypesNode == null) {
-			return allDeviceTypes;
-		}		
-		
-		
-//		// Not Reached code below!!
-//		for (int i=0; i < 3; i++) {
-//			DeviceType devicetype = new DeviceType();
-//			devicetype.setId(new String(i)); // temporary id generation
-//			allDeviceTypes.add(devicetype);
-//		}
+		for (int i=0;i<sensorTypesNode.size();i++) {
+			 JsonNode json = deviceTypesNode.path(i);
+			 DeviceType newDeviceType = new DeviceType();
+			 newDeviceType.setInterpreter(json.findPath("interpreter").asText());
+			 allDeviceTypes.add(newDeviceType);
+		}
+		*/
 					
 		return allDeviceTypes;
 

@@ -17,7 +17,12 @@ public class DeviceTypeController extends Controller {
 
     }
     public static Result newDeviceType() {
-    	return TODO;
+        Form<DeviceType> typeForm = deviceTypeForm.bindFromRequest();
+        DeviceType deviceType = new DeviceType(filledForm.get().name, filledForm.get().manufacturer, filledForm.get().version);
+        deviceType.save();
+
+        Form<DeviceType> newForm = Form.form(DeviceType.class);
+    	return ok(deviceTypes.render(DeviceType.all(), newForm));
     }
     public static Result deleteDeviceType(String id) {
         return TODO;
