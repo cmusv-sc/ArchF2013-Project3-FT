@@ -1,0 +1,22 @@
+
+@import helper._
+
+@if(flash.containsKey("error")) {
+        
+        <div class="alert alert-danger">
+            <p>
+                <strong>Oops!</strong> @flash.get("error")
+            </p>
+        </div>
+        
+}
+
+@if(flash.containsKey("message")) {
+        
+        <div class="alert alert-success">
+            <p>
+                @flash.get("message")
+            </p>
+        </div>
+        
+}
