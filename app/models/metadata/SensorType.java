@@ -8,7 +8,7 @@ import util.APICall;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class SensorType {
+public class SensorType extends Metadata{
 
 	private String id;
 	private String sensorTypeName;

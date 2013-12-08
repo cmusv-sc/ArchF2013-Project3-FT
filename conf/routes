@@ -26,17 +26,17 @@ POST    /sensorTypes    	controllers.SensorTypeController.deleteSensorType()
 # device_types
 GET		/deviceTypes				controllers.DeviceTypeController.deviceTypes()
 POST    /deviceTypes/new                controllers.DeviceTypeController.newDeviceType()
-GET    /deviceTypes/delete/:id     controllers.DeviceTypeController.deleteDeviceType(id: String)
+POST    /deviceTypes     controllers.DeviceTypeController.deleteDeviceType()
 
 # devices
 GET		/devices				controllers.DeviceController.devices()
 POST    /devices/new                controllers.DeviceController.newDevice()
-GET    /devices/delete/:id     controllers.DeviceController.deleteDevice(id: String)
+POST    /devices     controllers.DeviceController.deleteDevice()
 
 # sensors
 GET		/sensors				controllers.SensorController.sensors()
 POST    /sensors/new                controllers.SensorController.newSensor()
-GET   /sensors/delete/:id     controllers.SensorController.deleteSensor(id: String)
+POST   /sensors/     controllers.SensorController.deleteSensor()
 
 
 

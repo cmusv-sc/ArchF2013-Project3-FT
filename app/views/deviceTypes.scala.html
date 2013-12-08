@@ -21,14 +21,11 @@
             <td>@deviceType.getManufacturer()</td>
             <td>@deviceType.getVersion()</td>
             <td>
-             		@if(!deviceType.getId()) {
-                    <a href='@routes.DeviceTypeController.deleteDeviceType("error")' 
-                           class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
-                        
-                }else{
-                    <a href="@routes.DeviceTypeController.deleteDeviceType(deviceType.getId())" 
-                       class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
-                }
+             		 @form(routes.DeviceTypeController.deleteDeviceType()){
+               		 		<input name="idHolder" type="hidden" value="@deviceType.getId()">
+        							<input type="submit"  class="btn btn-danger" value="Delete">
+               			}
+               			
             		</td>
     	</tr>
         }
