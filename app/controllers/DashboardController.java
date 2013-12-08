@@ -1,29 +1,17 @@
 package controllers;
 
-import models.BugReport;
+import models.Dashboard;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
 
 public class DashboardController extends Controller {
 	
+	final static Form<Dashboard> dashboardForm = Form.form(Dashboard.class);	
 	
-    public static Result dashboard() {
-    	return ok(health.render(Dashboard.getHealth(), dashboardForm));
-    }
-    public static Result newReport() {
-    	Form<BugReport> filledForm = bugReportForm.bindFromRequest();
-        
-    	// Validations
-    	
-    	
-        
-        
-    	return TODO;
+    public static Result dashboardItems() {
+    	return ok(dashboard.render(Dashboard.status(),dashboardForm));
     }
 
-    public static Result solveReport(){
-        return TODO;
-    }
 
 }

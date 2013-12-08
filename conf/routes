@@ -43,5 +43,8 @@ GET		/sensorCategories				controllers.SensorCategoryController.sensorCategories(
 POST    /sensorCategories                controllers.SensorCategoryController.newSensorCategory()
 #POST    /sensorCategories/:id/delete     controllers.SensorCategoryController.deleteSensorCategory(id: String)
 
+# dashboard
+GET		/dashboard				controllers.DashboardController.dashboardItems()
+
 
 
