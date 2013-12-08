@@ -1,6 +1,7 @@
 @(sensorTypes: List[metadata.SensorType], sensorTypeForm: play.data.Form[metadata.SensorType])
 
 @import helper._
+@import helper.twitterBootstrap._
 
 @main("Sensor Types") {
     
@@ -30,15 +31,12 @@
                 <td>@sensorType.getInterpreter()</td>
                 
                 <td>
-                @if(!sensorType.getId()) {
-                	<a href='@routes.SensorTypeController.deleteSensorType("error")' 
-   									class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
-                	
-                }else{
-                	<a href="@routes.SensorTypeController.deleteSensorType(sensorType.getId())" 
-   									class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
-                }
-            </td>
+               		 @form(routes.SensorTypeController.deleteSensorType()){
+               		 		<input name="idHolder" type="hidden" value="@sensorType.getId()">
+        							<input type="submit"  class="btn btn-danger" value="Delete">
+               			}
+               			
+            		</td>
             
     </tr>
         }
@@ -49,10 +47,51 @@
          
         @inputText(
                 sensorTypeForm("sensorTypeName"), 
-                '_label -> "Sensor Type Name",                 
+                '_label -> "Sensor Type Name",     
+                'size -> 30,
+                'placeholder-> "the name of this sensor type",           
                 '_error -> sensorTypeForm.globalError                                
-            )
-        <input class="btn" type="submit" value="Create">
+        )
+        @inputText(
+                sensorTypeForm("manufacturer"), 
+                '_label -> "Manufacturer",  
+                'size -> 30,
+                'placeholder-> "the name of Manufacturer",               
+                '_error -> sensorTypeForm.globalError                                
+        )
+        @inputText(
+                sensorTypeForm("version"), 
+                '_label -> "Version",
+                'placeholder-> 1.0,                 
+                '_error -> sensorTypeForm.globalError                                
+        )
+        @inputText(
+                sensorTypeForm("maxValue"), 
+                '_label -> "Max Value",
+                'placeholder-> 1.9,                 
+                '_error -> sensorTypeForm.globalError                                
+        )
+        @inputText(
+                sensorTypeForm("minValue"), 
+                '_label -> "Min Value",                 
+                'placeholder-> 1.1,                 
+                '_error -> sensorTypeForm.globalError                                
+        )
+        @inputText(
+                sensorTypeForm("unit"), 
+                '_label -> "Unit",                 
+                'placeholder-> "Celsius",                 
+                '_error -> sensorTypeForm.globalError                                
+        )
+        @inputText(
+                sensorTypeForm("interpreter"), 
+                '_label -> "Interpreter",                 
+                'placeholder-> "y = 0.7506 * x + 32",                 
+                '_error -> sensorTypeForm.globalError                                
+        )
+        
+        <input class="btn" type="submit" value="Register">
+        <a href="@routes.SensorTypeController.sensorTypes()" class="btn">Cancel</a>
         
     }
     

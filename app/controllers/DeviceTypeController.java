@@ -1,10 +1,13 @@
 package controllers;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.*;
 
 import play.libs.Json;
 import models.metadata.DeviceType;
+import models.metadata.SensorType;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
@@ -23,9 +26,10 @@ public class DeviceTypeController extends Controller {
     
     public static Result newDeviceType() {
         DeviceType dt = deviceTypeForm.bindFromRequest().get();
-
+        System.out.println("hey "+dt.getDeviceTypeName()+"\t"+dt.getVersion());
+        
         ObjectNode jsonData = Json.newObject();
-        //jsonData.put("id", UUID.randomUUID().toString());
+        jsonData.put("id", UUID.randomUUID().toString());
         jsonData.put("device_type_name", dt.getDeviceTypeName());
         jsonData.put("manufacturer", dt.getManufacturer());
         jsonData.put("version", dt.getVersion());
@@ -48,6 +52,23 @@ public class DeviceTypeController extends Controller {
     }
 
     public static Result deleteDeviceType(String id) {
-        return TODO;
+    	if (id.equals("error")) {
+			flash("error", "This item cannot be deleted.");
+		} else {
+
+			JsonNode response = DeviceType.delete(id);
+			if (response == null) {
+				flash("error", "Error in creation: No reponse from server");
+			} else {
+				if (response.has("message")) {
+					flash("success", "This item has been deleted");
+				} else {
+					flash("error",
+							"Error in deleting: "
+									+ response.findPath("error").textValue());
+				}
+			}
+		}
+		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
     }
 }

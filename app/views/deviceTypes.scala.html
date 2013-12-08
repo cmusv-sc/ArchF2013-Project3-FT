@@ -12,6 +12,7 @@
 	    	<td>Device Type Name</td>   
 	    	<td>Manufacturer</td>
 	    	<td>Version</td>
+	    	<td>Operation</td>
 	    </tr>
 
     	@for(deviceType <- deviceTypes) {
@@ -19,7 +20,16 @@
             <td>@deviceType.getDeviceTypeName()</td>
             <td>@deviceType.getManufacturer()</td>
             <td>@deviceType.getVersion()</td>
-            
+            <td>
+             		@if(!deviceType.getId()) {
+                    <a href='@routes.DeviceTypeController.deleteDeviceType("error")' 
+                           class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+                        
+                }else{
+                    <a href="@routes.DeviceTypeController.deleteDeviceType(deviceType.getId())" 
+                       class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+                }
+            		</td>
     	</tr>
         }
     </table>
@@ -35,12 +45,12 @@
                 '_error -> deviceTypeForm.globalError                                
             )
             @inputText(
-                deviceTypeForm("deviceTypeManufacturer"), 
+                deviceTypeForm("manufacturer"), 
                 '_label -> "Manufacturer", 
                 '_error -> deviceTypeForm.globalError                                
             )
             @inputText(
-                deviceTypeForm("deviceTypeVersion"), 
+                deviceTypeForm("version"), 
                 '_label -> "Version",
                 '_error -> deviceTypeForm.globalError                                
             )
@@ -48,7 +58,7 @@
       
         <div class="actions">
             <input type="submit" class="btn primary" value="Register">
-            <a href="@routes.Application.index" class="btn">Cancel</a>
+            <a href="@routes.DeviceTypeController.deviceTypes()" class="btn">Cancel</a>
         </div>
         
     }
