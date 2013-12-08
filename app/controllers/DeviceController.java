@@ -38,7 +38,7 @@ public class DeviceController extends Controller {
 				flash("success", "A new item has been created");
 			} else {
 				flash("error",
-						"Error in creation: " + response.findPath("error"));
+						"Error in creation: possible wrong format");
 			}
 		}
 		return ok(devices.render(Device.all(), deviceForm));

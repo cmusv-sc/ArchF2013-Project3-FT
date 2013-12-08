@@ -42,7 +42,7 @@ public class SensorTypeController extends Controller {
 				flash("success", "A new item has been created");
 			} else {
 				flash("error",
-						"Error in creation: " + response.findPath("error"));
+						"Error in creation: possible wrong format");
 			}
 		}
 		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));

@@ -2,7 +2,6 @@ package models.metadata;
 
 import java.util.*;
 
-
 import play.libs.Json;
 import util.APICall;
 
@@ -149,11 +148,35 @@ public class SensorType {
 			 
 			 allSensorTypes.add(newSensorType);
 		 }
+		 
+		 // need to update the sensorTypeFoundList
+		 updateSensorTypeFoundList(allSensorTypes);
 
 		return allSensorTypes;
 
 	}
-
+	
+	public static void updateSensorTypeFoundList(List<SensorType> newList) {
+		sensorTypeFoundList.clear();
+		for (SensorType element : newList) {
+			sensorTypeFoundList.add(element);
+		}
+	}
+	/**
+	 * Method to display all sensor types' name
+	 * @return a list of all sensor types' name
+	 */
+	public static List<String> allSensorTypeName(){
+		List<SensorType> allList = all();
+		List<String> resultList = new ArrayList<String>();
+		for(SensorType element:allList){
+			String elementName = element.getSensorTypeName(); 
+			if(elementName!=null)
+				resultList.add(elementName);
+		}
+		return resultList;
+	}
+	
 	/**
 	 * Method to call the API to add a new sensor type
 	 * @param jsonData
@@ -186,8 +209,10 @@ public class SensorType {
 				return s;
 			}
 		}
-		// if not found, return null
-		return null;
+		// if not found, return sensor type id as the name
+		SensorType st = new SensorType();
+		st.setSensorTypeName(id);
+		return st;
 	}
 
 }

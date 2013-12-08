@@ -16,7 +16,7 @@ public class Device {
 	private double longitude;
 	private double latitude;
 	private double altitude;
-	
+
 	// http://einstein.sv.cmu.edu/get_devices/json
 	private static final String API_CALL = util.Constants.API_URL
 			+ util.Constants.GET_DEVICES + util.Constants.FORMAT;
@@ -24,6 +24,7 @@ public class Device {
 			+ util.Constants.ADD_DEVICE;
 	private static final String DELETE_DEVICE_CALL = util.Constants.API_URL
 			+ util.Constants.DELETE_DEVICE;
+	private static List<Device> deviceFoundList = new ArrayList<Device>();
 
 	// Constructors
 
@@ -64,14 +65,6 @@ public class Device {
 		this.regTimestamp = regTimestamp;
 	}
 
-	public static Device find(String id) {
-		// TODO
-		Device result = new Device();
-		result.setId(id);
-		return result;
-	}
-
-
 	public double getLongitude() {
 		return longitude;
 	}
@@ -97,7 +90,8 @@ public class Device {
 	}
 
 	/**
-	 * Method to call the API to add a new device 
+	 * Method to call the API to add a new device
+	 * 
 	 * @param jsonData
 	 * @return
 	 */
@@ -107,6 +101,7 @@ public class Device {
 
 	/**
 	 * Method to call the API to delete a device
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -135,17 +130,73 @@ public class Device {
 			JsonNode json = devicesNode.path(i);
 			Device newDevice = new Device();
 
-			newDevice.setId(json.findPath("device_id").asText());
+			String device_id = json.findPath("device_id").asText();
+			newDevice.setId(device_id);
 			
 			DeviceType deviceType = new DeviceType();
 			deviceType.setDeviceTypeName(json.findPath("device_type").asText());
 			newDevice.setDeviceType(deviceType);
 			
-			newDevice.setUri(json.findPath("uri").asText());
+			String newUri = json.findPath("uri").asText();
+			// for compatible reasons
+			// some devices used URI, some used device_id
+			newDevice.setUri(newUri.equals("")? device_id:newUri); 
+			
+			
 			newDevice.setRegTimestamp(json.findPath("user_defined_fields").asText());
 			
 			allDevices.add(newDevice);
 		}
+		
+		// update deviceFoundList
+		updateDeviceFoundList(allDevices);
+		
 		return allDevices;
+	}
+
+	public static void updateDeviceFoundList(List<Device> newList) {
+		deviceFoundList.clear();
+		for (Device element : newList) {
+			deviceFoundList.add(element);
+		}
+	}
+
+	/**
+	 * Method to find a device by its id
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static Device find(String id) {
+		// if find() is called the first time
+		if (deviceFoundList.size() == 0)
+			deviceFoundList = Device.all();
+		for (Device d : deviceFoundList) {
+			if (d.getId().equals(id)) {
+				return d;
+			}
+		}
+		// if not found, return device_id as the uri
+		Device d = new Device();
+		d.setUri(id);
+		return d;
+	}
+
+	/**
+	 * Method to display all devices' name with id
+	 * 
+	 * @return a list of all devices' name
+	 */
+	public static Map<String, String> allDeviceIdWithUri() {
+		List<Device> allList = all();
+		Map<String, String> resultMap = new HashMap<String, String>();
+		for (Device element : allList) {
+			String elementUri = element.getUri();
+			String elementId = element.getId();
+			if (elementId != null && elementUri != null && elementId != ""
+					&& elementUri != "")
+				resultMap.put(elementId, elementUri);
+		}
+		return resultMap;
 	}
 }

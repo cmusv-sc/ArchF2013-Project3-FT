@@ -31,10 +31,10 @@
                 <td>@sensorType.getInterpreter()</td>
                 
                 <td>
-               		 @form(routes.SensorTypeController.deleteSensorType()){
+               		 	@form(routes.SensorTypeController.deleteSensorType()){
                		 		<input name="idHolder" type="hidden" value="@sensorType.getId()">
-        							<input type="submit"  class="btn btn-danger" value="Delete">
-               			}
+        							<input type="submit"  class="btn btn-danger" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')">
+            				}
                			
             		</td>
             

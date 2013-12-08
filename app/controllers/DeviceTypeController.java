@@ -26,14 +26,15 @@ public class DeviceTypeController extends Controller {
     }
     
     public static Result newDeviceType() {
-        DeviceType dt = deviceTypeForm.bindFromRequest().get();
+        Form<DeviceType> dt = deviceTypeForm.bindFromRequest();
         
         ObjectNode jsonData = Json.newObject();
         jsonData.put("id", UUID.randomUUID().toString());
-        jsonData.put("device_type_name", dt.getDeviceTypeName());
-        jsonData.put("manufacturer", dt.getManufacturer());
-        jsonData.put("version", dt.getVersion());
+        jsonData.put("device_type_name", dt.field("deviceTypeName").value());
+        jsonData.put("manufacturer", dt.field("manufacturer").value());
+        jsonData.put("version", dt.field("version").value());
 
+        System.out.println(jsonData);
         // create the item by calling the API
         JsonNode response = DeviceType.create(jsonData);
         
@@ -45,7 +46,7 @@ public class DeviceTypeController extends Controller {
                 flash("success", "A new item has been created");
             } else {
                 flash("error",
-                        "Error in creation: " + response.findPath("error").textValue());
+                        "Error in creation: possible wrong format");
             }
         }
 

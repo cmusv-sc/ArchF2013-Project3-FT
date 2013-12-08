@@ -33,9 +33,9 @@
 	
 			<td>
 			 @form(routes.SensorController.deleteSensor()){
-               		 		<input name="idHolder" type="hidden" value="@sensor.getId()">
-        							<input type="submit"  class="btn btn-danger" value="Delete">
-               			}
+          <input name="idHolder" type="hidden" value="@sensor.getId()">
+        	<input type="submit"  class="btn btn-danger" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')">
+       }
                			
 			</td>
 	
@@ -45,27 +45,26 @@
 	<h2>Add a new sensor</h2>
 	
 	@helper.form(action = routes.SensorController.newSensor) {
-        
-        <fieldset>          
-            
-            @inputText(
-                sensorForm("name"), 
-                '_label -> "Sensor name",                 
+        		
+        		@inputText(
+                sensorForm("sensorName"), 
+                '_label -> "Sensor Name",
                 '_error -> sensorForm.globalError                                
             )
-            
-            <select>
-		        <option>Sensor Type 1</option>
-		        <option>Sensor Type 2</option>		        
-		    </select>
-    
-            <select>
-		        <option>Device 1</option>
-		        <option>Device 2</option>		        
-		    </select>            
-           
-        </fieldset>
-        
+        		@select(
+        				sensorForm("sensorType"), 
+                options(metadata.SensorType.allSensorTypeName()),
+        				'_label -> "Sensor Type",
+                '_error -> sensorForm.globalError
+        		)
+        		@select(
+        				sensorForm("uri"), 
+                options(metadata.Device.allDeviceIdWithUri()),
+        				'_label -> "Parent Device",
+                '_error -> sensorForm.globalError
+        		)
+        		
+       
       
         <div class="actions">
             <input type="submit" class="btn btn-primary" value="Create">
