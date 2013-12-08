@@ -9,8 +9,9 @@ import models.metadata.Device;
 
 public class Dashboard {
 	
-	private int status; // 0: inactive, 1: active
-	private Device device;
+	private ArrayList<DashboardItem> items;
+	private int totalCount;
+	private int activeCount;
 	
 	private static final String GET_LATEST_DEVICE_READINGS = util.Constants.API_URL
 			+ util.Constants.GET_LATEST_DEVICE_READINGS + util.Constants.FORMAT;
@@ -22,27 +23,39 @@ public class Dashboard {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Dashboard(int status, Device device) {
-		this.status = status;
-		this.device = device;
+	public Dashboard(ArrayList<DashboardItem> items, int totalCount, int activeCount) {
+		this.items = items;
+		this.totalCount = totalCount;
+		this.activeCount = activeCount;		
 	}
 	
-	public Device getDevice() {
-		return device;
+	public int getActiveCount() {
+		return activeCount;
 	}
-	public int getStatus() {
-		return status;
+	public ArrayList<DashboardItem> getItems() {
+		return items;
 	}
-	public void setDevice(Device device) {
-		this.device = device;
+	public int getTotalCount() {
+		return totalCount;
 	}
-	public void setStatus(int status) {
-		this.status = status;
+	public void setActiveCount(int activeCount) {
+		this.activeCount = activeCount;
 	}
-
-	public static List<Dashboard> status() {
+	public void setItems(ArrayList<DashboardItem> items) {
+		this.items = items;
+	}
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+	
+	public static Dashboard status() {
 		
-		List<Dashboard> dashboardItems = new ArrayList<Dashboard>();
+		Dashboard dashboard = new Dashboard();
+		
+		ArrayList<DashboardItem> dashboardItems = new ArrayList<DashboardItem>();
+		int totalCount = DEVICE_IDS.length;
+		int activeCount = 0;
+		
 
 		// API call for "active" devices
 		JsonNode devicesNode = APICall.callAPI(GET_LATEST_DEVICE_READINGS);
@@ -67,20 +80,30 @@ public class Dashboard {
 			String deviceId = DEVICE_IDS[i].split("#")[0];
 			String location = DEVICE_IDS[i].split("#")[1];
 			
-			Dashboard dashboardItem = new Dashboard();			
+			DashboardItem dashboardItem = new DashboardItem();			
 			Device dashboardItemDevice = new Device();
 			dashboardItemDevice.setId(deviceId);
 			dashboardItemDevice.setRegTimestamp(location); // put location information instead of timestamp
 			dashboardItem.setDevice(dashboardItemDevice);
 			
 			// Set status
-			dashboardItem.setStatus(activeDeviceIds.contains(deviceId) ? 1 : 0);
+			if (activeDeviceIds.contains(deviceId)) {
+				dashboardItem.setStatus(1);
+				activeCount++;
+			}
+			else {
+				dashboardItem.setStatus(0);
+			}
 			
 			dashboardItems.add(dashboardItem);
 			
-		}		
+		}
 		
-		return dashboardItems;
+		dashboard.setItems(dashboardItems);
+		dashboard.setTotalCount(totalCount);
+		dashboard.setActiveCount(activeCount);
+		
+		return dashboard;
 				
 	}
 
