@@ -9,7 +9,7 @@ public class DashboardController extends Controller {
 	
 	final static Form<Dashboard> dashboardForm = Form.form(Dashboard.class);	
 	
-    public static Result dashboardItems() {
+    public static Result dashboard() {
     	return ok(dashboard.render(Dashboard.status(),dashboardForm));
     }
 

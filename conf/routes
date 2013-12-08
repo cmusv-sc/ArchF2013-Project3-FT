@@ -44,7 +44,7 @@ POST    /sensorCategories                controllers.SensorCategoryController.ne
 #POST    /sensorCategories/:id/delete     controllers.SensorCategoryController.deleteSensorCategory(id: String)
 
 # dashboard
-GET		/dashboard				controllers.DashboardController.dashboardItems()
+GET		/dashboard				controllers.DashboardController.dashboard()
 
 
 
