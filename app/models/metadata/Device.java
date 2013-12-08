@@ -121,7 +121,6 @@ public class Device {
 	 * @return List<Device> List of all devices
 	 */
 	public static List<Device> all() {
-		System.out.println("Started here!");
 		List<Device> allDevices = new ArrayList<Device>();
 
 		// API Call: http://einstein.sv.cmu.edu/get_devices/json
@@ -136,10 +135,12 @@ public class Device {
 			JsonNode json = devicesNode.path(i);
 			Device newDevice = new Device();
 
+			newDevice.setId(json.findPath("device_id").asText());
+			
 			DeviceType deviceType = new DeviceType();
 			deviceType.setDeviceTypeName(json.findPath("device_type").asText());
-
 			newDevice.setDeviceType(deviceType);
+			
 			newDevice.setUri(json.findPath("uri").asText());
 			newDevice.setRegTimestamp(json.findPath("user_defined_fields").asText());
 			

@@ -36,6 +36,8 @@ public class DeviceTypeController extends Controller {
 
         // create the item by calling the API
         JsonNode response = DeviceType.create(jsonData);
+        
+        // now response
         if (response == null) {
             flash("error", "Error in creation: No reponse from server");
         } else {

@@ -44,11 +44,22 @@
     <h2>Add a new device</h2>
     
     @form(routes.DeviceController.newDevice()) {
-        
-        @inputText(deviceForm("label")) 
-        
-        <input type="submit" value="Create">
-        
+        		
+        		@inputText(
+                deviceForm("uri"), 
+                '_label -> "URI",
+                '_error -> deviceForm.globalError                                
+            )
+        		@select(
+        				deviceForm("deviceTypeName"), 
+                options(metadata.DeviceType.allDeviceTypeName()),
+        				'_label -> "Device Type Name",
+                '_error -> deviceForm.globalError
+        		)
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Register">
+            <a href="@routes.DeviceController.devices()" class="btn">Cancel</a>
+        </div>
     }
     
 }

@@ -25,12 +25,12 @@ public class DeviceController extends Controller {
 		
 		ObjectNode jsonData = Json.newObject();
 		jsonData.put("id", UUID.randomUUID().toString());
-		jsonData.put("uri", dc.field("device URI").value());
-		jsonData.put("deviceType", dc.field("deviceType").value());
+		jsonData.put("uri", dc.field("uri").value());
+		jsonData.put("device_type", dc.field("deviceTypeName").value());
 		jsonData.put("user_defined_fields", new java.sql.Timestamp(new java.util.Date().getTime()).toString());
 		
 		// create the item by calling the API
-		JsonNode response = SensorType.create(jsonData);
+		JsonNode response = Device.create(jsonData);
 		if (response == null) {
 			flash("error", "Error in creation: No reponse from server");
 		} else {

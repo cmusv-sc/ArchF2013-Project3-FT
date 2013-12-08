@@ -35,7 +35,6 @@
 
     @form(action = routes.DeviceTypeController.newDeviceType()) {
         
-        <fieldset>
             @inputText(
                 deviceTypeForm("deviceTypeName"), 
                 '_label -> "Name",                 
@@ -51,7 +50,6 @@
                 '_label -> "Version",
                 '_error -> deviceTypeForm.globalError                                
             )
-        </fieldset>
       
         <div class="actions">
             <input type="submit" class="btn primary" value="Register">
