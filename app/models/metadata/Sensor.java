@@ -29,6 +29,8 @@ public class Sensor {
 	// http://einstein.sv.cmu.edu/get_sensors/json
 	private static final String GET_SENSORS_CALL = util.Constants.API_URL
 			+ util.Constants.GET_SENSORS + util.Constants.FORMAT;
+	private static final String DELETE_SENSOR_CALL = util.Constants.API_URL
+			+ util.Constants.DELETE_SENSOR;
 
 	public String getId() {
 		return id;
@@ -92,11 +94,16 @@ public class Sensor {
 			 String device_id = json.findPath("device_id").asText();
 			 newSensor.setDevice(Device.find(device_id));
 			 
+			 
 			 allSensors.add(newSensor);
 		 }
 		 
 		return allSensors;
 
+	}
+	public static JsonNode delete(String id) {
+		JsonNode responseResult = APICall.callAPI(DELETE_SENSOR_CALL+id);
+		return responseResult;
 	}
 
 }

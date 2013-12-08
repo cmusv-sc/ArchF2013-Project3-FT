@@ -1,4 +1,4 @@
-@(bugReports: List[BugReport], bugReportForm: play.data.Form[BugReport])
+@(bugReports: Collection[BugReport], bugReportForm: play.data.Form[BugReport])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -13,6 +13,11 @@
             @inputText(
                 bugReportForm("name"), 
                 '_label -> "Your name",                 
+                '_error -> bugReportForm.globalError                                
+            )
+            @inputText(
+                bugReportForm("title"), 
+                '_label -> "Bug Title",                 
                 '_error -> bugReportForm.globalError                                
             )
             @inputText(
