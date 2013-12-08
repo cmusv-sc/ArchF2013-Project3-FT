@@ -18,6 +18,7 @@ public class SensorType {
 	private double minValue;
 	private String unit;
 	private String interpreter;
+	private SensorCategory sensorCategory;
 
 	// http://einstein.sv.cmu.edu/get_devices/json
 	private static final String GET_SENSOR_TYPES_CALL = util.Constants.API_URL
@@ -35,7 +36,7 @@ public class SensorType {
 
 	public SensorType(String id, String sensorTypeName, String manufacturer,
 			double version, double maxValue, double minValue, String unit,
-			String interpreter) {
+			String interpreter, SensorCategory sensorCategory) {
 		super();
 		this.id = id;
 		this.sensorTypeName = sensorTypeName;
@@ -45,6 +46,7 @@ public class SensorType {
 		this.minValue = minValue;
 		this.unit = unit;
 		this.interpreter = interpreter;
+		this.sensorCategory = sensorCategory;
 	}
 
 	public String getId() {
@@ -109,6 +111,14 @@ public class SensorType {
 
 	public void setInterpreter(String interpreter) {
 		this.interpreter = interpreter;
+	}
+	
+	public SensorCategory getSensorCategory() {
+		return sensorCategory;
+	}
+	
+	public void setSensorCategory(SensorCategory sensorCategory) {
+		this.sensorCategory = sensorCategory;
 	}
 
 	public static List<SensorType> all() {

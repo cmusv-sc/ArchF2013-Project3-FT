@@ -38,5 +38,13 @@ GET		/sensors				controllers.SensorController.sensors()
 POST    /sensors                controllers.SensorController.newSensor()
 GET    /sensors/delete/:id     controllers.SensorController.deleteSensor(id: String)
 
+# sensor_categories
+GET		/sensorCategories				controllers.SensorCategoryController.sensorCategories()
+POST    /sensorCategories                controllers.SensorCategoryController.newSensorCategory()
+#POST    /sensorCategories/:id/delete     controllers.SensorCategoryController.deleteSensorCategory(id: String)
+
+# dashboard
+GET		/dashboard				controllers.DashboardController.dashboardItems()
+
 
 
