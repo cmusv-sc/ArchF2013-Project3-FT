@@ -1,14 +1,8 @@
 package controllers;
 
-
-import models.metadata.SensorType;
-
-import play.*;
 import play.mvc.*;
 import play.data.*;
 import static play.data.Form.*;
-
-import models.*;
 import views.html.*;
 
 public class Application extends Controller {
@@ -57,5 +51,4 @@ public class Application extends Controller {
         return redirect( routes.Application.login() );
     }
     
-
 }

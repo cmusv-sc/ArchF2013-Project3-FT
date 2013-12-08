@@ -27,7 +27,7 @@ public class SensorType {
 			+ util.Constants.DELETE_SENSOR_TYPE;
 	private static final String ADD_SENSOR_TYPE_CALL = util.Constants.API_URL
 			+ util.Constants.ADD_SENSOR_TYPE;
-	private static List<SensorType> sensorTypeList =null;
+	private static List<SensorType> sensorTypeFoundList = new ArrayList<SensorType>();
 
 	public SensorType() {
 		// TODO Auto-generated constructor stub
@@ -139,8 +139,8 @@ public class SensorType {
 			 
 			 newSensorType.setId(json.findPath("sensor_type_id").asText());
 			 newSensorType.setSensorTypeName(json.findPath("sensor_type_name").asText());
-			 newSensorType.setManufacturer(json.findPath("sensor_type_name").asText());
-			 newSensorType.setVersion(json.findPath("sensor_type_name").asDouble());
+			 newSensorType.setManufacturer(json.findPath("manufacturer").asText());
+			 newSensorType.setVersion(json.findPath("version").asDouble());
 			 newSensorType.setMaxValue(json.findPath("max_value").asDouble());
 			 newSensorType.setMinValue(json.findPath("min_value").asDouble());
 			 newSensorType.setUnit(json.findPath("unit").asText());
@@ -154,24 +154,39 @@ public class SensorType {
 
 	}
 
+	/**
+	 * Method to call the API to add a new sensor type
+	 * @param jsonData
+	 * @return the response json from the API server
+	 */
 	public static JsonNode create(JsonNode jsonData) {
-		String tmpTest = "http://einstein.sv.cmu.edu/add_sensor_type";
 		return APICall.postAPI(ADD_SENSOR_TYPE_CALL, jsonData);
 	}
 
+	/**
+	 * Method to call the API to delete a sensor type with its id
+	 * @param id
+	 * @return the response json from the API server
+	 */
 	public static JsonNode delete(String id) {
 		return APICall.callAPI(DELETE_SENSOR_TYPE_CALL+id);
 	}
 
+	/**
+	 * Find a sensor type by its id
+	 * @param id
+	 * @return The sensor type found
+	 */
 	public static SensorType find(String id){
-		// TODO
-		if(sensorTypeList==null)
-			sensorTypeList = SensorType.all();
-		for (SensorType s:sensorTypeList){
+		// if find() is called the first time
+		if(sensorTypeFoundList.size()==0)
+			sensorTypeFoundList = SensorType.all();
+		for (SensorType s:sensorTypeFoundList){
 			if (s.getId().equals(id)){
 				return s;
 			}
 		}
+		// if not found, return null
 		return null;
 	}
 

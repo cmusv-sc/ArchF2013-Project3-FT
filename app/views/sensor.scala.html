@@ -32,14 +32,11 @@
 			</td>
 	
 			<td>
-			 @if(!sensor.getId()) {
-                	<a href='@routes.SensorController.deleteSensor("error")' 
-   									class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
-                	
-       }else{
-                	<a href="@routes.SensorController.deleteSensor(sensor.getId())" 
-   									class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
-       }
+			 @form(routes.SensorController.deleteSensor()){
+               		 		<input name="idHolder" type="hidden" value="@sensor.getId()">
+        							<input type="submit"  class="btn btn-danger" value="Delete">
+               			}
+               			
 			</td>
 	
 		</tr>
