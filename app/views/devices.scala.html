@@ -12,6 +12,8 @@
 	    	<td>URI</td>
 	    	<td>Device Type</td>
 	    	<td>Registration Time</td>    	
+	    	<td>Location</td>
+	    	<td>Operation</td>
 	    </tr>
 
     	@for(device <- devices) {
@@ -23,6 +25,18 @@
 							}
 						</td>
 						<td>@device.getRegTimestamp()</td>
+						<td>
+						Longitude: @device.getLongitude()<br>
+						Latitude: @device.getLatitude()<br>
+						Altitude: @device.getAltitude()
+						</td>
+						<td>
+						@form(routes.DeviceController.deleteDevice()){
+               		 		<input name="idHolder" type="hidden" value="@device.getId()">
+        							<input type="submit"  class="btn btn-danger" value="Delete">
+               			}
+						
+						</td>
     	</tr>
         }
     </table>

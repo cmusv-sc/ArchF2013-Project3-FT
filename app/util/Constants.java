@@ -38,9 +38,12 @@ public class Constants {
 	
 	// create a sensor type
 	public static final String ADD_SENSOR_TYPE = "add_sensor_type";
-
-	//create a device type
+	// create a device type
 	public static final String ADD_DEVICE_TYPE = "add_device_type";
+	// create a device
+	public static final String ADD_DEVICE = "add_device";
+	// create a sensor
+	public static final String ADD_SENSOR = "add_sensor";
 	
 	// get latest device readings
 	public static final String GET_LATEST_DEVICE_READINGS = "lastest_readings_from_all_devices/temp/";
