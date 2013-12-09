@@ -12,7 +12,10 @@
 			<td>Sensor Name</td>
 			<td>Sensor Type</td>
 			<td>Device URI</td>
+			
+    	@if(session.get("email")){
 			<td>Operation</td>
+			}
 		</tr>
 	
 		@for(sensor <- sensors) {
@@ -31,6 +34,7 @@
 				}
 			</td>
 	
+    	@if(session.get("email")){
 			<td>
 			 @form(routes.SensorController.deleteSensor()){
           <input name="idHolder" type="hidden" value="@sensor.getId()">
@@ -38,10 +42,13 @@
        }
                			
 			</td>
-	
+			}
 		</tr>
 		}
 	</table>
+	
+	
+    @if(session.get("email")){
 	<h2>Add a new sensor</h2>
 	
 	@helper.form(action = routes.SensorController.newSensor) {
@@ -71,5 +78,6 @@
             <a href="@routes.Application.index" class="btn">Cancel</a>
         </div>
          
+     }
      }
 }

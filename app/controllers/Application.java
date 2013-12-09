@@ -40,7 +40,7 @@ public class Application extends Controller {
             return badRequest(login.render(loginForm));
         else {
             session("email", loginForm.get().email);
-            return redirect( routes.DeviceTypeController.deviceTypes() );
+            return redirect( routes.Application.index() );
         }
     }
 
@@ -48,7 +48,7 @@ public class Application extends Controller {
     public static Result logout() {
         session().clear();
         flash("success", "You've been logged out");
-        return redirect( routes.Application.login() );
+        return redirect( routes.Application.index() );
     }
     
 }

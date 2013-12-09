@@ -31,16 +31,21 @@
 						<ul class="dropdown-menu">
 							<li><a href="@routes.DeviceController.devices()">Devices</a></li>
 							<li><a href="@routes.DeviceTypeController.deviceTypes()">Device Types</a></li>
-							<li><a href="#">Device Locations</a></li>
 							
 						</ul></li>
 
 					<li><a href="@routes.DashboardController.dashboard()">Dashboard</a></li>
 
-					<form class="navbar-form navbar-right">
-						<button type="submit" class="btn btn-success">Sign in</button>
-					</form>
-
+					@if(!session.get("email")){
+						<form class="navbar-form navbar-right" action="@routes.Application.login()">
+							<button type="submit" class="btn btn-success">Sign in</button>
+						</form>
+					}else{
+						<form class="navbar-form navbar-right" action="@routes.Application.logout()">
+							<button type="submit" class="btn btn-success">Log out</button>
+						</form>
+					}
+					
 				</ul>
 			</div>
 			<!--/.nav-collapse -->

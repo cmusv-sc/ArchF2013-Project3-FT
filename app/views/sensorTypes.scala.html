@@ -17,7 +17,10 @@
     	<td>Min Value</td>
     	<td>Unit</td>
     	<td>Interpreter</td>
+    	
+    	@if(session.get("email")){
     	<td>Operation</td>
+    	}
     </tr>
 
         @for(sensorType <- sensorTypes) {
@@ -30,6 +33,7 @@
                 <td>@sensorType.getUnit()</td>
                 <td>@sensorType.getInterpreter()</td>
                 
+    						@if(session.get("email")){
                 <td>
                		 	@form(routes.SensorTypeController.deleteSensorType()){
                		 		<input name="idHolder" type="hidden" value="@sensorType.getId()">
@@ -37,10 +41,13 @@
             				}
                			
             		</td>
-            
+            		}
     </tr>
         }
     </table>
+    
+    
+    @if(session.get("email")){
     <h2>Add a new sensor type</h2>
     
     @form(routes.SensorTypeController.newSensorType()) {
@@ -94,5 +101,5 @@
         <a href="@routes.SensorTypeController.sensorTypes()" class="btn">Cancel</a>
         
     }
-    
+ 		}   
 }

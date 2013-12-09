@@ -13,7 +13,9 @@
 	    	<td>Device Type</td>
 	    	<td>Registration Time</td>    	
 	    	<td>Location</td>
+	    	@if(session.get("email")){
 	    	<td>Operation</td>
+	    	}
 	    </tr>
 
     	@for(device <- devices) {
@@ -30,6 +32,7 @@
 						Latitude: @device.getLatitude()<br>
 						Altitude: @device.getAltitude()
 						</td>
+						@if(session.get("email")){
 						<td>
 						@form(routes.DeviceController.deleteDevice()){
                		 		<input name="idHolder" type="hidden" value="@device.getId()">
@@ -37,10 +40,12 @@
             }
 						
 						</td>
+						}
     	</tr>
         }
     </table>
     
+    @if(session.get("email")){
     <h2>Add a new device</h2>
     
     @form(routes.DeviceController.newDevice()) {
@@ -61,5 +66,5 @@
             <a href="@routes.DeviceController.devices()" class="btn">Cancel</a>
         </div>
     }
-    
+    }
 }

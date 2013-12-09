@@ -12,7 +12,10 @@
 	    	<td>Device Type Name</td>   
 	    	<td>Manufacturer</td>
 	    	<td>Version</td>
-	    	<td>Operation</td>
+	    						
+	    	@if(!session.get("email")){
+	    		<td>Operation</td>
+	    	}
 	    </tr>
 
     	@for(deviceType <- deviceTypes) {
@@ -20,17 +23,20 @@
             <td>@deviceType.getDeviceTypeName()</td>
             <td>@deviceType.getManufacturer()</td>
             <td>@deviceType.getVersion()</td>
-            <td>
-             		@form(routes.DeviceTypeController.deleteDeviceType()){
+            @if(session.get("email")){
+            		<td>
+             			@form(routes.DeviceTypeController.deleteDeviceType()){
                		 		<input name="idHolder" type="hidden" value="@deviceType.getId()">
         							<input type="submit"  class="btn btn-danger" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')">
-            		}
+            			}
                			
             		</td>
+            }
     	</tr>
         }
     </table>
     
+    @if(session.get("email")){
     <h2>Add a new device type</h2>
 
     @form(action = routes.DeviceTypeController.newDeviceType()) {
@@ -57,5 +63,5 @@
         </div>
         
     }
-
+		}
 }
