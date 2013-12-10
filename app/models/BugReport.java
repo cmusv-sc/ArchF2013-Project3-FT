@@ -48,21 +48,24 @@ public class BugReport {
    // @ManyToOne
     //public User owner;
     @play.db.jpa.Transactional
-    public static Collection getAll() {
+    public static List getAll() {
         Connection connection = DB.getConnection();
         //This should clearly not be here, but for the moment i'll leave it
         //we need to learn how H2 works, it's an in-memory db so i think there's two instances running
         try{
-            Query query = JPA.em().createNativeQuery("CREATE TABLE BUG_REPORT ( title VARCHAR(255) )");
+            Query query = JPA.em().createNativeQuery("CREATE TABLE BUG_REPORT ( title VARCHAR(255), organization_name VARCHAR(255), email VARCHAR(255), description VARCHAR(255) )");
             query.executeUpdate();
+            System.out.println("created bug report table");
         }
         catch(Exception e){
             System.out.println("Didn't create table");
         }
 
+
+        //org.hibernate.dialect.Dialect does not have boolean type registered
         Query query2 = JPA.em().createNativeQuery("SELECT * FROM BUG_REPORT");
-        Collection collection = query2.getResultList();
-        return collection;
+        List<Object[]> list = query2.getResultList();
+        return list;
     }
 
     @play.db.jpa.Transactional
@@ -72,8 +75,10 @@ public class BugReport {
         //Query query = JPA.em().createNativeQuery("INSERT INTO BUG_REPORT VALUES (" + this.title + ")" );
         //query.executeUpdate();
         try{
+            //organization_name VARCHAR(255), email VARCHAR(255), description VARCHAR(255), CREATED_AT TIMESTAMP
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO BUG_REPORT (title) VALUES ('" + this.title + "')");
+            String queryText = "INSERT INTO BUG_REPORT (title, organization_name, email, description) VALUES ('" + this.title + "', 'CMU', 'test@test.com', '"+this.description+"')";
+            statement.executeUpdate(queryText);
         }
         catch(Exception e){
             System.out.println(e.toString());
@@ -91,6 +96,14 @@ public class BugReport {
 
     public void setTitle(String title){
         this.title = title;
+    }
+
+    public String getDescription(){
+        return this.description;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
     }
 
 }

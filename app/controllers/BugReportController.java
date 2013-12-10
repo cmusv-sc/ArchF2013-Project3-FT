@@ -20,6 +20,7 @@ import models.BugReport;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
+import java.util.*;
 
 public class BugReportController extends Controller {
 	final static Form<BugReport> bugReportForm = Form.form(BugReport.class);
@@ -36,7 +37,9 @@ public class BugReportController extends Controller {
         
     	// Validations
     	BugReport report = new BugReport();
+        //"INSERT INTO BUG_REPORT (title) VALUES ('" + this.title + "', 'CMU', '"+this.description+"')"
         report.setTitle(filledForm.get().title);
+        report.setDescription(filledForm.get().description);
         report.save();
 
         return ok(bugReporting.render(BugReport.getAll(), bugReportForm));
@@ -45,7 +48,21 @@ public class BugReportController extends Controller {
     @play.db.jpa.Transactional
     public static Result list() {
         BugReport bugReport = new BugReport();
-        return ok(bugs.render(BugReport.getAll()));
+        List<Object[]> list = BugReport.getAll();
+        LinkedList<BugReport> bugList = new LinkedList();
+        //title VARCHAR(255), organization_name VARCHAR(255), email VARCHAR(255), description
+        for(Object[] e : list) { 
+            System.out.println(e[0] +""+ e[1] + "e" + e.length); 
+            BugReport bug = new BugReport();
+            bug.setTitle(e[0].toString());
+            bug.setDescription(e[3].toString());
+            bugList.add(bug);
+        } 
+
+           // for()
+        //}
+
+        return ok(bugs.render(bugList));
     }
 
     /*
