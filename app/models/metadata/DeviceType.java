@@ -21,6 +21,8 @@ import java.util.*;
 import util.APICall;
 
 
+
+
 //import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.*;
 
@@ -30,9 +32,12 @@ public class DeviceType {
 	private String deviceTypeName;
 	private String manufacturer;
 	private double version;
+	private String sensorTypeNames;
+	private String deviceTypeUserDefinedFields;
+
 
 	// http://einstein.sv.cmu.edu/get_devices/json
-	private static final String GET_DEVICE_TYPES_CALL =  util.Constants.API_URL + util.Constants.GET_DEVICE_TYPES + util.Constants.FORMAT;
+	private static final String GET_DEVICE_TYPES_CALL =  util.Constants.NEW_API_URL + util.Constants.NEW_GET_DEVICE_TYPES + util.Constants.FORMAT;
 	private static final String ADD_DEVICE_TYPE_CALL = util.Constants.API_URL + util.Constants.ADD_DEVICE_TYPE;
 	private static final String DELETE_SENSOR_TYPE_CALL = util.Constants.API_URL + util.Constants.DELETE_DEVICE_TYPE;
 
@@ -41,21 +46,42 @@ public class DeviceType {
 	public DeviceType() {
 	}
 	
+
 	public DeviceType(String id, String deviceTypeName, String manufacturer,
-			double version) {
+			double version, String sensorTypeNames, String deviceTypeUserDefinedFields) {
 		super();
 		this.id = id;
 		this.deviceTypeName = deviceTypeName;
 		this.manufacturer = manufacturer;
 		this.version = version;
+		this.sensorTypeNames = sensorTypeNames;
+		this.deviceTypeUserDefinedFields = deviceTypeUserDefinedFields;
 	}
 
-	
-	
 	// Getters
+	public String getId() {
+		return id;
+	}
+	
 	public String getDeviceTypeName() {
 		return deviceTypeName;
 	}	
+	
+	public String getManufacturer() {
+		return manufacturer;
+	}
+	
+	public double getVersion() {
+		return version;
+	}
+	
+	public String getSensorTypeNames() {
+		return sensorTypeNames;
+	}
+	
+	public String getDeviceTypeUserDefinedFields() {
+		return deviceTypeUserDefinedFields;
+	}
 	
 	// Setters
 	public void setId(String id) {
@@ -66,24 +92,20 @@ public class DeviceType {
 		this.deviceTypeName = deviceTypeName;
 	}
 
-	public String getManufacturer() {
-		return manufacturer;
-	}
-
 	public void setManufacturer(String manufacturer) {
 		this.manufacturer = manufacturer;
-	}
-
-	public double getVersion() {
-		return version;
 	}
 
 	public void setVersion(double version) {
 		this.version = version;
 	}
-
-	public String getId() {
-		return id;
+	
+	public void setSensorTypeNames(String sensorTypeNames) {
+		this.sensorTypeNames = sensorTypeNames;
+	}
+	
+	public void setDeviceTypeUserDefinedFields(String deviceTypeUserDefinedFields) {
+		this.deviceTypeUserDefinedFields = deviceTypeUserDefinedFields;
 	}
 	
 	/**
@@ -122,10 +144,14 @@ public class DeviceType {
 		for (int i=0;i<deviceTypesNode.size();i++) {
 			 JsonNode json = deviceTypesNode.path(i);
 			 DeviceType newDeviceType = new DeviceType();
-			 newDeviceType.setId(json.findPath("device_type_key").asText());
-			 newDeviceType.setDeviceTypeName(json.findPath("device_type_name").asText());
+			 
+			 newDeviceType.setId(UUID.randomUUID().toString());
+			 newDeviceType.setDeviceTypeName(json.findPath("deviceTypeName").asText());
 			 newDeviceType.setManufacturer(json.findPath("manufacturer").asText());
 			 newDeviceType.setVersion(json.findPath("version").asDouble());
+			 newDeviceType.setDeviceTypeUserDefinedFields(json.findPath("deviceTypeUserDefinedFields").asText());
+			 newDeviceType.setSensorTypeNames(json.findPath("sensorTypeNames").asText());
+
 			 allDeviceTypes.add(newDeviceType);
 		}
 					

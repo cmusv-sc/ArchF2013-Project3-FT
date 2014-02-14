@@ -117,6 +117,8 @@ public class Constants {
 	public static final String NEW_GET_SENSORS = "getAllSensors/";
 	
 	// device type
+	public static final String NEW_GET_DEVICE_TYPES = "getAllDeviceTypes/";
+
 	
 	// device
 	
