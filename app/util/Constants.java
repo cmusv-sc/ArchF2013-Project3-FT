@@ -101,4 +101,26 @@ public class Constants {
 		"17030003#Room 104",
 		"17030004#Room 123"};
 
+	/*
+	 * Starting here is the migration from calling API1.1 to API1.3
+	 * 
+	 * */
+
+	// NEW API URL
+	public static final String NEW_API_URL = "http://einstein.sv.cmu.edu:9000/";
+	
+	// sensor type
+	public static final String NEW_GET_SENSOR_TYPES = "getAllSensorTypes/";
+
+	// sensor 
+	
+	public static final String NEW_GET_SENSORS = "getAllSensors/";
+	
+	// device type
+	public static final String NEW_GET_DEVICE_TYPES = "getAllDeviceTypes/";
+
+	
+	// device
+	
+	// sensor category
 }

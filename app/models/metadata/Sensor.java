@@ -18,6 +18,7 @@ package models.metadata;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -26,25 +27,21 @@ import util.APICall;
 public class Sensor {
 	private String id;
 	private String sensorName;
-	private SensorType sensorType;
-	private Device device;
+	//private SensorType sensorType;
+	//private Device device;
+	private String sensorTypeName;
+	private String deviceUri;
+	
 
 	public Sensor() {
 
 	}
-
-	public Sensor(String id, String sensorName, SensorType sensorType,
-			Device device) {
-		super();
-		this.id = id;
-		this.sensorName = sensorName;
-		this.sensorType = sensorType;
-		this.device = device;
-	}
-
+	
 	// http://einstein.sv.cmu.edu/get_sensors/json
-	private static final String GET_SENSORS_CALL = util.Constants.API_URL
-			+ util.Constants.GET_SENSORS + util.Constants.FORMAT;
+	private static final String GET_SENSORS_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_GET_SENSORS + util.Constants.FORMAT;
+	
+	
 	private static final String DELETE_SENSOR_CALL = util.Constants.API_URL
 			+ util.Constants.DELETE_SENSOR;
 	private static final String ADD_SENSOR_CALL = util.Constants.API_URL
@@ -66,20 +63,27 @@ public class Sensor {
 		this.sensorName = sensorName;
 	}
 
-	public SensorType getSensorType() {
-		return sensorType;
+//	public Device getDevice() {
+//		return device;
+//	}
+//	public void setDevice(Device device) {
+//		this.device = device;
+//	}
+
+	public String getDeviceUri() {
+		return deviceUri;
 	}
 
-	public void setSensorType(SensorType sensorType) {
-		this.sensorType = sensorType;
+	public void setDeviceUri(String deviceUri) {
+		this.deviceUri = deviceUri;
 	}
 
-	public Device getDevice() {
-		return device;
+	public String getSensorTypeName() {
+		return sensorTypeName;
 	}
 
-	public void setDevice(Device device) {
-		this.device = device;
+	public void setSensorTypeName(String sensorTypeName) {
+		this.sensorTypeName = sensorTypeName;
 	}
 
 	// NEED TO CALL DEVICE AND SENSORTYPE API!
@@ -103,14 +107,12 @@ public class Sensor {
 			JsonNode json = sensorsNode.path(i);
 			Sensor newSensor = new Sensor();
 
-			newSensor.setId(json.findPath("sensor_id").asText());
-			newSensor.setSensorName(json.findPath("sensor_name").asText());
+			newSensor.setId(UUID.randomUUID().toString());
+			newSensor.setSensorName(json.findPath("sensorName").asText());
 
-			String sensor_type_id = json.findPath("sensor_type").asText();
-			newSensor.setSensorType(SensorType.find(sensor_type_id));
+			newSensor.setSensorTypeName(json.findPath("sensorTypeName").asText());
 
-			String device_id = json.findPath("device_id").asText();
-			newSensor.setDevice(Device.find(device_id));
+			newSensor.setDeviceUri(json.findPath("deviceUri").asText());
 
 			allSensors.add(newSensor);
 		}
@@ -139,5 +141,6 @@ public class Sensor {
 		JsonNode responseResult = APICall.callAPI(DELETE_SENSOR_CALL + id);
 		return responseResult;
 	}
+
 
 }

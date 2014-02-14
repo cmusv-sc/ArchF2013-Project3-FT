@@ -33,11 +33,19 @@ public class SensorType {
 	private double minValue;
 	private String unit;
 	private String interpreter;
-	private SensorCategory sensorCategory;
+	
+	// newly added attributes
+	private String sensorTypeUserDefinedFields;
+	private String sensorCategoryName;
+	
+	// removed attributes
+	//private SensorCategory sensorCategory;
 
 	// http://einstein.sv.cmu.edu/get_devices/json
-	private static final String GET_SENSOR_TYPES_CALL = util.Constants.API_URL
-			+ util.Constants.GET_SENSOR_TYPES + util.Constants.FORMAT;
+	private static final String GET_SENSOR_TYPES_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_GET_SENSOR_TYPES + util.Constants.FORMAT;
+	
+	// NEED TO BE CHANGED for API v1.3!!
 	private static final String DELETE_SENSOR_TYPE_CALL = util.Constants.API_URL
 			+ util.Constants.DELETE_SENSOR_TYPE;
 	private static final String ADD_SENSOR_TYPE_CALL = util.Constants.API_URL
@@ -47,21 +55,6 @@ public class SensorType {
 	public SensorType() {
 		// TODO Auto-generated constructor stub
 
-	}
-
-	public SensorType(String id, String sensorTypeName, String manufacturer,
-			double version, double maxValue, double minValue, String unit,
-			String interpreter, SensorCategory sensorCategory) {
-		super();
-		this.id = id;
-		this.sensorTypeName = sensorTypeName;
-		this.manufacturer = manufacturer;
-		this.version = version;
-		this.maxValue = maxValue;
-		this.minValue = minValue;
-		this.unit = unit;
-		this.interpreter = interpreter;
-		this.sensorCategory = sensorCategory;
 	}
 
 	public String getId() {
@@ -128,14 +121,31 @@ public class SensorType {
 		this.interpreter = interpreter;
 	}
 	
-	public SensorCategory getSensorCategory() {
-		return sensorCategory;
-	}
-	
-	public void setSensorCategory(SensorCategory sensorCategory) {
-		this.sensorCategory = sensorCategory;
+//	public SensorCategory getSensorCategory() {
+//		return sensorCategory;
+//	}
+//	
+//	public void setSensorCategory(SensorCategory sensorCategory) {
+//		this.sensorCategory = sensorCategory;
+//	}
+
+	public String getSensorTypeUserDefinedFields() {
+		return sensorTypeUserDefinedFields;
 	}
 
+	public void setSensorTypeUserDefinedFields(String sensorTypeUserDefinedFields) {
+		this.sensorTypeUserDefinedFields = sensorTypeUserDefinedFields;
+	}
+
+	public String getSensorCategoryName() {
+		return sensorCategoryName;
+	}
+
+	public void setSensorCategoryName(String sensorCategoryName) {
+		this.sensorCategoryName = sensorCategoryName;
+	}
+
+	
 	public static List<SensorType> all() {
 		List<SensorType> allSensorTypes = new ArrayList<SensorType>();
 
@@ -152,15 +162,18 @@ public class SensorType {
 			 JsonNode json = sensorTypesNode.path(i);
 			 SensorType newSensorType = new SensorType();
 			 
-			 newSensorType.setId(json.findPath("sensor_type_id").asText());
-			 newSensorType.setSensorTypeName(json.findPath("sensor_type_name").asText());
+			 newSensorType.setId(UUID.randomUUID().toString());
+			 newSensorType.setSensorTypeName(json.findPath("sensorTypeName").asText());
 			 newSensorType.setManufacturer(json.findPath("manufacturer").asText());
 			 newSensorType.setVersion(json.findPath("version").asDouble());
-			 newSensorType.setMaxValue(json.findPath("max_value").asDouble());
-			 newSensorType.setMinValue(json.findPath("min_value").asDouble());
+			 newSensorType.setMaxValue(json.findPath("maximumValue").asDouble());
+			 newSensorType.setMinValue(json.findPath("minimumValue").asDouble());
 			 newSensorType.setUnit(json.findPath("unit").asText());
 			 newSensorType.setInterpreter(json.findPath("interpreter").asText());
+			 newSensorType.setSensorTypeUserDefinedFields(json.findPath("sensorTypeUserDefinedFields").asText());
+			 newSensorType.setSensorCategoryName(json.findPath("sensorCategoryName").asText());
 			 
+			 //newSensorType.setSensorCategoryName();
 			 
 			 allSensorTypes.add(newSensorType);
 		 }
