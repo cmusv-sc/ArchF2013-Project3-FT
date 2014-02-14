@@ -28,7 +28,7 @@
     </tr>
 
         @for(sensorType <- sensorTypes) {
-    <tr>
+    <tr id="@sensorType.getId()">
             <td>@sensorType.getSensorTypeName()</td>
                 <td>@sensorType.getManufacturer()</td>
                 <td>@sensorType.getVersion()</td>

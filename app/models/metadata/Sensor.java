@@ -31,6 +31,7 @@ public class Sensor {
 	//private Device device;
 	private String sensorTypeName;
 	private String deviceUri;
+	
 
 	public Sensor() {
 
@@ -60,14 +61,6 @@ public class Sensor {
 
 	public void setSensorName(String sensorName) {
 		this.sensorName = sensorName;
-	}
-
-	public SensorType getSensorType() {
-		return sensorType;
-	}
-
-	public void setSensorType(SensorType sensorType) {
-		this.sensorType = sensorType;
 	}
 
 //	public Device getDevice() {

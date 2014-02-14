@@ -22,18 +22,8 @@
 		@for(sensor <- sensors) {
 		<tr>
 			<td>@sensor.getSensorName()</td>
-			<td>@{ 
-				val sensorType = sensor.getSensorType()
-					if(sensorType!=null) {
-						sensorType.getSensorTypeName()
-					}
-				}
-			</td>
-			<td>@{ 
-				val device = sensor.getDevice()
-				if(device!=null) device.getUri()
-				}
-			</td>
+			<td><a href="@routes.SensorTypeController.sensorTypes()#@sensor.getId()">@sensor.getSensorTypeName()</a></td>
+			<td>@sensor.getDeviceUri</td>
 	
     	@if(session.get("email")){
 			<td>
