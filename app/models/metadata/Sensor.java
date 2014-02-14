@@ -43,8 +43,10 @@ public class Sensor {
 	}
 
 	// http://einstein.sv.cmu.edu/get_sensors/json
-	private static final String GET_SENSORS_CALL = util.Constants.API_URL
-			+ util.Constants.GET_SENSORS + util.Constants.FORMAT;
+	private static final String GET_SENSORS_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_GET_SENSORS + util.Constants.FORMAT;
+	
+	
 	private static final String DELETE_SENSOR_CALL = util.Constants.API_URL
 			+ util.Constants.DELETE_SENSOR;
 	private static final String ADD_SENSOR_CALL = util.Constants.API_URL

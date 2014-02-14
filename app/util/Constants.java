@@ -109,5 +109,16 @@ public class Constants {
 	// NEW API URL
 	public static final String NEW_API_URL = "http://einstein.sv.cmu.edu:9000/";
 	
+	// sensor type
 	public static final String NEW_GET_SENSOR_TYPES = "getAllSensorTypes/";
+
+	// sensor 
+	
+	public static final String NEW_GET_SENSORS = "getAllSensorTypes/";
+	
+	// device type
+	
+	// device
+	
+	// sensor category
 }
