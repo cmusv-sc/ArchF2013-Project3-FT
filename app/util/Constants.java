@@ -114,7 +114,7 @@ public class Constants {
 
 	// sensor 
 	
-	public static final String NEW_GET_SENSORS = "getAllSensorTypes/";
+	public static final String NEW_GET_SENSORS = "getAllSensors/";
 	
 	// device type
 	
