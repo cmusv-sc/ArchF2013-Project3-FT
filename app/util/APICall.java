@@ -41,7 +41,7 @@ public class APICall {
 					}
 				});
 
-		return bodyPromise.get(3000);				
+		return bodyPromise.get(5000);				
 
 	}
 
@@ -60,6 +60,6 @@ public class APICall {
 						}
 					}
 				});
-		return bodyPromise.get(3000);
+		return bodyPromise.get(5000);
 	}
 }

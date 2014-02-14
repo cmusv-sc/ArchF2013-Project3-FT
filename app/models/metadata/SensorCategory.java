@@ -69,14 +69,7 @@ public class SensorCategory {
 		
 		List<SensorCategory> sensorCategories = new ArrayList<SensorCategory>();
 
-		// API Call: http://einstein.sv.cmu.edu/get_devices/json
-		//final JsonNode apiResponse = APICall.callAPI(API_CALL);		
-		
-		// If no value is returned
-		//if (apiResponse == null) {
-		//	return sensorCategories;
-		//}		
-							
+	
 		return sensorCategories;
 
 	}	

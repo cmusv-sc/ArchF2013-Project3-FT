@@ -18,6 +18,9 @@
     	<td>Min Value</td>
     	<td>Unit</td>
     	<td>Interpreter</td>
+    	<td>Sensor Category</td>
+    	<td>User Defined Fields</td>
+    	
     	
     	@if(session.get("email")){
     	<td>Operation</td>
@@ -33,6 +36,8 @@
                 <td>@sensorType.getMinValue()</td>
                 <td>@sensorType.getUnit()</td>
                 <td>@sensorType.getInterpreter()</td>
+                <td>@sensorType.getSensorCategoryName()</td>
+                <td>@sensorType.getSensorTypeUserDefinedFields()</td>
                 
     						@if(session.get("email")){
                 <td>
