@@ -107,8 +107,6 @@ public class DeviceType {
 	public void setDeviceTypeUserDefinedFields(String deviceTypeUserDefinedFields) {
 		this.deviceTypeUserDefinedFields = deviceTypeUserDefinedFields;
 	}
-
-
 	
 	/**
 	 * Method to call the API to add a new device type
@@ -148,10 +146,12 @@ public class DeviceType {
 			 DeviceType newDeviceType = new DeviceType();
 			 
 			 newDeviceType.setId(UUID.randomUUID().toString());
-			 newDeviceType.setId(json.findPath("device_type_key").asText());
-			 newDeviceType.setDeviceTypeName(json.findPath("device_type_name").asText());
+			 newDeviceType.setDeviceTypeName(json.findPath("deviceTypeName").asText());
 			 newDeviceType.setManufacturer(json.findPath("manufacturer").asText());
 			 newDeviceType.setVersion(json.findPath("version").asDouble());
+			 newDeviceType.setDeviceTypeUserDefinedFields(json.findPath("deviceTypeUserDefinedFields").asText());
+			 newDeviceType.setSensorTypeNames(json.findPath("sensorTypeNames").asText());
+
 			 allDeviceTypes.add(newDeviceType);
 		}
 					
