@@ -13,6 +13,7 @@
 			<td>Sensor Name</td>
 			<td>Sensor Type</td>
 			<td>Device URI</td>
+			<td>Sensor Category</td>
 			
     	@if(session.get("email")){
 			<td>Operation</td>
@@ -23,8 +24,9 @@
 		<tr>
 			<td>@sensor.getSensorName()</td>
 			<td><a href="@routes.SensorTypeController.sensorTypes()#@sensor.getId()">@sensor.getSensorTypeName()</a></td>
-			<td>@sensor.getDeviceUri</td>
-	
+			<td>@sensor.getDeviceUri()</td>
+			<td>@sensor.getSensorCategory()</td>
+
     	@if(session.get("email")){
 			<td>
 			 @form(routes.SensorController.deleteSensor()){
