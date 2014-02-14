@@ -99,7 +99,7 @@ public class Dashboard {
 			DashboardItem dashboardItem = new DashboardItem();			
 			Device dashboardItemDevice = new Device();
 			dashboardItemDevice.setId(deviceId);
-			dashboardItemDevice.setRegTimestamp(location); // put location information instead of timestamp
+			//dashboardItemDevice.setRegTimestamp(location); // put location information instead of timestamp
 			dashboardItem.setDevice(dashboardItemDevice);
 			
 			// Set status
