@@ -167,7 +167,7 @@ public class Device {
 
 		// If no value is returned
 		if (devicesNode == null) {
-			return null;
+			return allDevices;
 		}
 
 		for (int i = 0; i < devicesNode.size(); i++) {

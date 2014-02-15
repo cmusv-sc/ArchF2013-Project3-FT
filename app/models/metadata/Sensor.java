@@ -104,7 +104,7 @@ public class Sensor {
 
 		// if no value is returned
 		if (sensorsNode == null) {
-			return null;
+			return allSensors;
 		}
 
 		// if sensor node is not json array
