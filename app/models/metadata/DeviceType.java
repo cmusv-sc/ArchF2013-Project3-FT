@@ -23,6 +23,12 @@ import util.APICall;
 
 
 
+
+
+
+
+
+
 //import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.*;
 
@@ -32,9 +38,10 @@ public class DeviceType {
 	private String deviceTypeName;
 	private String manufacturer;
 	private double version;
-	private String sensorTypeNames;
+	//private String sensorTypeNames;
 	private String deviceTypeUserDefinedFields;
 
+	private List<String> sensorTypeNames = new ArrayList<String>();
 
 	// http://einstein.sv.cmu.edu/get_devices/json
 	private static final String GET_DEVICE_TYPES_CALL =  util.Constants.NEW_API_URL + util.Constants.NEW_GET_DEVICE_TYPES + util.Constants.FORMAT;
@@ -48,7 +55,7 @@ public class DeviceType {
 	
 
 	public DeviceType(String id, String deviceTypeName, String manufacturer,
-			double version, String sensorTypeNames, String deviceTypeUserDefinedFields) {
+			double version, List<String> sensorTypeNames, String deviceTypeUserDefinedFields) {
 		super();
 		this.id = id;
 		this.deviceTypeName = deviceTypeName;
@@ -75,7 +82,7 @@ public class DeviceType {
 		return version;
 	}
 	
-	public String getSensorTypeNames() {
+	public List<String> getSensorTypeNames() {
 		return sensorTypeNames;
 	}
 	
@@ -100,12 +107,24 @@ public class DeviceType {
 		this.version = version;
 	}
 	
-	public void setSensorTypeNames(String sensorTypeNames) {
+	public void setSensorTypeNames(List<String> sensorTypeNames) {
 		this.sensorTypeNames = sensorTypeNames;
 	}
 	
 	public void setDeviceTypeUserDefinedFields(String deviceTypeUserDefinedFields) {
 		this.deviceTypeUserDefinedFields = deviceTypeUserDefinedFields;
+	}
+	
+	public void addSensorTypeName(String sensorTypeName){
+		this.sensorTypeNames.add(sensorTypeName);
+	}
+	
+	public void deleteSensorTypeName(String sensorTypeName){
+		for (int i = 0; i < this.sensorTypeNames.size(); i++){
+			if (sensorTypeName.equals(this.sensorTypeNames.get(i))){
+				this.sensorTypeNames.remove(i);
+			}
+		}
 	}
 	
 	/**
@@ -150,8 +169,13 @@ public class DeviceType {
 			 newDeviceType.setManufacturer(json.findPath("manufacturer").asText());
 			 newDeviceType.setVersion(json.findPath("version").asDouble());
 			 newDeviceType.setDeviceTypeUserDefinedFields(json.findPath("deviceTypeUserDefinedFields").asText());
-			 newDeviceType.setSensorTypeNames(json.findPath("sensorTypeNames").asText());
-
+	//		 newDeviceType.setSensorTypeNames(json.findPath("sensorTypeNames").asText());
+			
+			 JsonNode sensorTypeNamesJson = json.findPath("sensorTypeNames");
+			 for (int j = 0; j < sensorTypeNamesJson.size(); j++){
+				 newDeviceType.addSensorTypeName(sensorTypeNamesJson.get(j).asText());
+			 }
+			 
 			 allDeviceTypes.add(newDeviceType);
 		}
 					
