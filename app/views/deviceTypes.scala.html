@@ -61,6 +61,18 @@
                 '_label -> "Version",
                 '_error -> deviceTypeForm.globalError                                
             )
+            @inputText(
+            	deviceTypeForm("deviceTypeUserDefinedFields"),
+            	'_label -> "User Defined Fields",
+            	'_error -> deviceTypeForm.globalError
+            )
+            @select(
+            	deviceTypeForm("sensorTypeNames"),
+            	options(metadata.SensorType.allSensorTypeName()),
+            	'_label -> "Sensor Type Name",
+            	'_error -> deviceTypeForm.globalError
+            )
+           
       
         <div class="actions">
             <input type="submit" class="btn primary" value="Register">

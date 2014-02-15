@@ -45,11 +45,15 @@ public class DeviceTypeController extends Controller {
         Form<DeviceType> dt = deviceTypeForm.bindFromRequest();
         
         ObjectNode jsonData = Json.newObject();
-        jsonData.put("id", UUID.randomUUID().toString());
-        jsonData.put("device_type_name", dt.field("deviceTypeName").value());
+        //jsonData.put("id", UUID.randomUUID().toString());
+        jsonData.put("deviceTypeName", dt.field("deviceTypeName").value());
         jsonData.put("manufacturer", dt.field("manufacturer").value());
         jsonData.put("version", dt.field("version").value());
+        jsonData.put("deviceTypeUserDefinedFields", dt.field("deviceTypeUserDefinedFields").value());
 
+        ArrayNode arrayNode = jsonData.putArray("sensorTypeNames");
+        arrayNode.add(dt.field("sensorTypeNames").value());
+        
         System.out.println(jsonData);
         // create the item by calling the API
         JsonNode response = DeviceType.create(jsonData);
