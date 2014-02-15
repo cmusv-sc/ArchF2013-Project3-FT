@@ -30,6 +30,8 @@ public class SensorCategory {
 	private String categoryName;
 	private static final String GET_SENSOR_CATEGORY_ALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_GET_SENSOR_CATEGORY + util.Constants.FORMAT;
+	private static final String NEW_ADD_SENSOR_CATEGOTY_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_ADD_SENSOR_CATEGORY;
 
 	public SensorCategory() {
 		// TODO Auto-generated constructor stub
@@ -82,7 +84,7 @@ public class SensorCategory {
 
 		// if no value is returned
 		if (sensorsNode == null) {
-			return null;
+			return sensorCategories;
 		}
 
 		// if sensor node is not json array
@@ -98,7 +100,7 @@ public class SensorCategory {
 			newCategory.setPurpose(json.findPath("purpose").asText());
 			sensorCategories.add(newCategory);
 			
-			System.out.println(newCategory.getName().toString());
+			//System.out.println(newCategory.getName().toString());
 		}
 
 		// API Call: http://einstein.sv.cmu.edu/get_devices/json
@@ -113,5 +115,16 @@ public class SensorCategory {
 		return sensorCategories;
 
 	}
+	
+	/**
+	 * Method to call the API to add a new sensor category
+	 * 
+	 * @param jsonData
+	 * @return the response json from the API server
+	 */
+	public static JsonNode create(JsonNode jsonData) {
+		return APICall.postAPI(NEW_ADD_SENSOR_CATEGOTY_CALL, jsonData);
+	}
+
 
 }
