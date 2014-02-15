@@ -41,21 +41,23 @@ public class APICall {
 					}
 				});
 
-		return bodyPromise.get(5000);				
+		return bodyPromise.get(5000);
 
 	}
 
 	public static JsonNode postAPI(String apiString, JsonNode jsonData) {
 
+		System.out.println(jsonData);
 		Promise<WS.Response> responsePromise = WS.url(apiString).post(jsonData);
 		final Promise<JsonNode> bodyPromise = responsePromise
 				.map(new Function<WS.Response, JsonNode>() {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
-						if (response.getStatus() == 200) {
+						if (response.getStatus() == 201) {
 							return response.asJson();
 						} else { // no response from the server
+							System.out.println("Resp:" + response.getStatus());
 							return null;
 						}
 					}
