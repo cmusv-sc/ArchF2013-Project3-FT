@@ -12,6 +12,6 @@ Play 2.2.x (http://www.playframework.com/download)
 How to run on a local machine
 =============
 1. Install Play Framework. Instruction can be found at http://www.playframework.com/documentation/2.2.x/Installing
-2. Downlaod the source code from https://github.com/robwblack/mercury
+2. Downlaod the source code from https://github.com/cmusv-sc/ArchF2013-Project3-FT
 3. From the parent folder, run the command: 'play run'
 4. Local App will available at localhost:9000

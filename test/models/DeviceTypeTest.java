@@ -1,8 +1,10 @@
 package models;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import models.metadata.DeviceType;
 
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -16,7 +18,7 @@ public class DeviceTypeTest
    private static String TEST_ID = "1";
    private static String TEST_NAME = "testDeviceType";
    private static String TEST_MANUFACTURER = "testSensorType";
-   private static Double TEST_VERSION = 1.00
+   private static Double TEST_VERSION = 1.00;
 
 //public DeviceType(String id, String deviceTypeName, String manufacturer, double version) {
 
