@@ -38,7 +38,6 @@ public class DeviceType {
 	private String deviceTypeName;
 	private String manufacturer;
 	private double version;
-	//private String sensorTypeNames;
 	private String deviceTypeUserDefinedFields;
 
 	private List<String> sensorTypeNames = new ArrayList<String>();
@@ -169,7 +168,6 @@ public class DeviceType {
 			 newDeviceType.setManufacturer(json.findPath("manufacturer").asText());
 			 newDeviceType.setVersion(json.findPath("version").asDouble());
 			 newDeviceType.setDeviceTypeUserDefinedFields(json.findPath("deviceTypeUserDefinedFields").asText());
-	//		 newDeviceType.setSensorTypeNames(json.findPath("sensorTypeNames").asText());
 			
 			 JsonNode sensorTypeNamesJson = json.findPath("sensorTypeNames");
 			 for (int j = 0; j < sensorTypeNamesJson.size(); j++){
