@@ -18,7 +18,11 @@ package models.metadata;
 
 import java.util.*;
 
+import scala.reflect.internal.Trees.This;
 import util.APICall;
+
+
+
 
 //import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.*;
@@ -26,16 +30,20 @@ import com.fasterxml.jackson.databind.*;
 public class Device {
 
 	private String id;
-	private String uri;
-	private DeviceType deviceType;
-	private String regTimestamp;
+	private String deviceUri;
+	//private DeviceType deviceType;
 	private double longitude;
 	private double latitude;
 	private double altitude;
+	
+	// newly added
+	private String deviceTypeName;
+	private List<String> sensorTypeNames = new ArrayList<String>();
+	private List<String> sensorNames = new ArrayList<String>();
 
 	// http://einstein.sv.cmu.edu/get_devices/json
-	private static final String API_CALL = util.Constants.API_URL
-			+ util.Constants.GET_DEVICES + util.Constants.FORMAT;
+	private static final String API_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_GET_DEVICES + util.Constants.FORMAT;
 	private static final String ADD_DEVICE_CALL = util.Constants.API_URL
 			+ util.Constants.ADD_DEVICE;
 	private static final String DELETE_DEVICE_CALL = util.Constants.API_URL
@@ -47,38 +55,21 @@ public class Device {
 	public Device() {
 	}
 
-	// Getters
-	public DeviceType getDeviceType() {
-		return deviceType;
-	}
-
 	public String getId() {
 		return id;
 	}
 
-	public String getUri() {
-		return uri;
+	public String getDeviceUri() {
+		return deviceUri;
 	}
 
-	// Setters
-	public void setDeviceType(DeviceType deviceType) {
-		this.deviceType = deviceType;
-	}
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	public void setUri(String uri) {
-		this.uri = uri;
-	}
-
-	public String getRegTimestamp() {
-		return regTimestamp;
-	}
-
-	public void setRegTimestamp(String regTimestamp) {
-		this.regTimestamp = regTimestamp;
+	public void setDeviceUri(String uri) {
+		this.deviceUri = uri;
 	}
 
 	public double getLongitude() {
@@ -105,6 +96,43 @@ public class Device {
 		this.altitude = altitude;
 	}
 
+	public String getDeviceTypeName() {
+		return deviceTypeName;
+	}
+
+	public void setDeviceTypeName(String deviceTypeName) {
+		this.deviceTypeName = deviceTypeName;
+	}
+
+	public List<String> getSensorTypeNames() {
+		return sensorTypeNames;
+	}
+
+	public void addSensorTypeName(String sensorTypeName) {
+		this.sensorTypeNames.add(sensorTypeName);
+	}
+	public void deleteSensorTypeName(String sensorTypeName) {
+		for (int i = 0; i < this.sensorTypeNames.size(); i++) {
+			if (sensorTypeName.equals(this.sensorTypeNames.get(i))) {
+				this.sensorTypeNames.remove(i);
+			}
+		}
+	}
+
+	public List<String> getSensorNames() {
+		return sensorNames;
+	}
+
+	public void addSensorNames(String sensorName) {
+		this.sensorNames.add(sensorName);
+	}
+	public void deleteSensorName(String sensorName) {
+		for (int i = 0; i < this.sensorNames.size(); i++) {
+			if (sensorName.equals(this.sensorNames.get(i))) {
+				this.sensorNames.remove(i);
+			}
+		}
+	}
 	/**
 	 * Method to call the API to add a new device
 	 * 
@@ -145,22 +173,23 @@ public class Device {
 		for (int i = 0; i < devicesNode.size(); i++) {
 			JsonNode json = devicesNode.path(i);
 			Device newDevice = new Device();
-
-			String device_id = json.findPath("device_id").asText();
-			newDevice.setId(device_id);
+ 
+			newDevice.setId(UUID.randomUUID().toString());
 			
-			DeviceType deviceType = new DeviceType();
-			deviceType.setDeviceTypeName(json.findPath("device_type").asText());
-			newDevice.setDeviceType(deviceType);
+			newDevice.setDeviceUri(json.findPath("uri").asText()); 
+			newDevice.setDeviceTypeName(json.findPath("deviceTypeName").asText());
 			
-			String newUri = json.findPath("uri").asText();
-			// for compatible reasons
-			// some devices used URI, some used device_id
-			newDevice.setUri(newUri.equals("")? device_id:newUri); 
+			JsonNode sensorNamesJson = json.findPath("sensorNames");
+			for (int j = 0; j < sensorNamesJson.size(); j++) {
+				newDevice.addSensorNames(sensorNamesJson.get(j).asText());
+			}
 			
+			JsonNode sensorTypeNamesJson = json.findPath("sensorTypeNames");
+			for (int j = 0; j < sensorTypeNamesJson.size(); j++) {
+				newDevice.addSensorTypeName(sensorTypeNamesJson.get(j).asText());
+			}
 			
-			newDevice.setRegTimestamp(json.findPath("user_defined_fields").asText());
-			
+		
 			allDevices.add(newDevice);
 		}
 		
@@ -194,7 +223,7 @@ public class Device {
 		}
 		// if not found, return device_id as the uri
 		Device d = new Device();
-		d.setUri(id);
+		//d.setUri(id);
 		return d;
 	}
 
@@ -207,7 +236,7 @@ public class Device {
 		List<Device> allList = all();
 		Map<String, String> resultMap = new HashMap<String, String>();
 		for (Device element : allList) {
-			String elementUri = element.getUri();
+			String elementUri = element.getDeviceUri();
 			String elementId = element.getId();
 			if (elementId != null && elementUri != null && elementId != ""
 					&& elementUri != "")

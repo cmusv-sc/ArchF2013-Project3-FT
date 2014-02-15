@@ -31,6 +31,7 @@ public class Sensor {
 	//private Device device;
 	private String sensorTypeName;
 	private String deviceUri;
+	private String sensorCategory;
 	
 
 	public Sensor() {
@@ -86,6 +87,14 @@ public class Sensor {
 		this.sensorTypeName = sensorTypeName;
 	}
 
+	public String getSensorCategory() {
+		return sensorCategory;
+	}
+
+	public void setSensorCategory(String sensorCategory) {
+		this.sensorCategory = sensorCategory;
+	}
+
 	// NEED TO CALL DEVICE AND SENSORTYPE API!
 	public static List<Sensor> all() {
 		List<Sensor> allSensors = new ArrayList<Sensor>();
@@ -109,10 +118,9 @@ public class Sensor {
 
 			newSensor.setId(UUID.randomUUID().toString());
 			newSensor.setSensorName(json.findPath("sensorName").asText());
-
 			newSensor.setSensorTypeName(json.findPath("sensorTypeName").asText());
-
 			newSensor.setDeviceUri(json.findPath("deviceUri").asText());
+			newSensor.setSensorCategory(json.findPath("sensorCategory").asText());
 
 			allSensors.add(newSensor);
 		}

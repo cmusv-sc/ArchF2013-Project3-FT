@@ -12,8 +12,9 @@
 			<tr>
 	    	<td>URI</td>
 	    	<td>Device Type</td>
-	    	<td>Registration Time</td>    	
-	    	<td>Location</td>
+	    	<td>Sensor Type Names within device</td>
+	    	<td>Sensor Names within device</td>
+	    	
 	    	@if(session.get("email")){
 	    	<td>Operation</td>
 	    	}
@@ -21,18 +22,10 @@
 
     	@for(device <- devices) {
     	<tr>
-            <td>@device.getUri()</td>
-            <td>@{ 
-							val deviceType = device.getDeviceType()
-							if(deviceType!=null) deviceType.getDeviceTypeName()
-							}
-						</td>
-						<td>@device.getRegTimestamp()</td>
-						<td>
-						Longitude: @device.getLongitude()<br>
-						Latitude: @device.getLatitude()<br>
-						Altitude: @device.getAltitude()
-						</td>
+            <td>@device.getDeviceUri()</td>
+            <td>@device.getDeviceTypeName()</td>
+       		<td>@device.getSensorTypeNames()</td>
+       		<td>@device.getSensorNames()</td>
 						@if(session.get("email")){
 						<td>
 						@form(routes.DeviceController.deleteDevice()){
