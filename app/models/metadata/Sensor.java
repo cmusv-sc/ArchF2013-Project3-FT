@@ -43,10 +43,10 @@ public class Sensor {
 			+ util.Constants.NEW_GET_SENSORS + util.Constants.FORMAT;
 	
 	
-	private static final String DELETE_SENSOR_CALL = util.Constants.API_URL
-			+ util.Constants.DELETE_SENSOR;
-	private static final String ADD_SENSOR_CALL = util.Constants.API_URL
-			+ util.Constants.ADD_SENSOR;
+	private static final String DELETE_SENSOR_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_DELETE_SENSOR;
+	private static final String ADD_SENSOR_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_ADD_SENSOR;
 
 	public String getId() {
 		return id;
@@ -140,13 +140,13 @@ public class Sensor {
 	}
 
 	/**
-	 * Method to call the API to delete a sensor with its id
+	 * Method to call the API to delete a sensor with its name
 	 * 
-	 * @param id
+	 * @param sensorName
 	 * @return the response json from the API server
 	 */
-	public static JsonNode delete(String id) {
-		JsonNode responseResult = APICall.callAPI(DELETE_SENSOR_CALL + id);
+	public static JsonNode delete(String sensorName) {
+		JsonNode responseResult = APICall.deleteAPI(DELETE_SENSOR_CALL + sensorName);
 		return responseResult;
 	}
 

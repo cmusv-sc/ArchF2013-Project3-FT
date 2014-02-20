@@ -30,7 +30,7 @@
     	@if(session.get("email")){
 			<td>
 			 @form(routes.SensorController.deleteSensor()){
-          <input name="idHolder" type="hidden" value="@sensor.getId()">
+          <input name="idHolder" type="hidden" value="@sensor.getSensorName()">
         	<input type="submit"  class="btn btn-danger" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')">
        }
                			

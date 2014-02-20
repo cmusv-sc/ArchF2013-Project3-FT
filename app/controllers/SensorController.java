@@ -43,11 +43,11 @@ public class SensorController extends Controller {
 		
 		ObjectNode jsonData = Json.newObject();
 		jsonData.put("id", UUID.randomUUID().toString());
-		jsonData.put("print_name", dc.field("sensorName").value());
-		jsonData.put("sensor_type", dc.field("sensorType").value());
+		jsonData.put("sensorName", dc.field("sensorName").value());
+		jsonData.put("sensorType", dc.field("sensorType").value());
 		
 		System.out.println(dc.field("uri").value());
-		jsonData.put("device_id",dc.field("uri").value());
+		jsonData.put("uri",dc.field("uri").value());
 		
 		jsonData.put("user_defined_fields", new java.sql.Timestamp(new java.util.Date().getTime()).toString());
 		
@@ -68,14 +68,14 @@ public class SensorController extends Controller {
 
 	public static Result deleteSensor() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
-		String id = df.field("idHolder").value();
+		String sensorName = df.field("idHolder").value();
 
 		// return a text message
-		if (id.equals("")) {
+		if (sensorName.equals("")) {
 			flash("error", "This item does not have an id, so cannot be deleted.");
 		} else {
 			// Call the delete() method
-			JsonNode response = Sensor.delete(id);
+			JsonNode response = Sensor.delete(sensorName);
 			if (response == null) {
 				flash("error", "Error in deletion: No reponse from server");
 			} else {
