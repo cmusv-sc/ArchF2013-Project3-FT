@@ -44,16 +44,12 @@ public class SensorController extends Controller {
 		Form<Sensor> dc = sensorForm.bindFromRequest();
 
 		ObjectNode jsonData = Json.newObject();
-		jsonData.put("id", UUID.randomUUID().toString());
 		jsonData.put("sensorName", dc.field("sensorName").value());
-		jsonData.put("sensorType", dc.field("sensorType").value());
+		jsonData.put("sensorTypeName", dc.field("sensorTypeName").value());
+		jsonData.put("deviceUri", dc.field("deviceUri").value());
+		jsonData.put("sensorUserDefinedFields", dc.field("sensorUserDefinedFields").value());
 
-		System.out.println(dc.field("uri").value());
-		jsonData.put("uri", dc.field("uri").value());
-
-		jsonData.put("user_defined_fields", new java.sql.Timestamp(
-				new java.util.Date().getTime()).toString());
-
+		System.out.println(jsonData);
 		// create the item by calling the API
 		JsonNode response = Sensor.create(jsonData);
 

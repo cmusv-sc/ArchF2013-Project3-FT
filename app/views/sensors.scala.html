@@ -14,6 +14,7 @@
 			<td>Sensor Type</td>
 			<td>Device URI</td>
 			<td>Sensor Category</td>
+			<td>User Defined Fields</td>
 			
     	@if(session.get("email")){
 			<td>Operation</td>
@@ -25,7 +26,8 @@
 			<td>@sensor.getSensorName()</td>
 			<td><a href="@routes.SensorTypeController.sensorTypes()#@sensor.getId()">@sensor.getSensorTypeName()</a></td>
 			<td>@sensor.getDeviceUri()</td>
-			<td>@sensor.getSensorCategory()</td>
+			<td>@sensor.getSensorCategoryName()</td>
+			<td>@sensor.getSensorUserDefinedFields()</td>
 
     	@if(session.get("email")){
 			<td>
@@ -50,20 +52,24 @@
                 sensorForm("sensorName"), 
                 '_label -> "Sensor Name",
                 '_error -> sensorForm.globalError                                
-            )
+            	)
         		@select(
-        				sensorForm("sensorType"), 
+        				sensorForm("sensorTypeName"), 
                 options(metadata.SensorType.allSensorTypeName()),
         				'_label -> "Sensor Type",
                 '_error -> sensorForm.globalError
         		)
         		@select(
-        				sensorForm("uri"), 
-                options(metadata.Device.allDeviceIdWithUri()),
+        				sensorForm("deviceUri"), 
+                options(metadata.Device.allDeviceUri()),
         				'_label -> "Parent Device",
                 '_error -> sensorForm.globalError
         		)
-        		
+        		@inputText(
+                sensorForm("sensorUserDefinedFields"), 
+                '_label -> "User Defined Fields",
+                '_error -> sensorForm.globalError                                
+            	)
        
       
         <div class="actions">

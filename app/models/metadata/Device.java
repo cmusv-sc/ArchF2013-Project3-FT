@@ -233,16 +233,14 @@ public class Device {
 	 * 
 	 * @return a list of all devices' name
 	 */
-	public static Map<String, String> allDeviceIdWithUri() {
+	public static List<String> allDeviceUri() {
 		List<Device> allList = all();
-		Map<String, String> resultMap = new HashMap<String, String>();
+		List<String> resultList = new ArrayList<String>();
 		for (Device element : allList) {
 			String elementUri = element.getDeviceUri();
-			String elementId = element.getId();
-			if (elementId != null && elementUri != null && elementId != ""
-					&& elementUri != "")
-				resultMap.put(elementId, elementUri);
+			if (elementUri != null && elementUri != "")
+				resultList.add(elementUri);
 		}
-		return resultMap;
+		return resultList;
 	}
 }

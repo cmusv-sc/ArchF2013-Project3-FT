@@ -31,7 +31,8 @@ public class Sensor {
 	// private Device device;
 	private String sensorTypeName;
 	private String deviceUri;
-	private String sensorCategory;
+	private String sensorCategoryName;
+	private String sensorUserDefinedFields;
 
 	public Sensor() {
 
@@ -85,12 +86,20 @@ public class Sensor {
 		this.sensorTypeName = sensorTypeName;
 	}
 
-	public String getSensorCategory() {
-		return sensorCategory;
+	public String getSensorCategoryName() {
+		return sensorCategoryName;
 	}
 
-	public void setSensorCategory(String sensorCategory) {
-		this.sensorCategory = sensorCategory;
+	public void setSensorCategoryName(String sensorCategoryName) {
+		this.sensorCategoryName = sensorCategoryName;
+	}
+
+	public String getSensorUserDefinedFields() {
+		return sensorUserDefinedFields;
+	}
+
+	public void setSensorUserDefinedFields(String sensorUserDefinedFields) {
+		this.sensorUserDefinedFields = sensorUserDefinedFields;
 	}
 
 	// NEED TO CALL DEVICE AND SENSORTYPE API!
@@ -116,8 +125,9 @@ public class Sensor {
 			newSensor.setSensorTypeName(json.findPath("sensorTypeName")
 					.asText());
 			newSensor.setDeviceUri(json.findPath("deviceUri").asText());
-			newSensor.setSensorCategory(json.findPath("sensorCategory")
+			newSensor.setSensorCategoryName(json.findPath("sensorCategoryName")
 					.asText());
+			newSensor.setSensorUserDefinedFields(json.findPath("sensorUserDefinedFields").asText());
 
 			allSensors.add(newSensor);
 		}
