@@ -95,13 +95,12 @@ public class Constants {
 	
 	// device type
 	public static final String NEW_GET_DEVICE_TYPES = "getAllDeviceTypes/";
+	public static final String NEW_ADD_DEVICE_TYPE = "addDeviceType";
 
 	// device
 	public static final String NEW_GET_DEVICES = "getAllDevices/";
 
 	// sensor category
 	public static final String NEW_GET_SENSOR_CATEGORY = "getAllSensorCategories/";
-
-	// Adding sensor category
 	public static final String NEW_ADD_SENSOR_CATEGORY = "addSensorCategory";
 }

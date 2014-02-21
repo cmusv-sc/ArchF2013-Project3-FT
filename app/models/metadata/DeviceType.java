@@ -37,7 +37,7 @@ public class DeviceType {
 	private static final String GET_DEVICE_TYPES_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_GET_DEVICE_TYPES + util.Constants.FORMAT;
 	private static final String ADD_DEVICE_TYPE_CALL = util.Constants.NEW_API_URL
-			+ util.Constants.ADD_DEVICE_TYPE;
+			+ util.Constants.NEW_ADD_DEVICE_TYPE;
 	private static final String DELETE_SENSOR_TYPE_CALL = util.Constants.API_URL
 			+ util.Constants.DELETE_DEVICE_TYPE;
 

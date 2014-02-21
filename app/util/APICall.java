@@ -118,10 +118,10 @@ public class APICall {
 			jsonData.put("error", "Cannot be deleted on server");
 			break;
 		case TIMEOUT:
-			jsonData.put("error", "No response from server");
+			jsonData.put("error", "No response/Timeout from server");
 			break;
 		default:
-			jsonData.put("error", "Timeout from server");
+			jsonData.put("error", "Unknown errors");
 			break;
 		}
 		return jsonData;
