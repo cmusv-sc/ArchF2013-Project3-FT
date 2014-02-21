@@ -51,16 +51,9 @@ public class SensorTypeController extends Controller {
 
 		// create the item by calling the API
 		JsonNode response = SensorType.create(jsonData);
-		if (response == null) {
-			flash("error", "Error in creation: No reponse from server");
-		} else {
-			if (response.has("message")) {
-				flash("success", "A new item has been created");
-			} else {
-				flash("error",
-						"Error in creation: possible wrong format");
-			}
-		}
+
+		// flash the response message
+		Application.flashMsg(response);
 		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
 	}
 
@@ -68,24 +61,11 @@ public class SensorTypeController extends Controller {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		String id = df.field("idHolder").value();
 		
-		// return a text message
-		if (id.equals("")) {
-			flash("error", "This item does not have an id, so cannot be deleted.");
-		} else {
 			// Call the delete() method
 			JsonNode response = SensorType.delete(id);
-			if (response == null) {
-				flash("error", "Error in deletion: No reponse from server");
-			} else {
-				if (response.has("message")) {
-					flash("success", "This item has been deleted");
-				} else {
-					flash("error",
-							"Error in deleting: "
-									+ response.findPath("error").textValue());
-				}
-			}
-		}
+
+			// flash the response message
+			Application.flashMsg(response);
 		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
 	}
 }

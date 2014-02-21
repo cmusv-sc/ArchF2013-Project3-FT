@@ -16,6 +16,11 @@
  * */
 package controllers;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
 import play.mvc.*;
 import play.data.*;
 import static play.data.Form.*;
@@ -67,4 +72,11 @@ public class Application extends Controller {
         return redirect( routes.Application.index() );
     }
     
+    public static void flashMsg(JsonNode jsonNode){
+		Iterator<Entry<String, JsonNode>> it = jsonNode.fields();
+		while (it.hasNext()) {
+			Entry<String, JsonNode> field = it.next();
+			flash(field.getKey(),field.getValue().asText());	
+		}
+    }
 }

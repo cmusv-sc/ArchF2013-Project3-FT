@@ -33,18 +33,18 @@ public class SensorType {
 	private double minValue;
 	private String unit;
 	private String interpreter;
-	
+
 	// newly added attributes
 	private String sensorTypeUserDefinedFields;
 	private String sensorCategoryName;
-	
+
 	// removed attributes
-	//private SensorCategory sensorCategory;
+	// private SensorCategory sensorCategory;
 
 	// http://einstein.sv.cmu.edu/get_devices/json
 	private static final String GET_SENSOR_TYPES_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_GET_SENSOR_TYPES + util.Constants.FORMAT;
-	
+
 	// NEED TO BE CHANGED for API v1.3!!
 	private static final String DELETE_SENSOR_TYPE_CALL = util.Constants.API_URL
 			+ util.Constants.DELETE_SENSOR_TYPE;
@@ -64,7 +64,7 @@ public class SensorType {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getSensorTypeName() {
 		return sensorTypeName;
 	}
@@ -120,20 +120,21 @@ public class SensorType {
 	public void setInterpreter(String interpreter) {
 		this.interpreter = interpreter;
 	}
-	
-//	public SensorCategory getSensorCategory() {
-//		return sensorCategory;
-//	}
-//	
-//	public void setSensorCategory(SensorCategory sensorCategory) {
-//		this.sensorCategory = sensorCategory;
-//	}
+
+	// public SensorCategory getSensorCategory() {
+	// return sensorCategory;
+	// }
+	//
+	// public void setSensorCategory(SensorCategory sensorCategory) {
+	// this.sensorCategory = sensorCategory;
+	// }
 
 	public String getSensorTypeUserDefinedFields() {
 		return sensorTypeUserDefinedFields;
 	}
 
-	public void setSensorTypeUserDefinedFields(String sensorTypeUserDefinedFields) {
+	public void setSensorTypeUserDefinedFields(
+			String sensorTypeUserDefinedFields) {
 		this.sensorTypeUserDefinedFields = sensorTypeUserDefinedFields;
 	}
 
@@ -145,69 +146,76 @@ public class SensorType {
 		this.sensorCategoryName = sensorCategoryName;
 	}
 
-	
 	public static List<SensorType> all() {
 		List<SensorType> allSensorTypes = new ArrayList<SensorType>();
 
 		// Call the API to get the json string
 		JsonNode sensorTypesNode = APICall.callAPI(GET_SENSOR_TYPES_CALL);
 
-		if(sensorTypesNode==null){
+		if (sensorTypesNode == null || sensorTypesNode.has("error")
+				|| !sensorTypesNode.isArray()) {
 			return allSensorTypes;
 		}
-		
+
 		// parse the json string into object
-		 //parse the json string into object
-		 for (int i=0;i<sensorTypesNode.size();i++) {
-			 JsonNode json = sensorTypesNode.path(i);
-			 SensorType newSensorType = new SensorType();
-			 
-			 newSensorType.setId(UUID.randomUUID().toString());
-			 newSensorType.setSensorTypeName(json.findPath("sensorTypeName").asText());
-			 newSensorType.setManufacturer(json.findPath("manufacturer").asText());
-			 newSensorType.setVersion(json.findPath("version").asDouble());
-			 newSensorType.setMaxValue(json.findPath("maximumValue").asDouble());
-			 newSensorType.setMinValue(json.findPath("minimumValue").asDouble());
-			 newSensorType.setUnit(json.findPath("unit").asText());
-			 newSensorType.setInterpreter(json.findPath("interpreter").asText());
-			 newSensorType.setSensorTypeUserDefinedFields(json.findPath("sensorTypeUserDefinedFields").asText());
-			 newSensorType.setSensorCategoryName(json.findPath("sensorCategoryName").asText());
-			 
-			 //newSensorType.setSensorCategoryName();
-			 
-			 allSensorTypes.add(newSensorType);
-		 }
-		 
-		 // need to update the sensorTypeFoundList
-		 updateSensorTypeFoundList(allSensorTypes);
+		// parse the json string into object
+		for (int i = 0; i < sensorTypesNode.size(); i++) {
+			JsonNode json = sensorTypesNode.path(i);
+			SensorType newSensorType = new SensorType();
+
+			newSensorType.setId(UUID.randomUUID().toString());
+			newSensorType.setSensorTypeName(json.findPath("sensorTypeName")
+					.asText());
+			newSensorType.setManufacturer(json.findPath("manufacturer")
+					.asText());
+			newSensorType.setVersion(json.findPath("version").asDouble());
+			newSensorType.setMaxValue(json.findPath("maximumValue").asDouble());
+			newSensorType.setMinValue(json.findPath("minimumValue").asDouble());
+			newSensorType.setUnit(json.findPath("unit").asText());
+			newSensorType.setInterpreter(json.findPath("interpreter").asText());
+			newSensorType.setSensorTypeUserDefinedFields(json.findPath(
+					"sensorTypeUserDefinedFields").asText());
+			newSensorType.setSensorCategoryName(json.findPath(
+					"sensorCategoryName").asText());
+
+			// newSensorType.setSensorCategoryName();
+
+			allSensorTypes.add(newSensorType);
+		}
+
+		// need to update the sensorTypeFoundList
+		updateSensorTypeFoundList(allSensorTypes);
 
 		return allSensorTypes;
 
 	}
-	
+
 	public static void updateSensorTypeFoundList(List<SensorType> newList) {
 		sensorTypeFoundList.clear();
 		for (SensorType element : newList) {
 			sensorTypeFoundList.add(element);
 		}
 	}
+
 	/**
 	 * Method to display all sensor types' name
+	 * 
 	 * @return a list of all sensor types' name
 	 */
-	public static List<String> allSensorTypeName(){
+	public static List<String> allSensorTypeName() {
 		List<SensorType> allList = all();
 		List<String> resultList = new ArrayList<String>();
-		for(SensorType element:allList){
-			String elementName = element.getSensorTypeName(); 
-			if(elementName!=null)
+		for (SensorType element : allList) {
+			String elementName = element.getSensorTypeName();
+			if (elementName != null)
 				resultList.add(elementName);
 		}
 		return resultList;
 	}
-	
+
 	/**
 	 * Method to call the API to add a new sensor type
+	 * 
 	 * @param jsonData
 	 * @return the response json from the API server
 	 */
@@ -217,24 +225,26 @@ public class SensorType {
 
 	/**
 	 * Method to call the API to delete a sensor type with its id
+	 * 
 	 * @param id
 	 * @return the response json from the API server
 	 */
 	public static JsonNode delete(String id) {
-		return APICall.callAPI(DELETE_SENSOR_TYPE_CALL+id);
+		return APICall.callAPI(DELETE_SENSOR_TYPE_CALL + id);
 	}
 
 	/**
 	 * Find a sensor type by its id
+	 * 
 	 * @param id
 	 * @return The sensor type found
 	 */
-	public static SensorType find(String id){
+	public static SensorType find(String id) {
 		// if find() is called the first time
-		if(sensorTypeFoundList.size()==0)
+		if (sensorTypeFoundList.size() == 0)
 			sensorTypeFoundList = SensorType.all();
-		for (SensorType s:sensorTypeFoundList){
-			if (s.getId().equals(id)){
+		for (SensorType s : sensorTypeFoundList) {
+			if (s.getId().equals(id)) {
 				return s;
 			}
 		}

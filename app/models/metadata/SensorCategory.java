@@ -67,8 +67,6 @@ public class SensorCategory {
 		this.purpose = purpose;
 	}
 
-
-
 	// Find
 	public static SensorCategory find(String id) {
 		SensorCategory sensorCategory = new SensorCategory();
@@ -78,29 +76,27 @@ public class SensorCategory {
 
 	// All
 	public static List<SensorCategory> all() {
-		JsonNode sensorsNode = APICall.callAPI(GET_SENSOR_CATEGORY_ALL);
 
 		List<SensorCategory> sensorCategories = new ArrayList<SensorCategory>();
 
-		// if no value is returned
-		if (sensorsNode == null) {
+		JsonNode sensorCategoriesNode = APICall
+				.callAPI(GET_SENSOR_CATEGORY_ALL);
+
+		// if no value is returned or error or is not json array
+		if (sensorCategoriesNode == null || sensorCategoriesNode.has("error")
+				|| !sensorCategoriesNode.isArray()) {
 			return sensorCategories;
 		}
 
-		// if sensor node is not json array
-		if (!sensorsNode.isArray()) {
-			return null;
-		}
 		// parse the json string into object
-		for (int i = 0; i < sensorsNode.size(); i++) {
-			JsonNode json = sensorsNode.path(i);
+		for (int i = 0; i < sensorCategoriesNode.size(); i++) {
+			JsonNode json = sensorCategoriesNode.path(i);
 			SensorCategory newCategory = new SensorCategory();
-			newCategory.setName(json.findPath(
-					"sensorCategoryName").asText());
+			newCategory.setName(json.findPath("sensorCategoryName").asText());
 			newCategory.setPurpose(json.findPath("purpose").asText());
 			sensorCategories.add(newCategory);
-			
-			//System.out.println(newCategory.getName().toString());
+
+			// System.out.println(newCategory.getName().toString());
 		}
 
 		// API Call: http://einstein.sv.cmu.edu/get_devices/json
@@ -111,11 +107,10 @@ public class SensorCategory {
 		// return sensorCategories;
 		// }
 
-
 		return sensorCategories;
 
 	}
-	
+
 	/**
 	 * Method to call the API to add a new sensor category
 	 * 
@@ -125,6 +120,5 @@ public class SensorCategory {
 	public static JsonNode create(JsonNode jsonData) {
 		return APICall.postAPI(NEW_ADD_SENSOR_CATEGOTY_CALL, jsonData);
 	}
-
 
 }

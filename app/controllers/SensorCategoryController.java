@@ -45,15 +45,9 @@ public class SensorCategoryController extends Controller {
 		jsonData.put("purpose", dc.field("Purpose").value());
 		// create the item by calling the API
 		JsonNode response = SensorCategory.create(jsonData);
-		if (response == null) {
-			flash("error", "Error in creation: No reponse from server");
-		} else {
-			if (response.has("message")) {
-				flash("success", "A new item has been created");
-			} else {
-				flash("error", "Error in creation: possible wrong format");
-			}
-		}
+
+		// flash the response message
+		Application.flashMsg(response);
 		return ok(sensorCategories.render(SensorCategory.all(),
 				sensorCategoryForm));
 	}

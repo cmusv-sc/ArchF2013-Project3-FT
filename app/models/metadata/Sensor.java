@@ -27,22 +27,20 @@ import util.APICall;
 public class Sensor {
 	private String id;
 	private String sensorName;
-	//private SensorType sensorType;
-	//private Device device;
+	// private SensorType sensorType;
+	// private Device device;
 	private String sensorTypeName;
 	private String deviceUri;
 	private String sensorCategory;
-	
 
 	public Sensor() {
 
 	}
-	
+
 	// http://einstein.sv.cmu.edu/get_sensors/json
 	private static final String GET_SENSORS_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_GET_SENSORS + util.Constants.FORMAT;
-	
-	
+
 	private static final String DELETE_SENSOR_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_DELETE_SENSOR;
 	private static final String ADD_SENSOR_CALL = util.Constants.NEW_API_URL
@@ -64,12 +62,12 @@ public class Sensor {
 		this.sensorName = sensorName;
 	}
 
-//	public Device getDevice() {
-//		return device;
-//	}
-//	public void setDevice(Device device) {
-//		this.device = device;
-//	}
+	// public Device getDevice() {
+	// return device;
+	// }
+	// public void setDevice(Device device) {
+	// this.device = device;
+	// }
 
 	public String getDeviceUri() {
 		return deviceUri;
@@ -102,15 +100,12 @@ public class Sensor {
 		// Call the API to get the json string
 		JsonNode sensorsNode = APICall.callAPI(GET_SENSORS_CALL);
 
-		// if no value is returned
-		if (sensorsNode == null) {
+		// if no value is returned or error or is not json array
+		if (sensorsNode == null || sensorsNode.has("error")
+				|| !sensorsNode.isArray()) {
 			return allSensors;
 		}
 
-		// if sensor node is not json array
-		if (!sensorsNode.isArray()) {
-			return null;
-		}
 		// parse the json string into object
 		for (int i = 0; i < sensorsNode.size(); i++) {
 			JsonNode json = sensorsNode.path(i);
@@ -118,9 +113,11 @@ public class Sensor {
 
 			newSensor.setId(UUID.randomUUID().toString());
 			newSensor.setSensorName(json.findPath("sensorName").asText());
-			newSensor.setSensorTypeName(json.findPath("sensorTypeName").asText());
+			newSensor.setSensorTypeName(json.findPath("sensorTypeName")
+					.asText());
 			newSensor.setDeviceUri(json.findPath("deviceUri").asText());
-			newSensor.setSensorCategory(json.findPath("sensorCategory").asText());
+			newSensor.setSensorCategory(json.findPath("sensorCategory")
+					.asText());
 
 			allSensors.add(newSensor);
 		}
@@ -146,9 +143,9 @@ public class Sensor {
 	 * @return the response json from the API server
 	 */
 	public static JsonNode delete(String sensorName) {
-		JsonNode responseResult = APICall.deleteAPI(DELETE_SENSOR_CALL + sensorName);
+		JsonNode responseResult = APICall.deleteAPI(DELETE_SENSOR_CALL
+				+ sensorName);
 		return responseResult;
 	}
-
 
 }

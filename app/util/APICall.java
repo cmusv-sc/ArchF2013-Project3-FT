@@ -16,13 +16,17 @@
  * */
 package util;
 
+import play.libs.Json;
 import play.libs.WS;
 import play.libs.F.Function;
 import play.libs.F.Promise;
-
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class APICall {
+	public static enum ResponseType {
+		SUCCESS, GETERROR, SAVEERROR, DELETEERROR, TIMEOUT
+	}
 
 	public static JsonNode callAPI(String apiString) {
 
@@ -32,16 +36,21 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
-
-						if (response.getStatus() == 200) {
+						if (response.getStatus() == 200
+								|| response.getStatus() == 201) {
 							return response.asJson();
 						} else { // no response from the server
-							return null;
+							return createResponse(ResponseType.GETERROR);
 						}
 					}
 				});
 
-		return bodyPromise.get(5000);
+		try {
+			return bodyPromise.get(5000L);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return createResponse(ResponseType.TIMEOUT);
+		}
 
 	}
 
@@ -52,16 +61,23 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
-						if (response.getStatus() == 201) {
-							return response.asJson();
-						} else { // no response from the server
-							return null;
+						if (response.getStatus() == 201
+								|| response.getStatus() == 200) {
+							return createResponse(ResponseType.SUCCESS);
+						} else { // other response status from the server
+							return createResponse(ResponseType.SAVEERROR);
 						}
 					}
 				});
-		return bodyPromise.get(5000);
+		try {
+			return bodyPromise.get(5000L);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return createResponse(ResponseType.TIMEOUT);
+		}
+
 	}
-	
+
 	public static JsonNode deleteAPI(String apiString) {
 		Promise<WS.Response> responsePromise = WS.url(apiString).delete();
 		final Promise<JsonNode> bodyPromise = responsePromise
@@ -69,13 +85,45 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
-						if (response.getStatus() == 201) {
-							return response.asJson();
+						if (response.getStatus() == 200
+								|| response.getStatus() == 201) {
+							return createResponse(ResponseType.SUCCESS);
 						} else { // no response from the server
-							return null;
+							return createResponse(ResponseType.DELETEERROR);
 						}
 					}
 				});
-		return bodyPromise.get(5000);
+		try {
+			return bodyPromise.get(5000L);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return createResponse(ResponseType.TIMEOUT);
+		}
+
+	}
+
+	private static JsonNode createResponse(ResponseType type) {
+		ObjectNode jsonData = Json.newObject();
+		switch (type) {
+		case SUCCESS:
+			jsonData.put("success", "Success!");
+			break;
+		case GETERROR:
+			jsonData.put("error", "Cannot get data from server");
+			break;
+		case SAVEERROR:
+			jsonData.put("error", "Cannot be saved on server");
+			break;
+		case DELETEERROR:
+			jsonData.put("error", "Cannot be deleted on server");
+			break;
+		case TIMEOUT:
+			jsonData.put("error", "No response from server");
+			break;
+		default:
+			jsonData.put("error", "Timeout from server");
+			break;
+		}
+		return jsonData;
 	}
 }
