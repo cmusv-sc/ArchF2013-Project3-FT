@@ -17,7 +17,7 @@
     	<tr>
             <td>@sensorCategory.getSensorCategoryName()</td>
             <td>@sensorCategory.getPurpose()</td>
-            @if(Secured.isLoggedIn()){
+            @if(session.get("email")){
             		<td>
              			@form(routes.SensorCategoryController.deleteSensorCategory()){
                		 		<input name="idHolder" type="hidden" value="@sensorCategory.getSensorCategoryName())">
