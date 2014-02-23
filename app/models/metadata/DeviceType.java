@@ -137,7 +137,7 @@ public class DeviceType {
 	 * @return the response json from the API server
 	 */
 	public static JsonNode delete(String deviceTypeName) {
-		return APICall.callAPI(DELETE_SENSOR_TYPE_CALL + deviceTypeName);
+		return APICall.deleteAPI(DELETE_SENSOR_TYPE_CALL + deviceTypeName);
 	}
 
 	/**

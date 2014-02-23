@@ -127,7 +127,8 @@ public class Sensor {
 			newSensor.setDeviceUri(json.findPath("deviceUri").asText());
 			newSensor.setSensorCategoryName(json.findPath("sensorCategoryName")
 					.asText());
-			newSensor.setSensorUserDefinedFields(json.findPath("sensorUserDefinedFields").asText());
+			newSensor.setSensorUserDefinedFields(json.findPath(
+					"sensorUserDefinedFields").asText());
 
 			allSensors.add(newSensor);
 		}
@@ -153,9 +154,7 @@ public class Sensor {
 	 * @return the response json from the API server
 	 */
 	public static JsonNode delete(String sensorName) {
-		JsonNode responseResult = APICall.deleteAPI(DELETE_SENSOR_CALL
-				+ sensorName);
-		return responseResult;
+		return APICall.deleteAPI(DELETE_SENSOR_CALL + sensorName);
 	}
 
 }

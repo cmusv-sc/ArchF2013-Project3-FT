@@ -20,48 +20,48 @@ public class Constants {
 
 	// TO DO: Read all the constant variables from a configuration file
 
-	// API URL
-	public static final String API_URL = "http://einstein.sv.cmu.edu/";
+//	// API URL
+//	public static final String API_URL = "http://einstein.sv.cmu.edu/";
+//
+//	// API Call format
+//	public static final String FORMAT = "json";
 
-	// API Call format
-	public static final String FORMAT = "json";
-
-	// Get sensor types action
-	public static final String GET_SENSOR_TYPES = "get_all_sensor_types/";
-
-	// Get devices action
-	public static final String GET_DEVICES = "get_devices/";
-
-	// Get sensors action
-	public static final String GET_SENSORS = "get_sensors/";
-
-	// Get device types action
-	public static final String GET_DEVICE_TYPES = "get_device_types/";
-
-	// NOT IMPLEMENTED!!
-	// Get device agents action
-	public static final String GET_DEVICE_AGENTS = "get_device_agents/";
-
-	// delete a sensor type
-	public static final String DELETE_SENSOR_TYPE = "delete_sensor_type/";
-	// delete a sensor
-	public static final String DELETE_SENSOR = "delete_sensor/";
-	// delete a device type
-	public static final String DELETE_DEVICE_TYPE = "delete_device_type/";
-	// delete a device
-	public static final String DELETE_DEVICE = "delete_device/";
-
-	// create a sensor type
-	public static final String ADD_SENSOR_TYPE = "add_sensor_type";
-	// create a device type
-	public static final String ADD_DEVICE_TYPE = "add_device_type";
-	// create a device
-	public static final String ADD_DEVICE = "add_device";
-	// create a sensor
-	public static final String ADD_SENSOR = "add_sensor";
-
-	// get latest device readings
-	public static final String GET_LATEST_DEVICE_READINGS = "lastest_readings_from_all_devices/temp/";
+//	// Get sensor types action
+//	public static final String GET_SENSOR_TYPES = "get_all_sensor_types/";
+//
+//	// Get devices action
+//	public static final String GET_DEVICES = "get_devices/";
+//
+//	// Get sensors action
+//	public static final String GET_SENSORS = "get_sensors/";
+//
+//	// Get device types action
+//	public static final String GET_DEVICE_TYPES = "get_device_types/";
+//
+//	// NOT IMPLEMENTED!!
+//	// Get device agents action
+//	public static final String GET_DEVICE_AGENTS = "get_device_agents/";
+//
+//	// delete a sensor type
+//	public static final String DELETE_SENSOR_TYPE = "delete_sensor_type/";
+//	// delete a sensor
+//	public static final String DELETE_SENSOR = "delete_sensor/";
+//	// delete a device type
+//	public static final String DELETE_DEVICE_TYPE = "delete_device_type/";
+//	// delete a device
+//	public static final String DELETE_DEVICE = "delete_device/";
+//
+//	// create a sensor type
+//	public static final String ADD_SENSOR_TYPE = "add_sensor_type";
+//	// create a device type
+//	public static final String ADD_DEVICE_TYPE = "add_device_type";
+//	// create a device
+//	public static final String ADD_DEVICE = "add_device";
+//	// create a sensor
+//	public static final String ADD_SENSOR = "add_sensor";
+//
+//	// get latest device readings
+//	public static final String GET_LATEST_DEVICE_READINGS = "lastest_readings_from_all_devices/temp/";
 
 	// all device ids
 	public static final String[] DEVICE_IDS = { "17000001#Mobile test unit",
@@ -85,9 +85,13 @@ public class Constants {
 	// API 1.3 URL
 	public static final String NEW_API_URL = "http://einstein.sv.cmu.edu:9000/";
 
+	// API Call format
+	public static final String FORMAT = "json";
+	
 	// sensor type
 	public static final String NEW_GET_SENSOR_TYPES = "getAllSensorTypes/";
 	public static final String NEW_ADD_SENSOR_TYPE = "addSensorType";
+	public static final String NEW_DELETE_SENSOR_TYPE = "deleteSensorType/";
 	
 
 	// sensor
@@ -109,5 +113,9 @@ public class Constants {
 	// sensor category
 	public static final String NEW_GET_SENSOR_CATEGORY = "getAllSensorCategories/";
 	public static final String NEW_ADD_SENSOR_CATEGORY = "addSensorCategory";
-	public static final String NEW_DELETE_SENSOR_CATEGORY = "deleteSensorCategory/"; 
+	public static final String NEW_DELETE_SENSOR_CATEGORY = "deleteSensorCategory/";
+	
+	// get latest reading from all devices
+	public static final String NEW_GET_LATEST_DEVICE_READINGS = "getLastestReadingsFromAllDevices/temp/";
+
 }

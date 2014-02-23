@@ -29,8 +29,8 @@ public class Dashboard {
 	private int totalCount;
 	private int activeCount;
 	
-	private static final String GET_LATEST_DEVICE_READINGS = util.Constants.API_URL
-			+ util.Constants.GET_LATEST_DEVICE_READINGS + util.Constants.FORMAT;
+	private static final String GET_LATEST_DEVICE_READINGS = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_GET_LATEST_DEVICE_READINGS + util.Constants.FORMAT;
 	
 	private static final String[] DEVICE_IDS = util.Constants.DEVICE_IDS;
 	

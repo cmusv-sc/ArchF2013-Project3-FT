@@ -166,9 +166,8 @@ public class Device {
 	 * @param id
 	 * @return
 	 */
-	public static JsonNode delete(String id) {
-
-		return APICall.callAPI(DELETE_DEVICE_CALL + id);
+	public static JsonNode delete(String deviceName) {
+		return APICall.deleteAPI(DELETE_DEVICE_CALL + deviceName);
 	}
 
 	/**
