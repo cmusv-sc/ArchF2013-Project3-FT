@@ -90,20 +90,8 @@ public class SensorCategory {
 			newCategory.setSensorCategoryName(json.findPath("sensorCategoryName").asText());
 			newCategory.setPurpose(json.findPath("purpose").asText());
 			sensorCategories.add(newCategory);
-
-			// System.out.println(newCategory.getName().toString());
 		}
-
-		// API Call: http://einstein.sv.cmu.edu/get_devices/json
-		// final JsonNode apiResponse = APICall.callAPI(API_CALL);
-
-		// If no value is returned
-		// if (apiResponse == null) {
-		// return sensorCategories;
-		// }
-
 		return sensorCategories;
-
 	}
 
 	public static JsonNode create(JsonNode jsonData) {
@@ -113,6 +101,17 @@ public class SensorCategory {
 	public static JsonNode delete(String sensorCategoryName) {
 		return APICall.deleteAPI(DELETE_SENSOR_CATEGOTY_CALL
 				+ sensorCategoryName);
+	}
+	
+	public static List<String> allSensorCategoryName() {
+		List<SensorCategory> allList = all();
+		List<String> resultList = new ArrayList<String>();
+		for (SensorCategory element : allList) {
+			String elementName = element.getSensorCategoryName();
+			if (elementName != null)
+				resultList.add(elementName);
+		}
+		return resultList;
 	}
 
 }

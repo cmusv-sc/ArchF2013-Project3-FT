@@ -38,16 +38,34 @@ public class SensorTypeController extends Controller {
 
 	public static Result newSensorType() {
 		Form<SensorType> st = sensorTypeForm.bindFromRequest();
-		
+
 		ObjectNode jsonData = Json.newObject();
-		jsonData.put("id", UUID.randomUUID().toString());
-		jsonData.put("sensor_type", st.field("sensorTypeName").value());
+		//jsonData.put("id", UUID.randomUUID().toString());
+		jsonData.put("sensorTypeName", st.field("sensorTypeName").value());
 		jsonData.put("manufacturer", st.field("manufacturer").value());
-		jsonData.put("version", Double.valueOf(st.field("version").value()));
-		jsonData.put("maxValue", Double.valueOf(st.field("maxValue").value()));
-		jsonData.put("minValue", Double.valueOf(st.field("minValue").value()));
-		jsonData.put("unit", st.field("unit").value());
-		jsonData.put("interpreter", st.field("interpreter").value());
+		
+		String version = st.field("version").value();
+		if (version!=null && !version.isEmpty()) {
+			jsonData.put("version", Double.valueOf(version));
+		}
+		String maximumValue = st.field("maximumValue").value();
+		if (maximumValue!=null && !maximumValue.isEmpty()) {
+			jsonData.put("maximumValue", Double.valueOf(maximumValue));
+		}
+		String minimumValue = st.field("minimumValue").value();
+		if (minimumValue!=null && !minimumValue.isEmpty()) {
+			jsonData.put("minimumValue", Double.valueOf(minimumValue));
+		}
+		String unit = st.field("unit").value();
+		if (unit!=null && !unit.isEmpty()) {
+			jsonData.put("unit", Double.valueOf(unit));
+		}
+		String interpreter = st.field("interpreter").value();
+		if (interpreter!=null && !interpreter.isEmpty()) {
+			jsonData.put("interpreter", Double.valueOf(interpreter));
+		}
+		jsonData.put("sensorTypeUserDefinedFields", st.field("sensorTypeUserDefinedFields").value());
+		jsonData.put("sensorCategoryName", st.field("sensorCategoryName").value());
 
 		// create the item by calling the API
 		JsonNode response = SensorType.create(jsonData);
@@ -60,12 +78,12 @@ public class SensorTypeController extends Controller {
 	public static Result deleteSensorType() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		String id = df.field("idHolder").value();
-		
-			// Call the delete() method
-			JsonNode response = SensorType.delete(id);
 
-			// flash the response message
-			Application.flashMsg(response);
+		// Call the delete() method
+		JsonNode response = SensorType.delete(id);
+
+		// flash the response message
+		Application.flashMsg(response);
 		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
 	}
 }

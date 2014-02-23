@@ -45,11 +45,10 @@ public class SensorType {
 	private static final String GET_SENSOR_TYPES_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_GET_SENSOR_TYPES + util.Constants.FORMAT;
 
-	// NEED TO BE CHANGED for API v1.3!!
+	private static final String ADD_SENSOR_TYPE_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_ADD_SENSOR_TYPE;
 	private static final String DELETE_SENSOR_TYPE_CALL = util.Constants.API_URL
 			+ util.Constants.DELETE_SENSOR_TYPE;
-	private static final String ADD_SENSOR_TYPE_CALL = util.Constants.API_URL
-			+ util.Constants.ADD_SENSOR_TYPE;
 	private static List<SensorType> sensorTypeFoundList = new ArrayList<SensorType>();
 
 	public SensorType() {

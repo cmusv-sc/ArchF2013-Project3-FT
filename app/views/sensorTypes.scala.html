@@ -81,13 +81,11 @@
         @inputText(
                 sensorTypeForm("maxValue"), 
                 '_label -> "Max Value",
-                'placeholder-> 1.9,                 
                 '_error -> sensorTypeForm.globalError                                
         )
         @inputText(
                 sensorTypeForm("minValue"), 
                 '_label -> "Min Value",                 
-                'placeholder-> 1.1,                 
                 '_error -> sensorTypeForm.globalError                                
         )
         @inputText(
@@ -99,10 +97,21 @@
         @inputText(
                 sensorTypeForm("interpreter"), 
                 '_label -> "Interpreter",                 
+                '_error -> sensorTypeForm.globalError                                
+        )
+        @select(
+        		sensorTypeForm("sensorCategoryName"), 
+                options(metadata.SensorCategory.allSensorCategoryName()),
+     			'_label -> "Parent Device",
+                '_error -> sensorTypeForm.globalError
+        		)
+        		
+         @inputText(
+                sensorTypeForm("sensorTypeUserDefinedFields"), 
+                '_label -> "Interpreter",                 
                 'placeholder-> "y = 0.7506 * x + 32",                 
                 '_error -> sensorTypeForm.globalError                                
         )
-        
         <input class="btn" type="submit" value="Register">
         <a href="@routes.SensorTypeController.sensorTypes()" class="btn">Cancel</a>
         
