@@ -96,17 +96,16 @@ public class Constants {
 	// device type
 	public static final String NEW_GET_DEVICE_TYPES = "getAllDeviceTypes/";
 	public static final String NEW_ADD_DEVICE_TYPE = "addDeviceType";
-	public static final String NEW_DELETE_DEVICE_TYPE = "deleteDeviceType/";
+	public static final String NEW_DELETE_DEVICE_TYPE = "deleteDeviceType/"; //API not supporting
 	
 
 	// device
 	public static final String NEW_GET_DEVICES = "getAllDevices/";
 	public static final String NEW_ADD_DEVICE = "addDevice";
-	public static final String NEW_DELETE_DEVICE = "deleteDevice/";
+	public static final String NEW_DELETE_DEVICE = "deleteDevice/"; //API not supporting
 
 	// sensor category
 	public static final String NEW_GET_SENSOR_CATEGORY = "getAllSensorCategories/";
 	public static final String NEW_ADD_SENSOR_CATEGORY = "addSensorCategory";
-	public static final String NEW_DELETE_SENSOR_CATEGORY = "deleteSensorCategory/";
-	
+	public static final String NEW_DELETE_SENSOR_CATEGORY = "deleteSensorCategory/"; 
 }
