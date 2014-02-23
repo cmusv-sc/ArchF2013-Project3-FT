@@ -32,7 +32,7 @@ public class Device {
 	private double longitude;
 	private double latitude;
 	private double altitude;
-	
+
 	// newly added
 	private String deviceTypeName;
 	private String representation;
@@ -41,7 +41,7 @@ public class Device {
 	private List<String> sensorNames = new ArrayList<String>();
 
 	// http://einstein.sv.cmu.edu/get_devices/json
-	private static final String API_CALL = util.Constants.NEW_API_URL
+	private static final String GET_DEVICES_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_GET_DEVICES + util.Constants.FORMAT;
 	private static final String ADD_DEVICE_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_ADD_DEVICE;
@@ -180,7 +180,7 @@ public class Device {
 		List<Device> allDevices = new ArrayList<Device>();
 
 		// API Call: http://einstein.sv.cmu.edu/get_devices/json
-		final JsonNode devicesNode = APICall.callAPI(API_CALL);
+		final JsonNode devicesNode = APICall.callAPI(GET_DEVICES_CALL);
 
 		// If no value is returned
 		if (devicesNode == null || devicesNode.has("error")
@@ -209,13 +209,15 @@ public class Device {
 						.addSensorTypeName(sensorTypeNamesJson.get(j).asText());
 			}
 
-			newDevice.setRepresentation(json.findPath("locationInterpreter").asText());
+			newDevice.setRepresentation(json.findPath("locationInterpreter")
+					.asText());
 			newDevice.setLongitude(json.findPath("longitude").asDouble());
 			newDevice.setLatitude(json.findPath("latitude").asDouble());
 			newDevice.setAltitude(json.findPath("altitude").asDouble());
-			
-			newDevice.setDeviceUserDefinedFields(json.findPath("deviceUserDefinedFields").asText());
-			
+
+			newDevice.setDeviceUserDefinedFields(json.findPath(
+					"deviceUserDefinedFields").asText());
+
 			allDevices.add(newDevice);
 		}
 

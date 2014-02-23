@@ -25,30 +25,25 @@ import util.APICall;
 public class SensorCategory {
 
 	private String id;
-	private String name;
+	private String sensorCategoryName;
 	private String purpose;
-	private String categoryName;
-	private static final String GET_SENSOR_CATEGORY_ALL = util.Constants.NEW_API_URL
+	private static final String GET_SENSOR_CATEGORYS_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_GET_SENSOR_CATEGORY + util.Constants.FORMAT;
-	private static final String NEW_ADD_SENSOR_CATEGOTY_CALL = util.Constants.NEW_API_URL
+	private static final String ADD_SENSOR_CATEGOTY_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_ADD_SENSOR_CATEGORY;
+	private static final String DELETE_SENSOR_CATEGOTY_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_DELETE_SENSOR_CATEGORY;
 
 	public SensorCategory() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public SensorCategory(String id, String name, String purpose) {
-		this.id = id;
-		this.categoryName = name;
-		this.purpose = purpose;
 	}
 
 	public String getId() {
 		return id;
 	}
 
-	public String getName() {
-		return name;
+	public String getSensorCategoryName() {
+		return sensorCategoryName;
 	}
 
 	public String getPurpose() {
@@ -59,8 +54,8 @@ public class SensorCategory {
 		this.id = id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setSensorCategoryName(String sensorCategoryName) {
+		this.sensorCategoryName = sensorCategoryName;
 	}
 
 	public void setPurpose(String purpose) {
@@ -80,7 +75,7 @@ public class SensorCategory {
 		List<SensorCategory> sensorCategories = new ArrayList<SensorCategory>();
 
 		JsonNode sensorCategoriesNode = APICall
-				.callAPI(GET_SENSOR_CATEGORY_ALL);
+				.callAPI(GET_SENSOR_CATEGORYS_CALL);
 
 		// if no value is returned or error or is not json array
 		if (sensorCategoriesNode == null || sensorCategoriesNode.has("error")
@@ -92,7 +87,7 @@ public class SensorCategory {
 		for (int i = 0; i < sensorCategoriesNode.size(); i++) {
 			JsonNode json = sensorCategoriesNode.path(i);
 			SensorCategory newCategory = new SensorCategory();
-			newCategory.setName(json.findPath("sensorCategoryName").asText());
+			newCategory.setSensorCategoryName(json.findPath("sensorCategoryName").asText());
 			newCategory.setPurpose(json.findPath("purpose").asText());
 			sensorCategories.add(newCategory);
 
@@ -111,14 +106,13 @@ public class SensorCategory {
 
 	}
 
-	/**
-	 * Method to call the API to add a new sensor category
-	 * 
-	 * @param jsonData
-	 * @return the response json from the API server
-	 */
 	public static JsonNode create(JsonNode jsonData) {
-		return APICall.postAPI(NEW_ADD_SENSOR_CATEGOTY_CALL, jsonData);
+		return APICall.postAPI(ADD_SENSOR_CATEGOTY_CALL, jsonData);
+	}
+
+	public static JsonNode delete(String sensorName) {
+		return APICall.deleteAPI(DELETE_SENSOR_CATEGOTY_CALL
+				+ sensorName);
 	}
 
 }

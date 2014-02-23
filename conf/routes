@@ -36,12 +36,12 @@ POST    /devices     controllers.DeviceController.deleteDevice()
 # sensors
 GET		/sensors				controllers.SensorController.sensors()
 POST    /sensors/new                controllers.SensorController.newSensor()
-POST   /sensors/     controllers.SensorController.deleteSensor()
+POST   /sensors     controllers.SensorController.deleteSensor()
 
 # sensor_categories
 GET		/sensorCategories				controllers.SensorCategoryController.sensorCategories()
-POST    /sensorCategories                controllers.SensorCategoryController.newSensorCategory()
-#POST    /sensorCategories/:id/delete     controllers.SensorCategoryController.deleteSensorCategory(id: String)
+POST    /sensorCategories/new                controllers.SensorCategoryController.newSensorCategory()
+POST    /sensorCategories     controllers.SensorCategoryController.deleteSensorCategory()
 
 # dashboard
 GET		/dashboard				controllers.DashboardController.dashboard()

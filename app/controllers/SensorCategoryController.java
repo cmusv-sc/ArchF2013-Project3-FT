@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import models.metadata.Sensor;
 import models.metadata.SensorCategory;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
@@ -52,7 +53,18 @@ public class SensorCategoryController extends Controller {
 				sensorCategoryForm));
 	}
 
-	public static Result deleteSensorCategory(String id) {
-		return TODO;
+	public static Result deleteSensorCategory() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		String sensorName = df.field("idHolder").value();
+
+		// return a text message
+
+		// Call the delete() method
+		JsonNode response = SensorCategory.delete(sensorName);
+		
+		// flash the response message
+		Application.flashMsg(response);
+
+		return ok(sensorCategories.render(SensorCategory.all(), sensorCategoryForm));
 	}
 }

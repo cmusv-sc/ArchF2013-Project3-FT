@@ -105,4 +105,6 @@ public class Constants {
 	// sensor category
 	public static final String NEW_GET_SENSOR_CATEGORY = "getAllSensorCategories/";
 	public static final String NEW_ADD_SENSOR_CATEGORY = "addSensorCategory";
+	public static final String NEW_DELETE_SENSOR_CATEGORY = "deleteSensor/";
+	
 }

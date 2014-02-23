@@ -15,12 +15,17 @@
 
     	@for(sensorCategory <- sensorCategories) {
     	<tr>
-            <td>@sensorCategory.getName()</td>
+            <td>@sensorCategory.getSensorCategoryName()</td>
             <td>@sensorCategory.getPurpose()</td>
-            <td>
-            	<button type="edit" class="btn btn-xs btn-default">Edit</button>
-            	<button type="delete" class="btn btn-xs btn-default">Delete</button>
-            </td>
+            @if(Secured.isLoggedIn()){
+            		<td>
+             			@form(routes.SensorCategoryController.deleteSensorCategory()){
+               		 		<input name="idHolder" type="hidden" value="@sensorCategory.getSensorCategoryName())">
+        							<input type="submit"  class="btn btn-danger" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')">
+            			}
+               			
+            		</td>
+            }
     	</tr>
         }
     </table>
