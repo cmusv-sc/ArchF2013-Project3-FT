@@ -96,6 +96,8 @@ public class Constants {
 	// device type
 	public static final String NEW_GET_DEVICE_TYPES = "getAllDeviceTypes/";
 	public static final String NEW_ADD_DEVICE_TYPE = "addDeviceType";
+	public static final String NEW_DELETE_DEVICE_TYPE = "deleteDeviceType/";
+	
 
 	// device
 	public static final String NEW_GET_DEVICES = "getAllDevices/";

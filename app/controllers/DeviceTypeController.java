@@ -32,50 +32,49 @@ import views.html.*;
 @Security.Authenticated(Secured.class)
 public class DeviceTypeController extends Controller {
 	final static Form<DeviceType> deviceTypeForm = Form.form(DeviceType.class);
-	
-    public static Result deviceTypes() {
-    	if(Secured.isLoggedIn()) 
-            return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
-        else 
-            return forbidden();
 
-    }
-    
-    public static Result newDeviceType() {
-        Form<DeviceType> dt = deviceTypeForm.bindFromRequest();
-        
-        ObjectNode jsonData = Json.newObject();
-        //jsonData.put("id", UUID.randomUUID().toString());
-        jsonData.put("deviceTypeName", dt.field("deviceTypeName").value());
-        jsonData.put("manufacturer", dt.field("manufacturer").value());
-        jsonData.put("version", dt.field("version").value());
-        jsonData.put("deviceTypeUserDefinedFields", dt.field("deviceTypeUserDefinedFields").value());
+	public static Result deviceTypes() {
+		if (Secured.isLoggedIn())
+			return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
+		else
+			return forbidden();
 
-        ArrayNode arrayNode = jsonData.putArray("sensorTypeNames");
-        arrayNode.add(dt.field("sensorTypeNames").value());
-        
-        System.out.println(jsonData);
-        // create the item by calling the API
-        JsonNode response = DeviceType.create(jsonData);
-        
+	}
+
+	public static Result newDeviceType() {
+		Form<DeviceType> dt = deviceTypeForm.bindFromRequest();
+
+		ObjectNode jsonData = Json.newObject();
+		// jsonData.put("id", UUID.randomUUID().toString());
+		jsonData.put("deviceTypeName", dt.field("deviceTypeName").value());
+		jsonData.put("manufacturer", dt.field("manufacturer").value());
+		jsonData.put("version", dt.field("version").value());
+		jsonData.put("deviceTypeUserDefinedFields",
+				dt.field("deviceTypeUserDefinedFields").value());
+
+		ArrayNode arrayNode = jsonData.putArray("sensorTypeNames");
+		arrayNode.add(dt.field("sensorTypeNames").value());
+
+		System.out.println(jsonData);
+		// create the item by calling the API
+		JsonNode response = DeviceType.create(jsonData);
 
 		// flash the response message
 		Application.flashMsg(response);
 
-    	return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
-    }
-
-    public static Result deleteDeviceType() {
-    	DynamicForm df = DynamicForm.form().bindFromRequest();
-		String id = df.field("idHolder").value();
-		
-
-			// Call the delete() method
-			JsonNode response = DeviceType.delete(id);
-
-			// flash the response message
-			Application.flashMsg(response);
 		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
-		
-    }
+	}
+
+	public static Result deleteDeviceType() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		String deviceTypeName = df.field("idHolder").value();
+
+		// Call the delete() method
+		JsonNode response = DeviceType.delete(deviceTypeName);
+
+		// flash the response message
+		Application.flashMsg(response);
+		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
+
+	}
 }

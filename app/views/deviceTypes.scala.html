@@ -31,7 +31,7 @@
             @if(session.get("email")){
             		<td>
              			@form(routes.DeviceTypeController.deleteDeviceType()){
-               		 		<input name="idHolder" type="hidden" value="@deviceType.getId()">
+               		 		<input name="idHolder" type="hidden" value="@deviceType.getDeviceTypeName()">
         							<input type="submit"  class="btn btn-danger" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')">
             			}
                			
