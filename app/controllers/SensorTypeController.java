@@ -77,10 +77,10 @@ public class SensorTypeController extends Controller {
 
 	public static Result deleteSensorType() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
-		String id = df.field("idHolder").value();
+		String sensorTypeName = df.field("idHolder").value();
 
 		// Call the delete() method
-		JsonNode response = SensorType.delete(id);
+		JsonNode response = SensorType.delete(sensorTypeName);
 
 		// flash the response message
 		Application.flashMsg(response);

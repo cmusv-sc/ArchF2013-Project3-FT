@@ -47,8 +47,8 @@ public class SensorType {
 
 	private static final String ADD_SENSOR_TYPE_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_ADD_SENSOR_TYPE;
-	private static final String DELETE_SENSOR_TYPE_CALL = util.Constants.API_URL
-			+ util.Constants.DELETE_SENSOR_TYPE;
+	private static final String DELETE_SENSOR_TYPE_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_DELETE_SENSOR_TYPE;
 	private static List<SensorType> sensorTypeFoundList = new ArrayList<SensorType>();
 
 	public SensorType() {
@@ -222,14 +222,8 @@ public class SensorType {
 		return APICall.postAPI(ADD_SENSOR_TYPE_CALL, jsonData);
 	}
 
-	/**
-	 * Method to call the API to delete a sensor type with its id
-	 * 
-	 * @param id
-	 * @return the response json from the API server
-	 */
-	public static JsonNode delete(String id) {
-		return APICall.callAPI(DELETE_SENSOR_TYPE_CALL + id);
+	public static JsonNode delete(String sensorTypeName) {
+		return APICall.deleteAPI(DELETE_SENSOR_TYPE_CALL + sensorTypeName);
 	}
 
 	/**
