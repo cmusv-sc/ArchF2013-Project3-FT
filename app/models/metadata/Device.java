@@ -45,8 +45,8 @@ public class Device {
 			+ util.Constants.NEW_GET_DEVICES + util.Constants.FORMAT;
 	private static final String ADD_DEVICE_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_ADD_DEVICE;
-	private static final String DELETE_DEVICE_CALL = util.Constants.API_URL
-			+ util.Constants.DELETE_DEVICE;
+	private static final String DELETE_DEVICE_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_DELETE_DEVICE;
 	private static List<Device> deviceFoundList = new ArrayList<Device>();
 
 	// Constructors

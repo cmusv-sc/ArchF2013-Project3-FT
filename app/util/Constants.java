@@ -100,6 +100,7 @@ public class Constants {
 	// device
 	public static final String NEW_GET_DEVICES = "getAllDevices/";
 	public static final String NEW_ADD_DEVICE = "addDevice";
+	public static final String NEW_DELETE_DEVICE = "deleteDevice/";
 
 	// sensor category
 	public static final String NEW_GET_SENSOR_CATEGORY = "getAllSensorCategories/";
