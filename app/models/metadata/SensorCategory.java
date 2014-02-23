@@ -110,9 +110,9 @@ public class SensorCategory {
 		return APICall.postAPI(ADD_SENSOR_CATEGOTY_CALL, jsonData);
 	}
 
-	public static JsonNode delete(String sensorName) {
+	public static JsonNode delete(String sensorCategoryName) {
 		return APICall.deleteAPI(DELETE_SENSOR_CATEGOTY_CALL
-				+ sensorName);
+				+ sensorCategoryName);
 	}
 
 }

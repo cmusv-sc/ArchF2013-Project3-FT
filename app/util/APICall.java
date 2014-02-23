@@ -87,6 +87,7 @@ public class APICall {
 							throws Throwable {
 						if (response.getStatus() == 200
 								|| response.getStatus() == 201) {
+							System.out.println(response.getBody());
 							return createResponse(ResponseType.SUCCESS);
 						} else { // no response from the server
 							return createResponse(ResponseType.DELETEERROR);
