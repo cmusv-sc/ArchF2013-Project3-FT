@@ -45,9 +45,20 @@ public class DeviceController extends Controller {
 		
 		ObjectNode locationData = Json.newObject();
 		locationData.put("representation", dc.field("representation").value());
-		locationData.put("longitude", Double.valueOf(dc.field("longitude").value()));
-		locationData.put("latitude", Double.valueOf(dc.field("latitude").value()));
-		locationData.put("altitude", Double.valueOf(dc.field("altitude").value()));
+		
+		String longitude = dc.field("longitude").value();
+		if (longitude!=null && !longitude.isEmpty()){
+			locationData.put("longitude",longitude);
+		}
+		String latitude = dc.field("latitude").value();
+		if (latitude!=null && !latitude.isEmpty()){
+			locationData.put("latitude",latitude);
+		}
+		String altitude = dc.field("altitude").value();
+		if (altitude!=null && !altitude.isEmpty()){
+			locationData.put("altitude",altitude);
+		}
+		
 		jsonData.put("location", locationData);
 		
 		jsonData.put("deviceUserDefinedFields", dc.field("deviceUserDefinedFields").value());

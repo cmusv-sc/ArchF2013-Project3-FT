@@ -44,6 +44,7 @@ public class SensorCategoryController extends Controller {
 		ObjectNode jsonData = Json.newObject();
 		jsonData.put("sensorCategoryName", dc.field("Name").value());
 		jsonData.put("purpose", dc.field("Purpose").value());
+
 		// create the item by calling the API
 		JsonNode response = SensorCategory.create(jsonData);
 
