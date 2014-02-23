@@ -77,7 +77,10 @@ public class Dashboard {
 		JsonNode devicesNode = APICall.callAPI(GET_LATEST_DEVICE_READINGS);
 		
 		if (devicesNode == null || !devicesNode.isArray()) {
-			return null;			
+			dashboard.setItems(dashboardItems);
+			dashboard.setTotalCount(0);
+			dashboard.setActiveCount(0);
+			return dashboard;			
 		}
 				
 		 // Parse json and find active device ids
