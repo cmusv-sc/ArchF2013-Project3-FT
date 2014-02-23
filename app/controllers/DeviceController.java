@@ -40,10 +40,17 @@ public class DeviceController extends Controller {
     	Form<Device> dc = deviceForm.bindFromRequest();
 		
 		ObjectNode jsonData = Json.newObject();
-		jsonData.put("id", UUID.randomUUID().toString());
 		jsonData.put("uri", dc.field("uri").value());
-		jsonData.put("device_type", dc.field("deviceTypeName").value());
-		jsonData.put("user_defined_fields", new java.sql.Timestamp(new java.util.Date().getTime()).toString());
+		jsonData.put("deviceTypeName", dc.field("deviceTypeName").value());
+		
+		ObjectNode locationData = Json.newObject();
+		locationData.put("representation", dc.field("representation").value());
+		locationData.put("longitude", Double.valueOf(dc.field("longitude").value()));
+		locationData.put("latitude", Double.valueOf(dc.field("latitude").value()));
+		locationData.put("altitude", Double.valueOf(dc.field("altitude").value()));
+		jsonData.put("location", locationData);
+		
+		jsonData.put("deviceUserDefinedFields", dc.field("deviceUserDefinedFields").value());
 		
 		// create the item by calling the API
 		JsonNode response = Device.create(jsonData);

@@ -32,17 +32,19 @@ public class Device {
 	private double longitude;
 	private double latitude;
 	private double altitude;
-
+	
 	// newly added
 	private String deviceTypeName;
+	private String representation;
+	private String deviceUserDefinedFields;
 	private List<String> sensorTypeNames = new ArrayList<String>();
 	private List<String> sensorNames = new ArrayList<String>();
 
 	// http://einstein.sv.cmu.edu/get_devices/json
 	private static final String API_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_GET_DEVICES + util.Constants.FORMAT;
-	private static final String ADD_DEVICE_CALL = util.Constants.API_URL
-			+ util.Constants.ADD_DEVICE;
+	private static final String ADD_DEVICE_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_ADD_DEVICE;
 	private static final String DELETE_DEVICE_CALL = util.Constants.API_URL
 			+ util.Constants.DELETE_DEVICE;
 	private static List<Device> deviceFoundList = new ArrayList<Device>();
@@ -132,6 +134,22 @@ public class Device {
 		}
 	}
 
+	public String getDeviceUserDefinedFields() {
+		return deviceUserDefinedFields;
+	}
+
+	public void setDeviceUserDefinedFields(String deviceUserDefinedFields) {
+		this.deviceUserDefinedFields = deviceUserDefinedFields;
+	}
+
+	public String getRepresentation() {
+		return representation;
+	}
+
+	public void setRepresentation(String representation) {
+		this.representation = representation;
+	}
+
 	/**
 	 * Method to call the API to add a new device
 	 * 
@@ -191,6 +209,13 @@ public class Device {
 						.addSensorTypeName(sensorTypeNamesJson.get(j).asText());
 			}
 
+			newDevice.setRepresentation(json.findPath("locationInterpreter").asText());
+			newDevice.setLongitude(json.findPath("longitude").asDouble());
+			newDevice.setLatitude(json.findPath("latitude").asDouble());
+			newDevice.setAltitude(json.findPath("altitude").asDouble());
+			
+			newDevice.setDeviceUserDefinedFields(json.findPath("deviceUserDefinedFields").asText());
+			
 			allDevices.add(newDevice);
 		}
 
