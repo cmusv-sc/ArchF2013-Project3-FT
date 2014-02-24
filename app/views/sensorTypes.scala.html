@@ -102,14 +102,13 @@
         @select(
         		sensorTypeForm("sensorCategoryName"), 
                 options(metadata.SensorCategory.allSensorCategoryName()),
-     			'_label -> "Parent Device",
+     			'_label -> "Sensor Category",
                 '_error -> sensorTypeForm.globalError
         		)
         		
          @inputText(
                 sensorTypeForm("sensorTypeUserDefinedFields"), 
-                '_label -> "Interpreter",                 
-                'placeholder-> "y = 0.7506 * x + 32",                 
+                '_label -> "User Defined Fields",                     
                 '_error -> sensorTypeForm.globalError                                
         )
         <input class="btn" type="submit" value="Register">

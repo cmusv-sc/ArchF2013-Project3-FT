@@ -64,8 +64,8 @@ public class SensorTypeController extends Controller {
 		if (interpreter!=null && !interpreter.isEmpty()) {
 			jsonData.put("interpreter", Double.valueOf(interpreter));
 		}
-		jsonData.put("sensorTypeUserDefinedFields", st.field("sensorTypeUserDefinedFields").value());
 		jsonData.put("sensorCategoryName", st.field("sensorCategoryName").value());
+		jsonData.put("sensorTypeUserDefinedFields", st.field("sensorTypeUserDefinedFields").value());
 
 		// create the item by calling the API
 		JsonNode response = SensorType.create(jsonData);
