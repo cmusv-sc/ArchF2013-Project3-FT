@@ -34,11 +34,11 @@ public class DeviceTypeController extends Controller {
 	final static Form<DeviceType> deviceTypeForm = Form.form(DeviceType.class);
 
 	public static Result deviceTypes() {
-		if (Secured.isLoggedIn())
-			return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
-		else
-			return forbidden();
-
+//		if (Secured.isLoggedIn())
+//			return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
+//		else
+//			return forbidden();
+		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
 	}
 
 	public static Result newDeviceType() {
