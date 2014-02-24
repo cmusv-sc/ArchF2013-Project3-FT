@@ -45,7 +45,8 @@ public class BugReportController extends Controller {
         report.setDescription(filledForm.get().getDescription());
         report.save();
 
-        return ok(bugReporting.render(BugReport.getAll(), bugReportForm));
+        flash("success","A bug report has been created");
+        return redirect(routes.BugReportController.list());
     }
 
     @play.db.jpa.Transactional
