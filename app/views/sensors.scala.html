@@ -49,26 +49,26 @@
 	@helper.form(action = routes.SensorController.newSensor) {
         		
         		@inputText(
-                sensorForm("sensorName"), 
-                '_label -> "Sensor Name",
-                '_error -> sensorForm.globalError                                
+		                sensorForm("sensorName"), 
+		                '_label -> "Sensor Name",
+		                '_error -> sensorForm.globalError                                
             	)
         		@select(
-        				sensorForm("sensorTypeName"), 
-                options(metadata.SensorType.allSensorTypeName()),
-        				'_label -> "Sensor Type",
-                '_error -> sensorForm.globalError
+		        		sensorForm("sensorTypeName"), 
+		                options(metadata.SensorType.allSensorTypeName()),
+		        		'_label -> "Sensor Type",
+		                '_error -> sensorForm.globalError
         		)
         		@select(
         				sensorForm("deviceUri"), 
-                options(metadata.Device.allDeviceUri()),
+               			options(metadata.Device.allDeviceUri()),
         				'_label -> "Parent Device",
-                '_error -> sensorForm.globalError
+                		'_error -> sensorForm.globalError
         		)
         		@inputText(
-                sensorForm("sensorUserDefinedFields"), 
-                '_label -> "User Defined Fields",
-                '_error -> sensorForm.globalError                                
+		                sensorForm("sensorUserDefinedFields"), 
+		                '_label -> "User Defined Fields",
+		                '_error -> sensorForm.globalError                                
             	)
        
       

@@ -36,6 +36,7 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
+						System.out.println(response.getBody());
 						if ((response.getStatus() == 200 || response
 								.getStatus() == 201)
 								&& !response.getBody().contains("not")) {
@@ -61,6 +62,7 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
+						System.out.println(response.getBody());
 						if ((response.getStatus() == 201 || response
 								.getStatus() == 200)
 								&& !response.getBody().contains("not")) {
@@ -85,6 +87,7 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
+						System.out.println(response.getBody());
 						if ((response.getStatus() == 200 || response
 								.getStatus() == 201)
 								&& !response.getBody().contains("not")) {
