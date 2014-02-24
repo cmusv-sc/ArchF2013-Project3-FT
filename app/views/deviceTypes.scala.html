@@ -13,8 +13,8 @@
 	    	<td>Device Type Name</td>   
 	    	<td>Manufacturer</td>
 	    	<td>Version</td>
-	        <td>deviceTypeUserDefinedFields</td>
-	    	<td>sensorTypeNames</td>
+	    	<td>Sensor Type Names</td>
+	        <td>User Defined Fields</td>
 	    						
 	    	@if(session.get("email")){
 	    		<td>Operation</td>
@@ -26,9 +26,9 @@
             <td>@deviceType.getDeviceTypeName()</td>
             <td>@deviceType.getManufacturer()</td>
             <td>@deviceType.getVersion()</td>
-	    	<td>@deviceType.getDeviceTypeUserDefinedFields()</td>
 	    	<td>@deviceType.getSensorTypeNames()</td>
-            @if(session.get("email")){
+            <td>@deviceType.getDeviceTypeUserDefinedFields()</td>
+	    	@if(session.get("email")){
             		<td>
              			@form(routes.DeviceTypeController.deleteDeviceType()){
                		 		<input name="idHolder" type="hidden" value="@deviceType.getDeviceTypeName()">
