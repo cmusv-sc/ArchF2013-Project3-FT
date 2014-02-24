@@ -208,7 +208,7 @@ public class Device {
 						.addSensorTypeName(sensorTypeNamesJson.get(j).asText());
 			}
 
-			newDevice.setRepresentation(json.findPath("locationInterpreter")
+			newDevice.setRepresentation(json.findPath("representation")
 					.asText());
 			newDevice.setLongitude(json.findPath("longitude").asDouble());
 			newDevice.setLatitude(json.findPath("latitude").asDouble());
