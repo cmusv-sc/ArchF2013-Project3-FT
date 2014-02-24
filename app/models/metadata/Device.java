@@ -207,12 +207,12 @@ public class Device {
 				newDevice
 						.addSensorTypeName(sensorTypeNamesJson.get(j).asText());
 			}
-
-			newDevice.setRepresentation(json.findPath("representation")
+			JsonNode locationNode = json.findPath("location");
+			newDevice.setRepresentation(locationNode.findPath("representation")
 					.asText());
-			newDevice.setLongitude(json.findPath("longitude").asDouble());
-			newDevice.setLatitude(json.findPath("latitude").asDouble());
-			newDevice.setAltitude(json.findPath("altitude").asDouble());
+			newDevice.setLongitude(locationNode.findPath("longitude").asDouble());
+			newDevice.setLatitude(locationNode.findPath("latitude").asDouble());
+			newDevice.setAltitude(locationNode.findPath("altitude").asDouble());
 
 			newDevice.setDeviceUserDefinedFields(json.findPath(
 					"deviceUserDefinedFields").asText());

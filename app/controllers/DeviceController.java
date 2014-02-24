@@ -40,7 +40,11 @@ public class DeviceController extends Controller {
     	Form<Device> dc = deviceForm.bindFromRequest();
 		
 		ObjectNode jsonData = Json.newObject();
-		jsonData.put("uri", dc.field("uri").value());
+		
+		String uri = dc.field("uri").value();
+		if (uri !=null && !uri.isEmpty()) {
+			jsonData.put("uri", dc.field("uri").value());
+		}
 		jsonData.put("deviceTypeName", dc.field("deviceTypeName").value());
 		
 		ObjectNode locationData = Json.newObject();

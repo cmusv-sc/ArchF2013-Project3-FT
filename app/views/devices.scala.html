@@ -60,15 +60,16 @@
     @form(routes.DeviceController.newDevice()) {
         		
         		@inputText(
-                deviceForm("uri"), 
-                '_label -> "URI",
-                '_error -> deviceForm.globalError                                
-            )
+	                deviceForm("uri"), 
+	                '_label -> "URI",
+	                '_helper -> "Required",
+	                '_error -> deviceForm.globalError                                
+            	)
         		@select(
-        				deviceForm("deviceTypeName"), 
-                options(metadata.DeviceType.allDeviceTypeName()),
-        				'_label -> "Device Type Name",
-                '_error -> deviceForm.globalError
+        			deviceForm("deviceTypeName"), 
+                	options(metadata.DeviceType.allDeviceTypeName()),
+        			'_label -> "Device Type Name",
+              	  	'_error -> deviceForm.globalError
         		)
 		        		
 		        @inputText(

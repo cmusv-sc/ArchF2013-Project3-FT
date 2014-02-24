@@ -36,9 +36,8 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
-						if ((response.getStatus() == 200 || response
-								.getStatus() == 201)
-								&& !response.getBody().contains("not")) {
+						if (response.getStatus() == 200 || response
+								.getStatus() == 201) {
 							return response.asJson();
 						} else { // no response from the server
 							return createResponse(ResponseType.GETERROR);
