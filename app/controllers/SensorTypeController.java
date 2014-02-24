@@ -58,11 +58,11 @@ public class SensorTypeController extends Controller {
 		}
 		String unit = st.field("unit").value();
 		if (unit!=null && !unit.isEmpty()) {
-			jsonData.put("unit", Double.valueOf(unit));
+			jsonData.put("unit",unit);
 		}
 		String interpreter = st.field("interpreter").value();
 		if (interpreter!=null && !interpreter.isEmpty()) {
-			jsonData.put("interpreter", Double.valueOf(interpreter));
+			jsonData.put("interpreter", interpreter);
 		}
 		jsonData.put("sensorCategoryName", st.field("sensorCategoryName").value());
 		jsonData.put("sensorTypeUserDefinedFields", st.field("sensorTypeUserDefinedFields").value());

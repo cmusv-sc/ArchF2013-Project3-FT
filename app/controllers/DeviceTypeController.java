@@ -46,7 +46,10 @@ public class DeviceTypeController extends Controller {
 
 		ObjectNode jsonData = Json.newObject();
 		// jsonData.put("id", UUID.randomUUID().toString());
-		jsonData.put("deviceTypeName", dt.field("deviceTypeName").value());
+		String deviceTypeName = dt.field("deviceTypeName").value();
+		if (deviceTypeName!=null && !deviceTypeName.isEmpty()) {
+			jsonData.put("deviceTypeName", deviceTypeName);	
+		}
 		jsonData.put("manufacturer", dt.field("manufacturer").value());
 		jsonData.put("version", dt.field("version").value());
 		jsonData.put("deviceTypeUserDefinedFields",

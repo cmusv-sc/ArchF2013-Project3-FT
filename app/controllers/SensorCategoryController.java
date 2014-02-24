@@ -42,7 +42,10 @@ public class SensorCategoryController extends Controller {
 		Form<SensorCategory> dc = sensorCategoryForm.bindFromRequest();
 
 		ObjectNode jsonData = Json.newObject();
-		jsonData.put("sensorCategoryName", dc.field("Name").value());
+		String sensorCategoryName = dc.field("Name").value();
+		if (sensorCategoryName!=null && !sensorCategoryName.isEmpty()) {
+			jsonData.put("sensorCategoryName", sensorCategoryName);	
+		}
 		jsonData.put("purpose", dc.field("Purpose").value());
 
 		// create the item by calling the API

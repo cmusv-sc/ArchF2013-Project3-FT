@@ -44,7 +44,11 @@ public class SensorController extends Controller {
 		Form<Sensor> dc = sensorForm.bindFromRequest();
 
 		ObjectNode jsonData = Json.newObject();
-		jsonData.put("sensorName", dc.field("sensorName").value());
+		String sensorName = dc.field("sensorName").value();
+		if (sensorName!=null && !sensorName.isEmpty()) {
+			jsonData.put("sensorName", sensorName);	
+		}
+		
 		jsonData.put("sensorTypeName", dc.field("sensorTypeName").value());
 		jsonData.put("deviceUri", dc.field("deviceUri").value());
 		jsonData.put("sensorUserDefinedFields", dc.field("sensorUserDefinedFields").value());

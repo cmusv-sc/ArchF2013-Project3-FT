@@ -36,8 +36,14 @@
     
     @form(routes.SensorCategoryController.newSensorCategory()) {
         
-        @inputText(sensorCategoryForm("Name"))
-        @inputText(sensorCategoryForm("Purpose")) 
+        @inputText(
+        	sensorCategoryForm("Name"),
+        	'_label -> "Name * (Please DO NOT contain spaces)"
+        )
+        @inputText(
+        	sensorCategoryForm("Purpose"),
+        	'_label -> "Purpose"
+        ) 
 
         <input type="submit" value="Create">
         

@@ -60,7 +60,7 @@
          
         @inputText(
                 sensorTypeForm("sensorTypeName"), 
-                '_label -> "Sensor Type Name",     
+                '_label -> "Sensor Type Name * (Please DO NOT contain spaces)",     
                 'size -> 30,
                 'placeholder-> "the name of this sensor type",           
                 '_error -> sensorTypeForm.globalError                                
@@ -79,12 +79,12 @@
                 '_error -> sensorTypeForm.globalError                                
         )
         @inputText(
-                sensorTypeForm("maxValue"), 
+                sensorTypeForm("maximumValue"), 
                 '_label -> "Max Value",
                 '_error -> sensorTypeForm.globalError                                
         )
         @inputText(
-                sensorTypeForm("minValue"), 
+                sensorTypeForm("minimumValue"), 
                 '_label -> "Min Value",                 
                 '_error -> sensorTypeForm.globalError                                
         )
