@@ -36,8 +36,9 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
-						if (response.getStatus() == 200
-								|| response.getStatus() == 201) {
+						if ((response.getStatus() == 200 || response
+								.getStatus() == 201)
+								&& !response.getBody().contains("not")) {
 							return response.asJson();
 						} else { // no response from the server
 							return createResponse(ResponseType.GETERROR);
@@ -60,8 +61,9 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
-						if (response.getStatus() == 201
-								|| response.getStatus() == 200) {
+						if ((response.getStatus() == 201 || response
+								.getStatus() == 200)
+								&& !response.getBody().contains("not")) {
 							return createResponse(ResponseType.SUCCESS);
 						} else { // other response status from the server
 							return createResponse(ResponseType.SAVEERROR);
@@ -83,8 +85,9 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
-						if (response.getStatus() == 200
-								|| response.getStatus() == 201) {
+						if ((response.getStatus() == 200 || response
+								.getStatus() == 201)
+								&& !response.getBody().contains("not")) {
 							return createResponse(ResponseType.SUCCESS);
 						} else { // no response from the server
 							return createResponse(ResponseType.DELETEERROR);
