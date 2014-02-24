@@ -27,83 +27,127 @@ import play.db.jpa.*;
 
 public class BugReport {
 
-    private static final long serialVersionUID = 1L;
+	@Id
+	public Long id;
 
-    @Id
-    public Long id;
-    
-    @Constraints.Required
-    public String title;
+	@Constraints.Required
+	private String title;
 
-    public String description;
-    
-    public boolean solved = false;
-    
-    @Formats.DateTime(pattern="MM/dd/yy")
-    public java.sql.Date creationDate;
+	@Constraints.Required
+	private String email;
 
-    @Formats.DateTime(pattern="MM/dd/yy")
-    public java.sql.Date updateDate;
-    
-   // @ManyToOne
-    //public User owner;
-    @play.db.jpa.Transactional
-    public static List getAll() {
-        Connection connection = DB.getConnection();
-        //This should clearly not be here, but for the moment i'll leave it
-        //we need to learn how H2 works, it's an in-memory db so i think there's two instances running
-        try{
-            Query query = JPA.em().createNativeQuery("CREATE TABLE BUG_REPORT ( title VARCHAR(255), organization_name VARCHAR(255), email VARCHAR(255), description VARCHAR(255) )");
-            query.executeUpdate();
-            System.out.println("created bug report table");
-        }
-        catch(Exception e){
-            System.out.println("Didn't create table");
-        }
+	@Constraints.Required
+	private String name;
 
+	private String organization;
 
-        //org.hibernate.dialect.Dialect does not have boolean type registered
-        Query query2 = JPA.em().createNativeQuery("SELECT * FROM BUG_REPORT");
-        List<Object[]> list = query2.getResultList();
-        return list;
-    }
+	private String description;
 
-    @play.db.jpa.Transactional
-    public boolean save(){
-        Connection connection = DB.getConnection();
-        //"INSERT INTO BUG_REPORT VALUES ("Name")";
-        //Query query = JPA.em().createNativeQuery("INSERT INTO BUG_REPORT VALUES (" + this.title + ")" );
-        //query.executeUpdate();
-        try{
-            //organization_name VARCHAR(255), email VARCHAR(255), description VARCHAR(255), CREATED_AT TIMESTAMP
-            Statement statement = connection.createStatement();
-            String queryText = "INSERT INTO BUG_REPORT (title, organization_name, email, description) VALUES ('" + this.title + "', 'CMU', 'test@test.com', '"+this.description+"')";
-            statement.executeUpdate(queryText);
-        }
-        catch(Exception e){
-            System.out.println(e.toString());
-        }
-        return true;
-    }
+	public boolean solved = false;
 
-    public String toString() {
-        return "BugReport #" + id;
-    }
-    
-    public String getTitle(){
-        return this.title;
-    }
+	@Formats.DateTime(pattern = "MM/dd/yy")
+	public java.sql.Date creationDate;
 
-    public void setTitle(String title){
-        this.title = title;
-    }
+	@Formats.DateTime(pattern = "MM/dd/yy")
+	public java.sql.Date updateDate;
 
-    public String getDescription(){
-        return this.description;
-    }
+	// @ManyToOne
+	// public User owner;
+	@play.db.jpa.Transactional
+	public static List getAll() {
+		Connection connection = DB.getConnection();
+		// This should clearly not be here, but for the moment i'll leave it
+		// we need to learn how H2 works, it's an in-memory db so i think
+		// there's two instances running
+		try {
+			Query query = JPA
+					.em()
+					.createNativeQuery(
+							"CREATE TABLE BUG_REPORT ( title VARCHAR(255), name VARCHAR(255), email VARCHAR(255), organization VARCHAR(255), description VARCHAR(255) )");
+			query.executeUpdate();
+			System.out.println("created bug report table");
+		} catch (Exception e) {
+			System.out.println("Didn't create table");
+		}
 
-    public void setDescription(String description){
-        this.description = description;
-    }
+		// org.hibernate.dialect.Dialect does not have boolean type registered
+		Query query2 = JPA.em().createNativeQuery("SELECT * FROM BUG_REPORT");
+		List<Object[]> list = query2.getResultList();
+		return list;
+	}
+
+	@play.db.jpa.Transactional
+	public boolean save() {
+		Connection connection = DB.getConnection();
+		// "INSERT INTO BUG_REPORT VALUES ("Name")";
+		// Query query =
+		// JPA.em().createNativeQuery("INSERT INTO BUG_REPORT VALUES (" +
+		// this.title + ")" );
+		// query.executeUpdate();
+		try {
+			// organization_name VARCHAR(255), email VARCHAR(255), description
+			// VARCHAR(255), CREATED_AT TIMESTAMP
+			Statement statement = connection.createStatement();
+			String queryText = "INSERT INTO BUG_REPORT (title, name, email, organization, description) VALUES ('"
+					+ this.title
+					+ "', '"
+					+ this.name
+					+ "', '"
+					+ this.email
+					+ "', '"
+					+ this.organization
+					+ "', '"
+					+ this.description
+					+ "')";
+			statement.executeUpdate(queryText);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return true;
+	}
+
+	public String toString() {
+		return "BugReport #" + id;
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(String organization) {
+		this.organization = organization;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }

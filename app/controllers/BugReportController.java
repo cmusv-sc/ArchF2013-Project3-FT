@@ -38,8 +38,11 @@ public class BugReportController extends Controller {
     	// Validations
     	BugReport report = new BugReport();
         //"INSERT INTO BUG_REPORT (title) VALUES ('" + this.title + "', 'CMU', '"+this.description+"')"
-        report.setTitle(filledForm.get().title);
-        report.setDescription(filledForm.get().description);
+        report.setTitle(filledForm.get().getTitle());
+        report.setName(filledForm.get().getName());
+        report.setEmail(filledForm.get().getEmail());
+        report.setOrganization(filledForm.get().getOrganization());
+        report.setDescription(filledForm.get().getDescription());
         report.save();
 
         return ok(bugReporting.render(BugReport.getAll(), bugReportForm));
@@ -55,7 +58,10 @@ public class BugReportController extends Controller {
             System.out.println(e[0] +""+ e[1] + "e" + e.length); 
             BugReport bug = new BugReport();
             bug.setTitle(e[0].toString());
-            bug.setDescription(e[3].toString());
+            bug.setName(e[1].toString());
+            bug.setEmail(e[2].toString());
+            bug.setOrganization(e[3].toString());
+            bug.setDescription(e[4].toString());
             bugList.add(bug);
         } 
 
