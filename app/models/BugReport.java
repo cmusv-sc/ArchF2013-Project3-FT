@@ -89,15 +89,15 @@ public class BugReport {
 			// VARCHAR(255), CREATED_AT TIMESTAMP
 			Statement statement = connection.createStatement();
 			String queryText = "INSERT INTO BUG_REPORT (title, name, email, organization, description) VALUES ('"
-					+ this.title
+					+ this.title.replaceAll("\'", "\'\'")
 					+ "', '"
-					+ this.name
+					+ this.name.replaceAll("\'", "\'\'")
 					+ "', '"
-					+ this.email
+					+ this.email.replaceAll("\'", "\'\'")
 					+ "', '"
-					+ this.organization
+					+ this.organization.replaceAll("\'", "\'\'")
 					+ "', '"
-					+ this.description
+					+ this.description.replaceAll("\'", "\'\'")
 					+ "')";
 			statement.executeUpdate(queryText);
 		} catch (Exception e) {
