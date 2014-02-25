@@ -84,8 +84,4 @@ public class BugReportController extends Controller {
     }
     */
 
-    public static Result solveReport(){
-        return TODO;
-    }
-
 }
