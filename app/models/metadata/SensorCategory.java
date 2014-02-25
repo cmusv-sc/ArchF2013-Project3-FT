@@ -62,14 +62,16 @@ public class SensorCategory {
 		this.purpose = purpose;
 	}
 
-	// Find
 	public static SensorCategory find(String id) {
 		SensorCategory sensorCategory = new SensorCategory();
 		sensorCategory.setId(id);
 		return sensorCategory;
 	}
 
-	// All
+	/**
+	 * Generate the list of all sensor categories
+	 * @return a list of all the sensor categories
+	 */
 	public static List<SensorCategory> all() {
 
 		List<SensorCategory> sensorCategories = new ArrayList<SensorCategory>();
@@ -94,15 +96,29 @@ public class SensorCategory {
 		return sensorCategories;
 	}
 
+	/**
+	 * Create a new sensor category
+	 * @param jsonData
+	 * @return
+	 */
 	public static JsonNode create(JsonNode jsonData) {
 		return APICall.postAPI(ADD_SENSOR_CATEGOTY_CALL, jsonData);
 	}
 
+	/**
+	 * Delete a sensor category 
+	 * @param sensorCategoryName
+	 * @return
+	 */
 	public static JsonNode delete(String sensorCategoryName) {
 		return APICall.deleteAPI(DELETE_SENSOR_CATEGOTY_CALL
 				+ sensorCategoryName);
 	}
 	
+	/**
+	 * Generate a list of sensor category names
+	 * @return a list of sensor category names
+	 */
 	public static List<String> allSensorCategoryName() {
 		List<SensorCategory> allList = all();
 		List<String> resultList = new ArrayList<String>();

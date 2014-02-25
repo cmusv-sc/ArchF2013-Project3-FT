@@ -71,10 +71,6 @@ public class BugReportController extends Controller {
 			bug.setDescription(e[4].toString());
 			bugList.add(bug);
 		}
-
-		// for()
-		// }
-
 		return ok(bugs.render(bugList));
 	}
 
