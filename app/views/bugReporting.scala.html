@@ -1,10 +1,12 @@
-@(bugReports: Collection[BugReport], bugReportForm: play.data.Form[BugReport])
+@(bugReportForm: play.data.Form[BugReport])
 
 @import helper._
 @import helper.twitterBootstrap._
 
 @main("Bug Report") {
     
+    @flash_message()
+        
     @helper.form(action = routes.BugReportController.newReport) {
         
         <fieldset>

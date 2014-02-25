@@ -24,64 +24,66 @@ import java.util.*;
 
 public class BugReportController extends Controller {
 	final static Form<BugReport> bugReportForm = Form.form(BugReport.class);
-	
-    @play.db.jpa.Transactional
-    public static Result reports() {
-        BugReport bugReport = new BugReport();
-    	return ok(bugReporting.render(BugReport.getAll(), bugReportForm));
-    }
 
-    @play.db.jpa.Transactional
-    public static Result newReport() {
-    	Form<BugReport> filledForm = bugReportForm.bindFromRequest();
-        
-    	// Validations
-    	BugReport report = new BugReport();
-        //"INSERT INTO BUG_REPORT (title) VALUES ('" + this.title + "', 'CMU', '"+this.description+"')"
-        report.setTitle(filledForm.get().getTitle());
-        report.setName(filledForm.get().getName());
-        report.setEmail(filledForm.get().getEmail());
-        report.setOrganization(filledForm.get().getOrganization());
-        report.setDescription(filledForm.get().getDescription());
-        report.save();
+	@play.db.jpa.Transactional
+	public static Result reports() {
+		return ok(bugReporting.render(bugReportForm));
+	}
 
-        flash("success","A bug report has been created");
-        return redirect(routes.BugReportController.list());
-    }
+	@play.db.jpa.Transactional
+	public static Result newReport() {
+		Form<BugReport> filledForm = bugReportForm.bindFromRequest();
 
-    @play.db.jpa.Transactional
-    public static Result list() {
-        BugReport bugReport = new BugReport();
-        List<Object[]> list = BugReport.getAll();
-        LinkedList<BugReport> bugList = new LinkedList();
-        //title VARCHAR(255), organization_name VARCHAR(255), email VARCHAR(255), description
-        for(Object[] e : list) { 
-            System.out.println(e[0] +""+ e[1] + "e" + e.length); 
-            BugReport bug = new BugReport();
-            bug.setTitle(e[0].toString());
-            bug.setName(e[1].toString());
-            bug.setEmail(e[2].toString());
-            bug.setOrganization(e[3].toString());
-            bug.setDescription(e[4].toString());
-            bugList.add(bug);
-        } 
+		BugReport report = new BugReport("", "", "", "", "", false, null, null);
+		try {
+			// Validations
+			report.setTitle(filledForm.get().getTitle());
+			report.setName(filledForm.get().getName());
+			report.setEmail(filledForm.get().getEmail());
+			report.setOrganization(filledForm.get().getOrganization());
+			report.setDescription(filledForm.get().getDescription());
 
-           // for()
-        //}
+			report.save();
+			return redirect(routes.BugReportController.list());
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			flash("error", "Some fields are empty or contain illegal text");
+		}
+		
+		return ok(bugReporting.render(bugReportForm));
 
-        return ok(bugs.render(bugList));
-    }
+	}
 
-    /*
-    public static Result authenticate() {
-        Form<Login> loginForm = form(Login.class).bindFromRequest();
-        if(loginForm.hasErrors())
-            return badRequest(login.render(loginForm));
-        else {
-            session("email", loginForm.get().email);
-            return redirect( routes.DeviceTypeController.deviceTypes() );
-        }
-    }
-    */
+	@play.db.jpa.Transactional
+	public static Result list() {
+		BugReport bugReport = new BugReport();
+		List<Object[]> list = BugReport.getAll();
+		LinkedList<BugReport> bugList = new LinkedList();
+		// title VARCHAR(255), organization_name VARCHAR(255), email
+		// VARCHAR(255), description
+		for (Object[] e : list) {
+			System.out.println(e[0] + "" + e[1] + "e" + e.length);
+			BugReport bug = new BugReport();
+			bug.setTitle(e[0].toString());
+			bug.setName(e[1].toString());
+			bug.setEmail(e[2].toString());
+			bug.setOrganization(e[3].toString());
+			bug.setDescription(e[4].toString());
+			bugList.add(bug);
+		}
+
+		// for()
+		// }
+
+		return ok(bugs.render(bugList));
+	}
+
+	/*
+	 * public static Result authenticate() { Form<Login> loginForm =
+	 * form(Login.class).bindFromRequest(); if(loginForm.hasErrors()) return
+	 * badRequest(login.render(loginForm)); else { session("email",
+	 * loginForm.get().email); return redirect(
+	 * routes.DeviceTypeController.deviceTypes() ); } }
+	 */
 
 }

@@ -17,11 +17,15 @@
 package models;
 
 import java.util.*;
+
 import javax.persistence.*;
 
 import play.data.format.*;
 import play.data.validation.*;
+
 import java.sql.*;
+import java.sql.Date;
+
 import play.db.*;
 import play.db.jpa.*;
 
@@ -40,6 +44,23 @@ public class BugReport {
 	private String name;
 
 	private String organization;
+
+	public BugReport(){
+		
+	}
+	public BugReport(String title, String email, String name,
+			String organization, String description, boolean solved,
+			Date creationDate, Date updateDate) {
+		super();
+		this.title = title;
+		this.email = email;
+		this.name = name;
+		this.organization = organization;
+		this.description = description;
+		this.solved = solved;
+		this.creationDate = creationDate;
+		this.updateDate = updateDate;
+	}
 
 	private String description;
 
