@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class APICall {
 	public static enum ResponseType {
-		SUCCESS, GETERROR, SAVEERROR, DELETEERROR, TIMEOUT
+		SUCCESS, GETERROR, SAVEERROR, DELETEERROR, RESOLVEERROR, TIMEOUT, UNKNOWN
 	}
 
 	public static JsonNode callAPI(String apiString) {
@@ -104,7 +104,7 @@ public class APICall {
 
 	}
 
-	private static JsonNode createResponse(ResponseType type) {
+	public static JsonNode createResponse(ResponseType type) {
 		ObjectNode jsonData = Json.newObject();
 		switch (type) {
 		case SUCCESS:
@@ -118,6 +118,9 @@ public class APICall {
 			break;
 		case DELETEERROR:
 			jsonData.put("error", "Cannot be deleted on server");
+			break;
+		case RESOLVEERROR:
+			jsonData.put("error", "Cannot be resolved on server");
 			break;
 		case TIMEOUT:
 			jsonData.put("error", "No response/Timeout from server");

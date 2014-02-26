@@ -17,10 +17,17 @@
 package controllers;
 
 import models.BugReport;
+import models.metadata.Device;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.*;
+import util.APICall;
+import util.APICall.ResponseType;
 import views.html.*;
+
 import java.util.*;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 public class BugReportController extends Controller {
 	final static Form<BugReport> bugReportForm = Form.form(BugReport.class);
@@ -34,7 +41,7 @@ public class BugReportController extends Controller {
 	public static Result newReport() {
 		Form<BugReport> filledForm = bugReportForm.bindFromRequest();
 
-		BugReport report = new BugReport("", "", "", "", "", false, null, null);
+		BugReport report = new BugReport();
 		try {
 			// Validations
 			report.setTitle(filledForm.get().getTitle());
@@ -42,16 +49,15 @@ public class BugReportController extends Controller {
 			report.setEmail(filledForm.get().getEmail());
 			report.setOrganization(filledForm.get().getOrganization());
 			report.setDescription(filledForm.get().getDescription());
+			report.setSolved(0);
 
 			report.save();
 			return redirect(routes.BugReportController.list());
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
-			flash("error", "Some fields are empty or contain illegal text");
-		}
-		
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}	
 		return ok(bugReporting.render(bugReportForm));
-
 	}
 
 	@play.db.jpa.Transactional
@@ -62,13 +68,14 @@ public class BugReportController extends Controller {
 		// title VARCHAR(255), organization_name VARCHAR(255), email
 		// VARCHAR(255), description
 		for (Object[] e : list) {
-			System.out.println(e[0] + "" + e[1] + "e" + e.length);
 			BugReport bug = new BugReport();
-			bug.setTitle(e[0].toString());
-			bug.setName(e[1].toString());
-			bug.setEmail(e[2].toString());
-			bug.setOrganization(e[3].toString());
-			bug.setDescription(e[4].toString());
+			bug.setId((Integer)e[0]);
+			bug.setTitle(e[1].toString());
+			bug.setName(e[2].toString());
+			bug.setEmail(e[3].toString());
+			bug.setOrganization(e[4].toString());
+			bug.setDescription(e[5].toString());
+			bug.setSolved((Byte)e[6]);
 			bugList.add(bug);
 		}
 		return ok(bugs.render(bugList));
@@ -81,5 +88,46 @@ public class BugReportController extends Controller {
 	 * loginForm.get().email); return redirect(
 	 * routes.DeviceTypeController.deviceTypes() ); } }
 	 */
+	
+	@play.db.jpa.Transactional
+	public static Result deleteReport() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		
+		try {
+			int id = Integer.valueOf(df.field("idHolder").value());
+		
+			// Call the delete() method
+			if(BugReport.delete(id)){
+				Application.flashMsg(APICall.createResponse(ResponseType.SUCCESS));
+			}else {
+				Application.flashMsg(APICall.createResponse(ResponseType.DELETEERROR));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return redirect(routes.BugReportController.list());
+	}
+	
+	@play.db.jpa.Transactional
+	public static Result solveReport() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		
+		try {
+			int id = Integer.valueOf(df.field("idHolder").value());
+		
+			// Call the delete() method
+			if(BugReport.solve(id)){
+				Application.flashMsg(APICall.createResponse(ResponseType.SUCCESS));
+			}else {
+				Application.flashMsg(APICall.createResponse(ResponseType.RESOLVEERROR));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return redirect(routes.BugReportController.list());
+	}
+
 
 }
