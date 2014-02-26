@@ -54,6 +54,8 @@ public class APICall {
 	}
 
 	public static JsonNode postAPI(String apiString, JsonNode jsonData) {
+		System.out.println("call API POST: "+ apiString);
+		System.out.println("POST Json Data: "+jsonData);
 		Promise<WS.Response> responsePromise = WS.url(apiString).post(jsonData);
 		final Promise<JsonNode> bodyPromise = responsePromise
 				.map(new Function<WS.Response, JsonNode>() {
@@ -78,6 +80,7 @@ public class APICall {
 	}
 
 	public static JsonNode deleteAPI(String apiString) {
+		System.out.println("call API DELETE: "+apiString);
 		Promise<WS.Response> responsePromise = WS.url(apiString).delete();
 		final Promise<JsonNode> bodyPromise = responsePromise
 				.map(new Function<WS.Response, JsonNode>() {
