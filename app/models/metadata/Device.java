@@ -18,7 +18,6 @@ package models.metadata;
 
 import java.util.*;
 
-import scala.reflect.internal.Trees.This;
 import util.APICall;
 
 //import com.fasterxml.jackson.databind.JsonNode;
@@ -40,16 +39,14 @@ public class Device {
 	private List<String> sensorTypeNames = new ArrayList<String>();
 	private List<String> sensorNames = new ArrayList<String>();
 
-	// http://einstein.sv.cmu.edu/get_devices/json
+	/* The following are API*/
 	private static final String GET_DEVICES_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_GET_DEVICES + util.Constants.FORMAT;
 	private static final String ADD_DEVICE_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_ADD_DEVICE;
 	private static final String DELETE_DEVICE_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_DELETE_DEVICE;
-	private static List<Device> deviceFoundList = new ArrayList<Device>();
 
-	// Constructors
 
 	public Device() {
 	}
@@ -164,7 +161,7 @@ public class Device {
 	 * Method to call the API to delete a device
 	 * 
 	 * @param id
-	 * @return
+	 * @return the response json node from server
 	 */
 	public static JsonNode delete(String deviceName) {
 		return APICall.deleteAPI(DELETE_DEVICE_CALL + deviceName);
@@ -173,7 +170,7 @@ public class Device {
 	/**
 	 * Method to display all devices
 	 * 
-	 * @return List<Device> List of all devices
+	 * @return a list of all devices
 	 */
 	public static List<Device> all() {
 		List<Device> allDevices = new ArrayList<Device>();
@@ -220,39 +217,9 @@ public class Device {
 			allDevices.add(newDevice);
 		}
 
-		// update deviceFoundList
-		updateDeviceFoundList(allDevices);
-
 		return allDevices;
 	}
 
-	public static void updateDeviceFoundList(List<Device> newList) {
-		deviceFoundList.clear();
-		for (Device element : newList) {
-			deviceFoundList.add(element);
-		}
-	}
-
-	/**
-	 * Method to find a device by its id
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public static Device find(String id) {
-		// if find() is called the first time
-		if (deviceFoundList.size() == 0)
-			deviceFoundList = Device.all();
-		for (Device d : deviceFoundList) {
-			if (d.getId().equals(id)) {
-				return d;
-			}
-		}
-		// if not found, return device_id as the uri
-		Device d = new Device();
-		// d.setUri(id);
-		return d;
-	}
 
 	/**
 	 * Method to display all devices' name with id

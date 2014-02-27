@@ -24,6 +24,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import util.APICall;
 
+/**
+ * @author lyman
+ *
+ */
 public class Sensor {
 	private String id;
 	private String sensorName;
@@ -102,7 +106,12 @@ public class Sensor {
 		this.sensorUserDefinedFields = sensorUserDefinedFields;
 	}
 
-	// NEED TO CALL DEVICE AND SENSORTYPE API!
+
+	/**
+	 * Method to display all sensors
+	 * 
+	 * @return a list of all sensors
+	 */
 	public static List<Sensor> all() {
 		List<Sensor> allSensors = new ArrayList<Sensor>();
 

@@ -143,20 +143,18 @@ public class DeviceType {
 	/**
 	 * Method to display all devices
 	 * 
-	 * @return List<Device> List of all devices
+	 * @return List of all device types
 	 */
 	public static List<DeviceType> all() {
 
 		List<DeviceType> allDeviceTypes = new ArrayList<DeviceType>();
 
-		// API Call: http://einstein.sv.cmu.edu/get_device_types/json
 		JsonNode deviceTypesNode = APICall.callAPI(GET_DEVICE_TYPES_CALL);
 
 		if (deviceTypesNode == null || deviceTypesNode.has("error")
 				|| !deviceTypesNode.isArray())
 			return allDeviceTypes;
 
-		// id, name, manufacturer, version
 		for (int i = 0; i < deviceTypesNode.size(); i++) {
 			JsonNode json = deviceTypesNode.path(i);
 			DeviceType newDeviceType = new DeviceType();

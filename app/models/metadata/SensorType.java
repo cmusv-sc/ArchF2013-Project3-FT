@@ -145,6 +145,10 @@ public class SensorType {
 		this.sensorCategoryName = sensorCategoryName;
 	}
 
+	/**
+	 * Get a list of all sensor types
+	 * @return a list of all sensor types
+	 */
 	public static List<SensorType> all() {
 		List<SensorType> allSensorTypes = new ArrayList<SensorType>();
 
@@ -222,29 +226,14 @@ public class SensorType {
 		return APICall.postAPI(ADD_SENSOR_TYPE_CALL, jsonData);
 	}
 
+	/**
+	 * Method to call the API to delete a sensor type by its name
+	 * @param sensorTypeName
+	 * @return the response json from the API server
+	 */
 	public static JsonNode delete(String sensorTypeName) {
 		return APICall.deleteAPI(DELETE_SENSOR_TYPE_CALL + sensorTypeName);
 	}
 
-	/**
-	 * Find a sensor type by its id
-	 * 
-	 * @param id
-	 * @return The sensor type found
-	 */
-	public static SensorType find(String id) {
-		// if find() is called the first time
-		if (sensorTypeFoundList.size() == 0)
-			sensorTypeFoundList = SensorType.all();
-		for (SensorType s : sensorTypeFoundList) {
-			if (s.getId().equals(id)) {
-				return s;
-			}
-		}
-		// if not found, return sensor type id as the name
-		SensorType st = new SensorType();
-		st.setSensorTypeName(id);
-		return st;
-	}
 
 }

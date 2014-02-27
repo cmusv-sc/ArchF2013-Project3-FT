@@ -70,6 +70,7 @@ public class SensorCategory {
 
 	/**
 	 * Generate the list of all sensor categories
+	 * 
 	 * @return a list of all the sensor categories
 	 */
 	public static List<SensorCategory> all() {
@@ -99,7 +100,7 @@ public class SensorCategory {
 	/**
 	 * Create a new sensor category
 	 * @param jsonData
-	 * @return
+	 * @return the response from the API server
 	 */
 	public static JsonNode create(JsonNode jsonData) {
 		return APICall.postAPI(ADD_SENSOR_CATEGOTY_CALL, jsonData);
