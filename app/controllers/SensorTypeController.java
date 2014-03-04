@@ -33,7 +33,6 @@ public class SensorTypeController extends Controller {
 
 	public static Result sensorTypes() {
 		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
-
 	}
 
 	public static Result newSensorType() {
