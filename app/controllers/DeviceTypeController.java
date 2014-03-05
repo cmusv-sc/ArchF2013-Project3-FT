@@ -58,7 +58,6 @@ public class DeviceTypeController extends Controller {
 		ArrayNode arrayNode = jsonData.putArray("sensorTypeNames");
 		arrayNode.add(dt.field("sensorTypeNames").value());
 
-		System.out.println(jsonData);
 		// create the item by calling the API
 		JsonNode response = DeviceType.create(jsonData);
 

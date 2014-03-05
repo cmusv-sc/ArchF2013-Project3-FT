@@ -119,6 +119,6 @@ public class Constants {
 	public static final String NEW_GET_LATEST_DEVICE_READINGS = "getLastestReadingsFromAllDevices/temp/";
 
 	// get sensor reading 
-	public static final String NEW_GET_SENSOR_READING = "getSensorReading/"; 
+	public static final String NEW_GET_SENSOR_READING_IN_RANGE = "getSensorReadingInRange/"; 
 	
 }

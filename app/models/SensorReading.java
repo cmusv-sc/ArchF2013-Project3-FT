@@ -14,7 +14,7 @@ public class SensorReading {
 	private String endTime;
 
 	private static final String GET_SENSOR_READING_CALL = util.Constants.NEW_API_URL
-			+ util.Constants.NEW_GET_SENSOR_READING;
+			+ util.Constants.NEW_GET_SENSOR_READING_IN_RANGE;
 
 	public String getSensorName() {
 		return sensorName;
