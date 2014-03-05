@@ -1,0 +1,51 @@
+@(sensorReadingForm: play.data.Form[SensorReading])
+
+@import helper._
+
+
+@main("Sensor Reading") {
+	
+	@flash_message()
+        
+    @helper.form(action = routes.SensorReadingController.getSensorReadingsWithinRange) {
+           <fieldset>
+            <legend>Sensor Reading within a time range</legend>
+            
+            @select(
+        		sensorReadingForm("sensorName"), 
+                options(metadata.Sensor.allSensorName()),
+        		'_label -> "Sensor Name",
+                '_error -> sensorReadingForm.globalError
+        	)
+        	<div class="ui-picker">
+    
+	        	<p>
+	        	<label>Start Date</label>
+	            <input id="startDate" type="date" name="startDate" /> 
+	            </p>
+	            <p>
+	            <label>Start Time</label>
+	            <input id="startTime" name="startTime" type="text" value="09:30:00"/>
+	            </p>
+	        
+	        	<p>
+	        	<label>End Date</label>
+	            <input id="endDate" type="date" name="endDate" /> 
+	            </p>
+	            <p>
+	            <label>End Time</label>
+	            <input id="endTime" name="endTime" type="text" value="21:30:00" />
+	            </p> 
+           	</div>
+     	
+        </fieldset>
+       
+      	
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Submit">
+            <a href="@routes.Application.index" class="btn">Cancel</a>
+        </div>
+        
+    }
+   
+}
