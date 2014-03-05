@@ -166,4 +166,19 @@ public class Sensor {
 		return APICall.deleteAPI(DELETE_SENSOR_CALL + sensorName);
 	}
 
+	/**
+	 * Generate a list of all sensor names
+	 * 
+	 * @return a list of all sensor names
+	 */
+	public static List<String> allSensorName() {
+		List<Sensor> allList = all();
+		List<String> resultList = new ArrayList<String>();
+		for (Sensor element : allList) {
+			String elementName = element.getSensorName();
+			if (elementName != null)
+				resultList.add(elementName);
+		}
+		return resultList;
+	}
 }

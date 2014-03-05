@@ -118,4 +118,7 @@ public class Constants {
 	// get latest reading from all devices
 	public static final String NEW_GET_LATEST_DEVICE_READINGS = "getLastestReadingsFromAllDevices/temp/";
 
+	// get sensor reading 
+	public static final String NEW_GET_SENSOR_READING = "getSensorReading/"; 
+	
 }

@@ -48,5 +48,8 @@ POST    /delete/sensorCategories     controllers.SensorCategoryController.delete
 # dashboard
 GET		/dashboard				controllers.DashboardController.dashboard()
 
+# sensor reading
+GET		/sensorReading			controllers.SensorReadingController.sensorReadings()
+POST	/getSensorReadings		controllers.SensorReadingController.getSensorReadingsWithinRange() 
 
 

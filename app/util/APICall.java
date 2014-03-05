@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class APICall {
 	public static enum ResponseType {
-		SUCCESS, GETERROR, SAVEERROR, DELETEERROR, RESOLVEERROR, TIMEOUT, UNKNOWN
+		SUCCESS, GETERROR, SAVEERROR, DELETEERROR, RESOLVEERROR, TIMEOUT, CONVERSIONERROR, UNKNOWN
 	}
 
 	public static JsonNode callAPI(String apiString) {
@@ -36,8 +36,8 @@ public class APICall {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
-						if (response.getStatus() == 200 || response
-								.getStatus() == 201) {
+						if (response.getStatus() == 200
+								|| response.getStatus() == 201) {
 							return response.asJson();
 						} else { // no response from the server
 							return createResponse(ResponseType.GETERROR);
@@ -54,8 +54,8 @@ public class APICall {
 	}
 
 	public static JsonNode postAPI(String apiString, JsonNode jsonData) {
-		System.out.println("call API POST: "+ apiString);
-		System.out.println("POST Json Data: "+jsonData);
+		System.out.println("call API POST: " + apiString);
+		System.out.println("POST Json Data: " + jsonData);
 		Promise<WS.Response> responsePromise = WS.url(apiString).post(jsonData);
 		final Promise<JsonNode> bodyPromise = responsePromise
 				.map(new Function<WS.Response, JsonNode>() {
@@ -80,7 +80,7 @@ public class APICall {
 	}
 
 	public static JsonNode deleteAPI(String apiString) {
-		System.out.println("call API DELETE: "+apiString);
+		System.out.println("call API DELETE: " + apiString);
 		Promise<WS.Response> responsePromise = WS.url(apiString).delete();
 		final Promise<JsonNode> bodyPromise = responsePromise
 				.map(new Function<WS.Response, JsonNode>() {
@@ -124,6 +124,9 @@ public class APICall {
 			break;
 		case TIMEOUT:
 			jsonData.put("error", "No response/Timeout from server");
+			break;
+		case CONVERSIONERROR:
+			jsonData.put("error", "Conversion error");
 			break;
 		default:
 			jsonData.put("error", "Unknown errors");
