@@ -66,12 +66,16 @@
             	'_label -> "User Defined Fields",
             	'_error -> deviceTypeForm.globalError
             )
-            @select(
-            	deviceTypeForm("sensorTypeNames"),
-            	options(metadata.SensorType.allSensorTypeName()),
-            	'_label -> "Sensor Type Name",
-            	'_error -> deviceTypeForm.globalError
-            )
+            <dt>
+            	<label>Sensor Type Name</label>
+            </dt>
+            <dd>
+	            <select id="sensorTypeNames" name="sensorTypeNames" multiple>
+	            	@for(sensorTypeName <- metadata.SensorType.allSensorTypeName()) {
+	            		<option value="@sensorTypeName">@sensorTypeName</option>
+	            	}
+	            </select>
+            </dd>
            
       
         <div class="actions">

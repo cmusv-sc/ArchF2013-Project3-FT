@@ -16,7 +16,7 @@
  * */
 package controllers;
 
-import java.util.UUID;
+import java.util.*;
 
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.*;
@@ -42,21 +42,25 @@ public class DeviceTypeController extends Controller {
 	}
 
 	public static Result newDeviceType() {
-		Form<DeviceType> dt = deviceTypeForm.bindFromRequest();
-
+		//Form<DeviceType> dt = deviceTypeForm.bindFromRequest();
+		Map<String, String[]> dtFormEncoded = request().body().asFormUrlEncoded();
+		
 		ObjectNode jsonData = Json.newObject();
 		// jsonData.put("id", UUID.randomUUID().toString());
-		String deviceTypeName = dt.field("deviceTypeName").value();
+		String deviceTypeName =dtFormEncoded.get("deviceTypeName")[0];
 		if (deviceTypeName!=null && !deviceTypeName.isEmpty()) {
 			jsonData.put("deviceTypeName", deviceTypeName);	
 		}
-		jsonData.put("manufacturer", dt.field("manufacturer").value());
-		jsonData.put("version", dt.field("version").value());
+		jsonData.put("manufacturer", dtFormEncoded.get("manufacturer")[0]);
+		jsonData.put("version", dtFormEncoded.get("version")[0]);
 		jsonData.put("deviceTypeUserDefinedFields",
-				dt.field("deviceTypeUserDefinedFields").value());
+				dtFormEncoded.get("deviceTypeUserDefinedFields")[0]);
 
 		ArrayNode arrayNode = jsonData.putArray("sensorTypeNames");
-		arrayNode.add(dt.field("sensorTypeNames").value());
+		for (int i = 0; i < dtFormEncoded.get("sensorTypeNames").length; i++) {
+			arrayNode.add(dtFormEncoded.get("sensorTypeNames")[i]);
+		}
+		
 
 		// create the item by calling the API
 		JsonNode response = DeviceType.create(jsonData);
