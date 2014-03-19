@@ -51,6 +51,15 @@
         <input class="btn" type="submit" value="Create">
         <a href="@routes.SensorCategoryController.sensorCategories()" class="btn">Cancel</a>
     }
+    
+    @form(routes.SensorCategoryController.downloadSensorCategory()) {
+
+        <br>
+        <br>
+        <button type="submit" name="action" value="download">Download</button>
+    }
+    
+    
     }
     
 }
