@@ -46,7 +46,7 @@ public class APICall {
 				});
 
 		try {
-			return bodyPromise.get(5000L);
+			return bodyPromise.get(10000L);
 		} catch (Exception e) {
 			return createResponse(ResponseType.TIMEOUT);
 		}
@@ -72,7 +72,7 @@ public class APICall {
 					}
 				});
 		try {
-			return bodyPromise.get(5000L);
+			return bodyPromise.get(10000L);
 		} catch (Exception e) {
 			return createResponse(ResponseType.TIMEOUT);
 		}
@@ -97,7 +97,7 @@ public class APICall {
 					}
 				});
 		try {
-			return bodyPromise.get(5000L);
+			return bodyPromise.get(10000L);
 		} catch (Exception e) {
 			return createResponse(ResponseType.TIMEOUT);
 		}
