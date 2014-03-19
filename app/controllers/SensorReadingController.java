@@ -62,7 +62,7 @@ public class SensorReadingController extends Controller {
 				Application.flashMsg(resultNode);
 				return ok(sensorReading.render(sensorReadingForm));
 			}
-			return ok(resultNode.asText());
+			return ok(resultNode);
 
 		}catch(IllegalStateException e){
 			e.printStackTrace();
