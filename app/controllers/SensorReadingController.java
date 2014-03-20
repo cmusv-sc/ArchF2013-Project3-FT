@@ -17,14 +17,12 @@
 package controllers;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import models.SensorReading;
-import models.metadata.Sensor;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;

@@ -19,20 +19,18 @@ package controllers;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import models.metadata.Sensor;
 import models.metadata.SensorCategory;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
+import util.APICall;
+import util.APICall.ResponseType;
 import views.html.*;
 
 public class SensorCategoryController extends Controller {
@@ -48,6 +46,9 @@ public class SensorCategoryController extends Controller {
 		Form<SensorCategory> dc = sensorCategoryForm.bindFromRequest();
 
 		ObjectNode jsonData = Json.newObject();
+		try {
+			
+		
 		String sensorCategoryName = dc.field("Name").value();
 		if (sensorCategoryName!=null && !sensorCategoryName.isEmpty()) {
 			jsonData.put("sensorCategoryName", sensorCategoryName);	
@@ -59,6 +60,13 @@ public class SensorCategoryController extends Controller {
 
 		// flash the response message
 		Application.flashMsg(response);
+		} catch(IllegalStateException e){
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.CONVERSIONERROR));	
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
 		return ok(sensorCategories.render(SensorCategory.all(),
 				sensorCategoryForm));
 	}

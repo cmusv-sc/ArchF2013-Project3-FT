@@ -53,18 +53,19 @@
 		                '_label -> "Sensor Name * (Please DO NOT contain spaces)",
 		                '_error -> sensorForm.globalError                                
             	)
+            	@select(
+        				sensorForm("deviceUri"), 
+               			options(metadata.Device.allDeviceUri()),
+        				'_label -> "Parent Device",
+                		'_error -> sensorForm.globalError
+        		)
         		@select(
 		        		sensorForm("sensorTypeName"), 
 		                options(metadata.SensorType.allSensorTypeName()),
 		        		'_label -> "Sensor Type",
 		                '_error -> sensorForm.globalError
         		)
-        		@select(
-        				sensorForm("deviceUri"), 
-               			options(metadata.Device.allDeviceUri()),
-        				'_label -> "Parent Device",
-                		'_error -> sensorForm.globalError
-        		)
+        		
         		@inputText(
 		                sensorForm("sensorUserDefinedFields"), 
 		                '_label -> "User Defined Fields",

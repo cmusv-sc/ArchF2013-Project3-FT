@@ -17,7 +17,6 @@
 package controllers;
 
 import models.BugReport;
-import models.metadata.Device;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.*;
@@ -27,7 +26,6 @@ import views.html.*;
 
 import java.util.*;
 
-import com.fasterxml.jackson.databind.JsonNode;
 
 public class BugReportController extends Controller {
 	final static Form<BugReport> bugReportForm = Form.form(BugReport.class);

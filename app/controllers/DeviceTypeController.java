@@ -23,10 +23,11 @@ import com.fasterxml.jackson.databind.node.*;
 
 import play.libs.Json;
 import models.metadata.DeviceType;
-import models.metadata.SensorType;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.*;
+import util.APICall;
+import util.APICall.ResponseType;
 import views.html.*;
 
 @Security.Authenticated(Secured.class)
@@ -34,40 +35,46 @@ public class DeviceTypeController extends Controller {
 	final static Form<DeviceType> deviceTypeForm = Form.form(DeviceType.class);
 
 	public static Result deviceTypes() {
-//		if (Secured.isLoggedIn())
-//			return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
-//		else
-//			return forbidden();
+		// if (Secured.isLoggedIn())
+		// return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
+		// else
+		// return forbidden();
 		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
 	}
 
 	public static Result newDeviceType() {
-		//Form<DeviceType> dt = deviceTypeForm.bindFromRequest();
-		Map<String, String[]> dtFormEncoded = request().body().asFormUrlEncoded();
-		
-		ObjectNode jsonData = Json.newObject();
-		// jsonData.put("id", UUID.randomUUID().toString());
-		String deviceTypeName =dtFormEncoded.get("deviceTypeName")[0];
-		if (deviceTypeName!=null && !deviceTypeName.isEmpty()) {
-			jsonData.put("deviceTypeName", deviceTypeName);	
+		// Form<DeviceType> dt = deviceTypeForm.bindFromRequest();
+		Map<String, String[]> dtFormEncoded = request().body()
+				.asFormUrlEncoded();
+		try {
+			ObjectNode jsonData = Json.newObject();
+			String deviceTypeName = dtFormEncoded.get("deviceTypeName")[0];
+			if (deviceTypeName != null && !deviceTypeName.isEmpty()) {
+				jsonData.put("deviceTypeName", deviceTypeName);
+			}
+			jsonData.put("manufacturer", dtFormEncoded.get("manufacturer")[0]);
+			jsonData.put("version", dtFormEncoded.get("version")[0]);
+			jsonData.put("deviceTypeUserDefinedFields",
+					dtFormEncoded.get("deviceTypeUserDefinedFields")[0]);
+
+			ArrayNode arrayNode = jsonData.putArray("sensorTypeNames");
+			for (int i = 0; i < dtFormEncoded.get("sensorTypeNames").length; i++) {
+				arrayNode.add(dtFormEncoded.get("sensorTypeNames")[i]);
+			}
+
+			// create the item by calling the API
+			JsonNode response = DeviceType.create(jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		jsonData.put("manufacturer", dtFormEncoded.get("manufacturer")[0]);
-		jsonData.put("version", dtFormEncoded.get("version")[0]);
-		jsonData.put("deviceTypeUserDefinedFields",
-				dtFormEncoded.get("deviceTypeUserDefinedFields")[0]);
-
-		ArrayNode arrayNode = jsonData.putArray("sensorTypeNames");
-		for (int i = 0; i < dtFormEncoded.get("sensorTypeNames").length; i++) {
-			arrayNode.add(dtFormEncoded.get("sensorTypeNames")[i]);
-		}
-		
-
-		// create the item by calling the API
-		JsonNode response = DeviceType.create(jsonData);
-
-		// flash the response message
-		Application.flashMsg(response);
-
 		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
 	}
 

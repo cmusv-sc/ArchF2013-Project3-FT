@@ -16,7 +16,6 @@
  * */
 package controllers;
 
-import java.util.UUID;
 
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.*;
@@ -26,6 +25,8 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
+import util.APICall;
+import util.APICall.ResponseType;
 import views.html.*;
 
 public class SensorTypeController extends Controller {
@@ -39,38 +40,53 @@ public class SensorTypeController extends Controller {
 		Form<SensorType> st = sensorTypeForm.bindFromRequest();
 
 		ObjectNode jsonData = Json.newObject();
-		//jsonData.put("id", UUID.randomUUID().toString());
-		jsonData.put("sensorTypeName", st.field("sensorTypeName").value());
-		jsonData.put("manufacturer", st.field("manufacturer").value());
-		
-		String version = st.field("version").value();
-		if (version!=null && !version.isEmpty()) {
-			jsonData.put("version", Double.valueOf(version));
-		}
-		String maximumValue = st.field("maximumValue").value();
-		if (maximumValue!=null && !maximumValue.isEmpty()) {
-			jsonData.put("maximumValue", Double.valueOf(maximumValue));
-		}
-		String minimumValue = st.field("minimumValue").value();
-		if (minimumValue!=null && !minimumValue.isEmpty()) {
-			jsonData.put("minimumValue", Double.valueOf(minimumValue));
-		}
-		String unit = st.field("unit").value();
-		if (unit!=null && !unit.isEmpty()) {
-			jsonData.put("unit",unit);
-		}
-		String interpreter = st.field("interpreter").value();
-		if (interpreter!=null && !interpreter.isEmpty()) {
-			jsonData.put("interpreter", interpreter);
-		}
-		jsonData.put("sensorCategoryName", st.field("sensorCategoryName").value());
-		jsonData.put("sensorTypeUserDefinedFields", st.field("sensorTypeUserDefinedFields").value());
 
-		// create the item by calling the API
-		JsonNode response = SensorType.create(jsonData);
+		try {
 
-		// flash the response message
-		Application.flashMsg(response);
+			String sensorTypeName = st.field("sensorTypeName").value();
+			if (sensorTypeName != null && !sensorTypeName.isEmpty()) {
+				jsonData.put("sensorTypeName", sensorTypeName);
+			}
+			jsonData.put("manufacturer", st.field("manufacturer").value());
+
+			String version = st.field("version").value();
+			if (version != null && !version.isEmpty()) {
+				jsonData.put("version", Double.valueOf(version));
+			}
+			String maximumValue = st.field("maximumValue").value();
+			if (maximumValue != null && !maximumValue.isEmpty()) {
+				jsonData.put("maximumValue", Double.valueOf(maximumValue));
+			}
+			String minimumValue = st.field("minimumValue").value();
+			if (minimumValue != null && !minimumValue.isEmpty()) {
+				jsonData.put("minimumValue", Double.valueOf(minimumValue));
+			}
+			String unit = st.field("unit").value();
+			if (unit != null && !unit.isEmpty()) {
+				jsonData.put("unit", unit);
+			}
+			String interpreter = st.field("interpreter").value();
+			if (interpreter != null && !interpreter.isEmpty()) {
+				jsonData.put("interpreter", interpreter);
+			}
+			jsonData.put("sensorCategoryName", st.field("sensorCategoryName")
+					.value());
+			jsonData.put("sensorTypeUserDefinedFields",
+					st.field("sensorTypeUserDefinedFields").value());
+
+			// create the item by calling the API
+			JsonNode response = SensorType.create(jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+		} catch(IllegalStateException e){
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.CONVERSIONERROR));	
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+
 		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
 	}
 

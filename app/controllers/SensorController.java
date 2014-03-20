@@ -16,20 +16,16 @@
  * */
 package controllers;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.UUID;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import models.metadata.Device;
 import models.metadata.Sensor;
-import models.metadata.SensorType;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
+import util.APICall;
+import util.APICall.ResponseType;
 import views.html.*;
 
 public class SensorController extends Controller {
@@ -44,22 +40,30 @@ public class SensorController extends Controller {
 		Form<Sensor> dc = sensorForm.bindFromRequest();
 
 		ObjectNode jsonData = Json.newObject();
-		String sensorName = dc.field("sensorName").value();
-		if (sensorName!=null && !sensorName.isEmpty()) {
-			jsonData.put("sensorName", sensorName);	
+		try {
+			String sensorName = dc.field("sensorName").value();
+			if (sensorName != null && !sensorName.isEmpty()) {
+				jsonData.put("sensorName", sensorName);
+			}
+
+			jsonData.put("sensorTypeName", dc.field("sensorTypeName").value());
+			jsonData.put("deviceUri", dc.field("deviceUri").value());
+			jsonData.put("sensorUserDefinedFields",
+					dc.field("sensorUserDefinedFields").value());
+
+			// create the item by calling the API
+			JsonNode response = Sensor.create(jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		
-		jsonData.put("sensorTypeName", dc.field("sensorTypeName").value());
-		jsonData.put("deviceUri", dc.field("deviceUri").value());
-		jsonData.put("sensorUserDefinedFields", dc.field("sensorUserDefinedFields").value());
-
-		System.out.println(jsonData);
-		// create the item by calling the API
-		JsonNode response = Sensor.create(jsonData);
-
-		// flash the response message
-		Application.flashMsg(response);
-		
 		return ok(sensors.render(Sensor.all(), sensorForm));
 	}
 
@@ -71,7 +75,7 @@ public class SensorController extends Controller {
 
 		// Call the delete() method
 		JsonNode response = Sensor.delete(sensorName);
-		
+
 		// flash the response message
 		Application.flashMsg(response);
 
