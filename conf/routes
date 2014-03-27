@@ -53,4 +53,6 @@ GET		/dashboard				controllers.DashboardController.dashboard()
 GET		/sensorReading			controllers.SensorReadingController.sensorReadings()
 POST	/getSensorReadings		controllers.SensorReadingController.getSensorReadingsWithinRange() 
 
+# recommendation
+GET		/estimator				controllers.EstimateController.estimate()
 
