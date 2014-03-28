@@ -1,6 +1,5 @@
 @(title: String, moreScripts: Html = Html(""))(content: Html) 
 
-
 <!DOCTYPE html>
 
 <html>
@@ -24,8 +23,7 @@
 
 
 
-<link
-	href='@routes.Assets.at("stylesheets/bootstrap-editable.css")'
+<link href='@routes.Assets.at("stylesheets/bootstrap-editable.css")'
 	rel="stylesheet" />
 
 <script src='@routes.Assets.at("javascripts/jquery-1.9.0.min.js")'
@@ -38,7 +36,22 @@
 </head>
 
 <body>
-	@header()
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" style="padding-bottom: 0;" href="/"><img
+					src='@routes.Assets.at("images/logo.png")' style="height: 28px;"></a>
+			</div>
+		</div>
+	</div>
+
+
 	<div class="container">
 
 		@content
@@ -46,22 +59,6 @@
 		<!-- Footer -->
 		<div class="footer">
 			<div class="row">
-				<div class="col-md-4">
-					<div class="row">
-						<p class="text-muted" style="text-align: left;"https://github.com/sdscmusv">
-							<img src='@routes.Assets.at("images/github.png")'
-								style="width: 32px;"></a> Follow and contribute to this
-							project on <a href="https://github.com/sdscmusv">Github</a>
-						</p>
-					</div>
-					<div class="row">
-						<p class="text-muted" style="text-align: left;"@routes.BugReportController.reports()">
-							<img src='@routes.Assets.at("images/bug.png")'
-								style="width: 32px;"></a> Any issues? Please report bugs <a
-								href="@routes.BugReportController.reports()">here</a>
-						</p>
-					</div>
-				</div>
 				<div class="col-lg-4 col-lg-offset-4">
 					<p class="text-muted" style="text-align: right; font-size: 14px;">&copy;
 						Carnegie Mellon University. Silicon Valley. 2014</p>
