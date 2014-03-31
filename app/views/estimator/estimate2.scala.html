@@ -1,134 +1,31 @@
 
+@import helper._
 
-<html>
-<head>
+@main("Estimator") {
 
-<title>Estimator</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<ol class="breadcrumb">
+	<li><a href="/estimator">Collect Data</a></li>
+	<li><a href="/estimator/1">Input preference</a></li>
+	<li class="active">Workflow Summary</li>
+	<li><a href="/estimator/3">Recommendation</a></li>
+</ol>
 
-<link rel="stylesheet"
-	href='@routes.Assets.at("stylesheets/bootstrap.css")'>
-<link rel="stylesheet"
-	href='@routes.Assets.at("stylesheets/navbar-fixed-top.css")'>
-<link rel="stylesheet"
-	href='@routes.Assets.at("stylesheets/custom.css")'>
-<link rel="stylesheet" media="screen"
-	href='@routes.Assets.at("stylesheets/main.css")'>
-<link rel="shortcut icon" type="image/png"
-	href='@routes.Assets.at("images/favicon.png")'>
+<form method="GET" role="form" action="/estimator/3">
 
-
-
-<link
-	href='@routes.Assets.at("stylesheets/bootstrap-editable.css")'
-	rel="stylesheet" />
-
-<script src='@routes.Assets.at("javascripts/jquery-1.9.0.min.js")'
-	type="text/javascript"></script>
-<script src='@routes.Assets.at("javascripts/bootstrap.min.js")'
-	type="text/javascript"></script>
-
-<script src='@routes.Assets.at("javascripts/bootstrap-editable.min.js")'></script>
-</head>
-
-
-<body>
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" style="padding-bottom: 0;" href="/"><img
-					src='@routes.Assets.at("images/logo.png")' style="height: 28px;"></a>
-			</div>
-		</div>
-	</div>
-	
+<fieldset>
 	<div class="container">
-	<form action="/newReport" method="GET">
-
-
-		<fieldset>
-			<legend>Estimator</legend>
-
-			<p>We have collected your workflow and datasets. Based on those
-				files, we can help you decide which virtual machine option is best
-				for you to use at Amazon EC2.</p>
-
-			<div class="clearfix  " id="name_field">
-				<label for="name">Scripting file</label>
-				<div class="input">
-
-					<input type="text" id="name" name="name" value=""> <span
-						class="help-inline"></span> <span class="help-block">Required</span>
-				</div>
-			</div>
-			<div class="clearfix  " id="title_field">
-				<label for="title">Dataset</label>
-				<div class="input">
-
-					<input type="text" id="title" name="title" value=""> <span
-						class="help-inline"></span> <span class="help-block">Required</span>
-				</div>
-			</div>
-			<div class="clearfix  " id="email_field">
-				<label for="email">Email</label>
-				<div class="input">
-
-					<input type="text" id="email" name="email" value=""> <span
-						class="help-inline"></span> <span class="help-block">Required</span>
-				</div>
-			</div>
-
-			<div class="clearfix  " id="organization_field">
-				<label for="organization">Organization</label>
-				<div class="input">
-
-					<input type="text" id="organization" name="organization" value="">
-
-					<span class="help-inline"></span> <span class="help-block"></span>
-				</div>
-			</div>
-
-			<div class="clearfix  " id="description_field">
-				<label for="description">Description</label>
-				<div class="input">
-
-					<textarea id="description" name="description" cols="65" rows="7"></textarea>
-
-					<span class="help-inline"></span> <span class="help-block"></span>
-				</div>
-			</div>
-
-		</fieldset>
-
-
-		<div class="actions">
-			<input type="submit" class="btn btn-primary"
-				value="Get Recommendation"> <a href="/" class="btn">Thanks,
-				I know what to use</a>
-		</div>
-
-
-	</form>
-	
+	<p>Here is the workflow summary</p>
+	<img alt="workflow summary" src='@routes.Assets.at("images/workflow_1.png")'  height="500" width="700">
+	<img alt="workflow summary" src='@routes.Assets.at("images/workflow_2.png")' height="500" width="700">
 	</div>
-			<!-- Footer -->
-		<div class="footer">
-			<div class="row">
-				<div class="col-lg-6 col-lg-offset-4 ">
-					<p class="text-muted" style="text-align: right; font-size: 14px;">&copy;
-						Carnegie Mellon University. Silicon Valley. 2014</p>
-				</div>
-			</div>
-		</div>
 	
+</fieldset>	
+	<br></br>
+	<div class="actions">
+		<input type="submit" class="btn btn-primary" value="See Recommendation" action="/estimator/3" style="position: relative; left: 15px">
+	</div>
+    
+</form>           
+		
 	
-</body>
-</html>
+	}
