@@ -1,9 +1,5 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import models.metadata.DeviceType;
 import util.APICall;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -49,8 +45,6 @@ public class SensorReading {
 	public static JsonNode getReadingsWithinRange(String sensorName,
 			String startTime, String endTime) {
 
-		System.out.println(wrapTimeRangeURL(sensorName,
-				startTime, endTime));
 		JsonNode readingsNode = APICall.callAPI(wrapTimeRangeURL(sensorName,
 				startTime, endTime));
 		return readingsNode;
@@ -66,7 +60,6 @@ public class SensorReading {
 	}
 	
 	public static JsonNode getLatestSensorReading(String sensorTypeName) {
-		System.out.println(wrapLatestURL(sensorTypeName));
 		JsonNode readingsNode = APICall.callAPI(wrapLatestURL(sensorTypeName));
 		return readingsNode;
 	}
@@ -82,6 +75,6 @@ public class SensorReading {
 	}
 	
 	private static String wrapLatestURL(String sensorTypeName) {
-		return GET_SENSOR_READING_CALL + sensorTypeName + "/json";
+		return GET_LATEST_SENSOR_READING_CALL + sensorTypeName + "/json";
 	}
 }
