@@ -56,8 +56,87 @@
     <button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
 		
 </div>
-
 }
+<br>
+<br>
+<br>
+<br>
+<br>
+@helper.form(action = routes.SensorReadingController.getSensorReadingsAtTimestamp) {
+<fieldset>
+	<legend>Sensor Reading at a Specific Timestamp</legend>
+
+
+	@select( 
+		sensorReadingForm("sensorName2"),
+		options(metadata.Sensor.allSensorName()),
+	 	'_label -> "Sensor Name",
+		'_error -> sensorReadingForm.globalError
+	)
+	<div class="ui-picker">
+
+		<p>
+			<label>Date</label> <input id="startDate" type="date"
+				name="startDate" />
+		</p>
+		<p>
+			<label>Time</label> <input id="startTime" name="startTime"
+				type="text" value="10:59:00" />
+		</p>
+
+	</div>
+
+</fieldset>
+
+
+<div class="actions">
+	<input type="submit" class="btn primary" name="action" value="Submit"> <a
+		href="@routes.Application.index" class="btn">Cancel</a>
+
+</div>
+
+<br>
+<div class="actions">
+    <button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
+		
+</div>
+}
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+@helper.form(action = routes.SensorReadingController.getLatestSensorReadings()) {
+<fieldset>
+	<legend>Latest Sensor Reading at a Specific Timestamp for one type in all registered devices</legend>
+
+
+	@select( 
+		sensorReadingForm("sensorType"),
+		options(metadata.SensorType.allSensorTypeName()),
+	 	'_label -> "Sensor Type Name",
+		'_error -> sensorReadingForm.globalError
+	)
+</fieldset>
+
+
+<div class="actions">
+	<input type="submit" class="btn primary" name="action" value="Submit"> <a
+		href="@routes.Application.index" class="btn">Cancel</a>
+
+</div>
+
+<br>
+<div class="actions">
+    <button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
+		
+</div>
+}
+
+
+
 	<script type="text/javascript">
 
 	$(function() {
