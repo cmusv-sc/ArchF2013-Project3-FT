@@ -16,13 +16,23 @@
  * */
 package controllers;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.TimeZone;
 
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import models.SensorReading;
+import models.metadata.SensorCategory;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -40,8 +50,12 @@ public class SensorReadingController extends Controller {
 
 	public static Result getSensorReadingsWithinRange() {
 		Form<SensorReading> sr = sensorReadingForm.bindFromRequest();
+		String[] postAction = request().body().asFormUrlEncoded().get("action");
 		JsonNode resultNode;
+		File file = new File("E:\\sensor.json");
+
 		try {
+			String deviceName = sr.field("deviceName").value();
 			String sensorName = sr.field("sensorName").value();
 
 			String startDate = sr.field("startDate").value();
@@ -60,16 +74,113 @@ public class SensorReadingController extends Controller {
 				Application.flashMsg(resultNode);
 				return ok(sensorReading.render(sensorReadingForm));
 			}
-			return ok(resultNode);
+			
+			
+		if (postAction == null || postAction.length == 0) {
+			return badRequest("You must provide a valid action");
+		} else {
+			String action = postAction[0];
+			if ("Submit".equals(action)) {
+				return ok(resultNode);
+			} else if ("Download".equals(action)) {
+				// 1. Convert Java object to JSON format
+				ObjectMapper mapper = new ObjectMapper();
+				
+				try {
+					mapper.writeValue(file, resultNode);
 
-		}catch(IllegalStateException e){
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				response().setContentType("application/x-download");
+				response().setHeader("Content-disposition",
+						"attachment; filename=sensor.json");
+
+				return ok(file);
+				
+			} else {
+				return badRequest("This action is not allowed");
+			}
+		}
+
+		} catch (IllegalStateException e) {
 			e.printStackTrace();
-			Application.flashMsg(APICall.createResponse(ResponseType.CONVERSIONERROR));	
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(sensorReading.render(sensorReadingForm));
+		
+		if (postAction == null || postAction.length == 0) {
+			return badRequest("You must provide a valid action");
+		} else {
+			String action = postAction[0];
+			if ("Submit".equals(action)) {
+				return ok(sensorReading.render(sensorReadingForm));
+			} else if ("Download".equals(action)) {
+				return ok(file);
+			} else {
+				return badRequest("This action is not allowed");
+			}
+		}
+	}
+
+	public static Result downloadSensorReadings() {
+		Form<SensorReading> sr = sensorReadingForm.bindFromRequest();
+		JsonNode resultNode;
+		File file = new File("E:\\sensor.json");
+
+		try {
+			String deviceName = sr.field("deviceName").value();
+			String sensorName = sr.field("sensorName").value();
+
+			String startDate = sr.field("startDate").value();
+			String startTime = sr.field("startTime").value();
+			Long startTimeStamp = convertToUnixTime(startDate + startTime);
+
+			String endDate = sr.field("endDate").value();
+			String endTime = sr.field("endTime").value();
+			Long endTimeStamp = convertToUnixTime(endDate + endTime);
+
+			resultNode = SensorReading.getReadingsWithinRange(sensorName,
+					startTimeStamp.toString(), endTimeStamp.toString());
+
+			if (resultNode == null || resultNode.has("error")
+					|| !resultNode.isArray()) {
+				Application.flashMsg(resultNode);
+				return ok(sensorReading.render(sensorReadingForm));
+			}
+			// 1. Convert Java object to JSON format
+			ObjectMapper mapper = new ObjectMapper();
+
+
+			try {
+				mapper.writeValue(file, resultNode);
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			response().setContentType("application/x-download");
+			response().setHeader("Content-disposition",
+					"attachment; filename=sensor.json");
+
+			return ok(file);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return ok(file);
+
 	}
 
 	private static long convertToUnixTime(String timeStamp) throws Exception {
