@@ -3,7 +3,11 @@
 
 @import helper._
 
-@main("Sensor Categories") {
+@scripts = {
+	<script src='@routes.Assets.at("javascripts/custom.js")'></script>
+}
+
+@main("Sensor Categories", scripts) {
 	
 	@flash_message()    
 
@@ -25,7 +29,7 @@
 		<td>@if(session.get("email")){
 			<div class="edit-btn">
 				<input type="button" class="btn btn-primary" value="Edit"
-					onclick="makeEditable(event, $('#@sensorCategory.getSensorCategoryName()'))">
+					onclick='makeEditable(event, "@sensorCategory.getSensorCategoryName()", "@routes.SensorCategoryController.editSensorCategory()")'>
 			</div>
 
 			<div>
@@ -42,45 +46,28 @@
     </table>
     
      @if(session.get("email")){
-    <h2>Add a new sensor category</h2>
-    
-    @form(routes.SensorCategoryController.newSensorCategory()) {
-        
-        @inputText(
-        	sensorCategoryForm("Name"),
-        	'_label -> "Name * (Please DO NOT contain spaces)"
-        )
-        @inputText(
-        	sensorCategoryForm("Purpose"),
-        	'_label -> "Purpose"
-        ) 
-
-        <input class="btn" type="submit" value="Create">
-        <a href="@routes.SensorCategoryController.sensorCategories()" class="btn">Cancel</a>
-    }
-
-	<br>
+	    <h2>Add a new sensor category</h2>
 	    
-    @form(routes.SensorCategoryController.downloadSensorCategory(), 'class -> "form-horizontal", 'role -> "form") {
-
-        <button type="submit" name="action" value="download">Download</button>
+	    @form(routes.SensorCategoryController.newSensorCategory()) {
+	        
+	        @inputText(
+	        	sensorCategoryForm("Name"),
+	        	'_label -> "Name * (Please DO NOT contain spaces)"
+	        )
+	        @inputText(
+	        	sensorCategoryForm("Purpose"),
+	        	'_label -> "Purpose"
+	        ) 
+	
+	        <input class="btn" type="submit" value="Create">
+	        <a href="@routes.SensorCategoryController.sensorCategories()" class="btn">Cancel</a>
+	    }
+	
+		<br>
+		    
+	    @form(routes.SensorCategoryController.downloadSensorCategory(), 'class -> "form-horizontal", 'role -> "form") {
+	
+	        <button type="submit" name="action" value="download">Download</button>
+	    }
     }
-    
-    }
-   <script>
-
-				$(function() {
-					$.fn.editable.defaults.mode = 'inline';
-				});
-
-				var makeEditable = function(e, button) {
-					e.stopPropagation();
-					button.editable({
-
-						type : 'text',
-						toggle: 'click',
-						title : 'Enter Purpose'
-					});
-				}
-			</script>
 }

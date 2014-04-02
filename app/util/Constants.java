@@ -114,6 +114,7 @@ public class Constants {
 	public static final String NEW_GET_SENSOR_CATEGORY = "getAllSensorCategories/";
 	public static final String NEW_ADD_SENSOR_CATEGORY = "addSensorCategory";
 	public static final String NEW_DELETE_SENSOR_CATEGORY = "deleteSensorCategory/";
+	public static final String NEW_EDIT_SENSOR_CATEGORY = "updateSensorCategory";
 	
 	// get latest reading from all devices
 	public static final String NEW_GET_LATEST_DEVICE_READINGS = "getLatestReadingsFromAllDevices/androidMobile/";

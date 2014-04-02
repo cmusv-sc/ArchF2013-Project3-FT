@@ -45,6 +45,7 @@ GET		/sensorCategories				controllers.SensorCategoryController.sensorCategories(
 POST    /new/sensorCategories                controllers.SensorCategoryController.newSensorCategory()
 POST    /delete/sensorCategories     controllers.SensorCategoryController.deleteSensorCategory()
 POST	/download/sensorCategories	 controllers.SensorCategoryController.downloadSensorCategory()
+POST	/edit/sensorCategories		controllers.SensorCategoryController.editSensorCategory()
 
 # dashboard
 GET		/dashboard				controllers.DashboardController.dashboard()

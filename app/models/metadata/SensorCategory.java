@@ -33,6 +33,8 @@ public class SensorCategory {
 			+ util.Constants.NEW_ADD_SENSOR_CATEGORY;
 	private static final String DELETE_SENSOR_CATEGOTY_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_DELETE_SENSOR_CATEGORY;
+	private static final String EDIT_SENSOR_CATEGOTY_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_EDIT_SENSOR_CATEGORY;
 
 	public SensorCategory() {
 		// TODO Auto-generated constructor stub
@@ -90,7 +92,8 @@ public class SensorCategory {
 		for (int i = 0; i < sensorCategoriesNode.size(); i++) {
 			JsonNode json = sensorCategoriesNode.path(i);
 			SensorCategory newCategory = new SensorCategory();
-			newCategory.setSensorCategoryName(json.findPath("sensorCategoryName").asText());
+			newCategory.setSensorCategoryName(json.findPath(
+					"sensorCategoryName").asText());
 			newCategory.setPurpose(json.findPath("purpose").asText());
 			sensorCategories.add(newCategory);
 		}
@@ -99,6 +102,7 @@ public class SensorCategory {
 
 	/**
 	 * Create a new sensor category
+	 * 
 	 * @param jsonData
 	 * @return the response from the API server
 	 */
@@ -107,7 +111,18 @@ public class SensorCategory {
 	}
 
 	/**
-	 * Delete a sensor category 
+	 * Edit a sensor category
+	 * 
+	 * @param jsonData
+	 * @return
+	 */
+	public static JsonNode edit(JsonNode jsonData) {
+		return APICall.postAPI(EDIT_SENSOR_CATEGOTY_CALL, jsonData);
+	}
+
+	/**
+	 * Delete a sensor category
+	 * 
 	 * @param sensorCategoryName
 	 * @return
 	 */
@@ -115,9 +130,10 @@ public class SensorCategory {
 		return APICall.deleteAPI(DELETE_SENSOR_CATEGOTY_CALL
 				+ sensorCategoryName);
 	}
-	
+
 	/**
 	 * Generate a list of sensor category names
+	 * 
 	 * @return a list of sensor category names
 	 */
 	public static List<String> allSensorCategoryName() {
