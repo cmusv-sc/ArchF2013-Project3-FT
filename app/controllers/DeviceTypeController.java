@@ -49,7 +49,9 @@ public class DeviceTypeController extends Controller {
 		try {
 			ObjectNode jsonData = Json.newObject();
 			String deviceTypeName = dtFormEncoded.get("deviceTypeName")[0];
-			if (deviceTypeName != null && !deviceTypeName.isEmpty()) {
+			
+			// should not contain spaces
+			if (deviceTypeName != null && !deviceTypeName.isEmpty() && !deviceTypeName.contains(" ")) {
 				jsonData.put("deviceTypeName", deviceTypeName);
 			}
 			jsonData.put("manufacturer", dtFormEncoded.get("manufacturer")[0]);

@@ -135,7 +135,7 @@ public class APICall {
 			jsonData.put("error", "Cannot get data from server");
 			break;
 		case SAVEERROR:
-			jsonData.put("error", "Cannot be saved on server. Check if it is null");
+			jsonData.put("error", "Cannot be saved. The data must be invalid!");
 			break;
 		case DELETEERROR:
 			jsonData.put("error", "Cannot be deleted on server");

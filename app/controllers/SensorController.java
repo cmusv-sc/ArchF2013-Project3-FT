@@ -42,7 +42,10 @@ public class SensorController extends Controller {
 		ObjectNode jsonData = Json.newObject();
 		try {
 			String sensorName = dc.field("sensorName").value();
-			if (sensorName != null && !sensorName.isEmpty()) {
+			
+			// should not contain spaces
+			if (sensorName != null && !sensorName.isEmpty()
+					&& !sensorName.contains(" ")) {
 				jsonData.put("sensorName", sensorName);
 			}
 

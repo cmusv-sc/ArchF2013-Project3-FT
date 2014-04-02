@@ -16,7 +16,6 @@
  * */
 package controllers;
 
-
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.*;
 
@@ -44,7 +43,10 @@ public class SensorTypeController extends Controller {
 		try {
 
 			String sensorTypeName = st.field("sensorTypeName").value();
-			if (sensorTypeName != null && !sensorTypeName.isEmpty()) {
+
+			// should not contain spaces
+			if (sensorTypeName != null && !sensorTypeName.isEmpty()
+					&& !sensorTypeName.contains(" ")) {
 				jsonData.put("sensorTypeName", sensorTypeName);
 			}
 			jsonData.put("manufacturer", st.field("manufacturer").value());
@@ -79,9 +81,10 @@ public class SensorTypeController extends Controller {
 
 			// flash the response message
 			Application.flashMsg(response);
-		} catch(IllegalStateException e){
+		} catch (IllegalStateException e) {
 			e.printStackTrace();
-			Application.flashMsg(APICall.createResponse(ResponseType.CONVERSIONERROR));	
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));

@@ -42,7 +42,7 @@ public class DeviceController extends Controller {
 		try {
 
 			String uri = dc.field("uri").value();
-			if (uri != null && !uri.isEmpty()) {
+			if (uri != null && !uri.isEmpty() && !uri.contains(" ")) {
 				jsonData.put("uri", dc.field("uri").value());
 			}
 			jsonData.put("deviceTypeName", dc.field("deviceTypeName").value());
