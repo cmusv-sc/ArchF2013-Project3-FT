@@ -121,5 +121,8 @@ public class Constants {
 
 	// get sensor reading 
 	public static final String NEW_GET_SENSOR_READING_IN_RANGE = "getSensorReadingInRange/"; 
+	public static final String NEW_GET_SENSOR_READING = "getSensorReading/"; 
+	public static final String NEW_GET_LATEST_SENSOR_READING_IN_ALL_DEVICES ="getLatestReadingsFromAllDevices/";
+	
 	
 }

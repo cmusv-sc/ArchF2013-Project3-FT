@@ -5,10 +5,13 @@
 @main("Sensor Reading") { 
 
 @flash_message() 
+    
+    
 
 @helper.form(action = routes.SensorReadingController.getSensorReadingsWithinRange) {
 <fieldset>
 	<legend>Sensor Reading within a time range</legend>
+
 
 	@select( 
 		sensorReadingForm("sensorName"),
@@ -19,21 +22,21 @@
 	<div class="ui-picker">
 
 		<p>
-			<label>Start Date</label> <input id="startDate" type="date"
+			<label>Start Date</label> <input class="startDate" type="date"
 				name="startDate" />
 		</p>
 		<p>
-			<label>Start Time</label> <input id="startTime" name="startTime"
-				type="text" value="09:30:00" />
+			<label>Start Time</label> <input class="startTime" name="startTime"
+				type="text" value="10:59:00" />
 		</p>
 
 		<p>
-			<label>End Date</label> <input id="endDate" type="date"
+			<label>End Date</label> <input class="endDate" type="date"
 				name="endDate" />
 		</p>
 		<p>
-			<label>End Time</label> <input id="endTime" name="endTime"
-				type="text" value="21:30:00" />
+			<label>End Time</label> <input class="endTime" name="endTime"
+				type="text" value="11:00:00" />
 		</p>
 	</div>
 
@@ -41,11 +44,99 @@
 
 
 <div class="actions">
-	<input type="submit" class="btn primary" value="Submit"> <a
+	<input type="submit" class="btn primary" name="action" value="Submit"> <a
 		href="@routes.Application.index" class="btn">Cancel</a>
+
 </div>
 
+<br>
+
+    
+<div class="actions">
+    <button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
+		
+</div>
 }
+<br>
+<br>
+<br>
+<br>
+<br>
+@helper.form(action = routes.SensorReadingController.getSensorReadingsAtTimestamp) {
+<fieldset>
+	<legend>Sensor Reading at a Specific Timestamp</legend>
+
+
+	@select( 
+		sensorReadingForm("sensorName2"),
+		options(metadata.Sensor.allSensorName()),
+	 	'_label -> "Sensor Name",
+		'_error -> sensorReadingForm.globalError
+	)
+	<div class="ui-picker">
+
+		<p>
+			<label>Date</label> <input class="startDate" type="date"
+				name="Date" />
+		</p>
+		<p>
+			<label>Time</label> <input class="startTime" name="Time"
+				type="text" value="10:59:00" />
+		</p>
+
+	</div>
+
+</fieldset>
+
+
+<div class="actions">
+	<input type="submit" class="btn primary" name="action" value="Submit"> <a
+		href="@routes.Application.index" class="btn">Cancel</a>
+
+</div>
+
+<br>
+<div class="actions">
+    <button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
+		
+</div>
+}
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+@helper.form(action = routes.SensorReadingController.getLatestSensorReadings()) {
+<fieldset>
+	<legend>Latest Sensor Reading at a Specific Timestamp for one type in all registered devices</legend>
+
+
+	@select( 
+		sensorReadingForm("sensorType"),
+		options(metadata.SensorType.allSensorTypeName()),
+	 	'_label -> "Sensor Type Name",
+		'_error -> sensorReadingForm.globalError
+	)
+</fieldset>
+
+
+<div class="actions">
+	<input type="submit" class="btn primary" name="action" value="Submit"> <a
+		href="@routes.Application.index" class="btn">Cancel</a>
+
+</div>
+
+<br>
+<div class="actions">
+    <button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
+		
+</div>
+}
+
+
+
 	<script type="text/javascript">
 
 	$(function() {
@@ -55,8 +146,8 @@
 			return local.toJSON().slice(0, 10);
 		});
 		
-		$('#startDate').val(new Date().toDateInputValue());
-		$('#endDate').val(new Date().toDateInputValue())
+		$('.startDate').val(new Date(2014,2,24).toDateInputValue());
+		$('.endDate').val(new Date(2014,2,24).toDateInputValue());
 		});
 	</script>
 
