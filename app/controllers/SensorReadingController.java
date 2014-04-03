@@ -16,23 +16,16 @@
  * */
 package controllers;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.TimeZone;
 
-import com.fasterxml.jackson.core.JsonEncoding;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import models.SensorReading;
-import models.metadata.SensorCategory;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -286,7 +279,7 @@ public class SensorReadingController extends Controller {
 		File file = new File("E:\\sensor.json");
 
 		try {
-			String deviceName = sr.field("deviceName").value();
+			//String deviceName = sr.field("deviceName").value();
 			String sensorName = sr.field("sensorName").value();
 
 			String startDate = sr.field("startDate").value();
