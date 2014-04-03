@@ -84,7 +84,38 @@ public class DeviceController extends Controller {
 		}
 		return ok(devices.render(Device.all(), deviceForm));
 	}
+	public static Result editDevice() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		ObjectNode jsonData = Json.newObject();
+		try {
+			String deviceUri = df.field("pk").value();
 
+			if (deviceUri != null && !deviceUri.isEmpty()) {
+				jsonData.put("deviceUri", deviceUri);
+			}
+
+			jsonData.put("deviceUserDefinedFields", df.field("value").value());
+			
+			System.out.println("controller: "+jsonData);
+			
+			// Call the edit() method
+			JsonNode response = Device.edit(deviceUri, jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return ok(devices.render(Device.all(),
+				deviceForm));
+	}
+	
 	public static Result deleteDevice() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		String id = df.field("idHolder").value();

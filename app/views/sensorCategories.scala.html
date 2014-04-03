@@ -4,7 +4,7 @@
 @import helper._
 
 @scripts = {
-	<script src='@routes.Assets.at("javascripts/custom.js")'></script>
+	<script src='@routes.Assets.at("javascripts/edit_button.js")'></script>
 }
 
 @main("Sensor Categories", scripts) {
@@ -15,32 +15,34 @@
 		<table class="table table-striped table-bordered table-condensed">
 	<tr>
 		<td>Sensor Category Name</td>
-		<td>Purpose</td> @if(session.get("email")){
-		<td>Operation</td> }
+		<td>Purpose</td> 
+		@if(session.get("email")){
+			<td>Operation</td> 
+		}
 	</tr>
 
 	@for(sensorCategory <- sensorCategories) {
 	<tr>
 		<td>@sensorCategory.getSensorCategoryName()</td>
 
-		<td><span id="@sensorCategory.getSensorCategoryName()">
+		<td><span id="@sensorCategory.getSensorCategoryName()-purpose">
 				@sensorCategory.getPurpose() </span></td>
 
-		<td>@if(session.get("email")){
-			<div class="edit-btn">
-				<input type="button" class="btn btn-primary" value="Edit"
-					onclick='makeEditable(event, "@sensorCategory.getSensorCategoryName()", "@routes.SensorCategoryController.editSensorCategory()")'>
-			</div>
-
-			<div>
-				@form(routes.SensorCategoryController.deleteSensorCategory()){ <input
-					name="idHolder" class="hidden" type="hidden"
-					value="@sensorCategory.getSensorCategoryName()"> <input
-					type="submit" class="btn btn-danger delete-btn" value="Delete"
-					onclick="return confirm('Are you sure you want to delete this item?')">
+		@if(session.get("email")){
+			<td class="operation">
+				<input type="button" class="edit-btn btn btn-primary" value="Edit"
+					onclick="makeEditable(event, {'@sensorCategory.getSensorCategoryName()-purpose':'@sensorCategory.getSensorCategoryName()'}, '@routes.SensorCategoryController.editSensorCategory()')">
+	
+				@form(routes.SensorCategoryController.deleteSensorCategory()){ 
+					<input
+						name="idHolder" class="hidden" type="hidden"
+						value="@sensorCategory.getSensorCategoryName()"> 
+					<input
+						type="submit" class="btn btn-danger delete-btn" value="Delete"
+						onclick="return confirm('Are you sure you want to delete this item?')">
 				}
-			</div>
-		</td> }
+			</td> 
+		}
 	</tr>
 	}
     </table>

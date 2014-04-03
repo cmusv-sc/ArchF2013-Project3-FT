@@ -93,6 +93,36 @@ public class SensorTypeController extends Controller {
 		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
 	}
 
+	public static Result editSensorType() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		ObjectNode jsonData = Json.newObject();
+		try {
+			String sensorTypeName = df.field("pk").value();
+
+			if (sensorTypeName != null && !sensorTypeName.isEmpty()) {
+				jsonData.put("sensorTypeName", sensorTypeName);
+			}
+
+			jsonData.put("sensorTypeUserDefinedFields", df.field("value").value());
+			
+			// Call the edit() method
+			JsonNode response = SensorType.edit(jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return ok(sensorTypes.render(SensorType.all(),
+				sensorTypeForm));
+	}
+	
 	public static Result deleteSensorType() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		String sensorTypeName = df.field("idHolder").value();

@@ -3,7 +3,11 @@
 
 @import helper._
 
-@main("DeviceTypes") {
+@scripts = {
+	<script src='@routes.Assets.at("javascripts/edit_button.js")'></script>
+}
+
+@main("DeviceTypes", scripts) {
     
     @flash_message()
     
@@ -27,9 +31,17 @@
             <td>@deviceType.getManufacturer()</td>
             <td>@deviceType.getVersion()</td>
 	    	<td>@deviceType.getSensorTypeNames()</td>
-            <td>@deviceType.getDeviceTypeUserDefinedFields()</td>
+            <td>
+            <span id="@deviceType.getDeviceTypeName()-userDefinedFields">
+            	@deviceType.getDeviceTypeUserDefinedFields()
+            </span>
+            </td>
 	    	@if(session.get("email")){
-            		<td>
+            		
+	              	<td class="operation">
+							<input type="button" class="btn btn-primary" value="Edit"
+								onclick="makeEditable(event, {'@deviceType.getDeviceTypeName()-userDefinedFields':'@deviceType.getDeviceTypeName()'}, '@routes.DeviceTypeController.editDeviceType()')">
+						
              			@form(routes.DeviceTypeController.deleteDeviceType()){
                		 		<input name="idHolder" type="hidden" value="@deviceType.getDeviceTypeName()">
         							<input type="submit"  class="btn btn-danger" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')">

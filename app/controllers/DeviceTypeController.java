@@ -79,7 +79,36 @@ public class DeviceTypeController extends Controller {
 		}
 		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
 	}
+	
+	public static Result editDeviceType() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		ObjectNode jsonData = Json.newObject();
+		try {
+			String deviceTypeName = df.field("pk").value();
 
+			if (deviceTypeName != null && !deviceTypeName.isEmpty()) {
+				jsonData.put("deviceTypeName", deviceTypeName);
+			}
+
+			jsonData.put("deviceTypeUserDefinedFields", df.field("value").value());
+			
+			// Call the edit() method
+			JsonNode response = DeviceType.edit(deviceTypeName, jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return ok(deviceTypes.render(DeviceType.all(),
+				deviceTypeForm));
+	}
 	public static Result deleteDeviceType() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		String deviceTypeName = df.field("idHolder").value();

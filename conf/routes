@@ -24,21 +24,25 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET		/sensorTypes				controllers.SensorTypeController.sensorTypes()
 POST    /new/sensorTypes                controllers.SensorTypeController.newSensorType()
 POST    /delete/sensorTypes    	controllers.SensorTypeController.deleteSensorType()
+POST	/edit/sensorTypes		controllers.SensorTypeController.editSensorType()
 
 # device_types
 GET		/deviceTypes				controllers.DeviceTypeController.deviceTypes()
 POST    /new/deviceTypes               controllers.DeviceTypeController.newDeviceType()
 POST    /delete/deviceTypes     controllers.DeviceTypeController.deleteDeviceType()
+POST	/edit/deviceTypes		controllers.DeviceTypeController.editDeviceType()
 
 # devices
 GET		/devices				controllers.DeviceController.devices()
 POST    /new/devices                controllers.DeviceController.newDevice()
 POST    /delete/devices     controllers.DeviceController.deleteDevice()
+POST	/edit/sensors		controllers.DeviceController.editDevice()
 
 # sensors
 GET		/sensors				controllers.SensorController.sensors()
 POST    /new/sensors                controllers.SensorController.newSensor()
 POST    /delete/sensors    controllers.SensorController.deleteSensor()
+POST	/edit/sensors		controllers.SensorController.editSensor()
 
 # sensor_categories
 GET		/sensorCategories				controllers.SensorCategoryController.sensorCategories()

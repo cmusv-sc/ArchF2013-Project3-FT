@@ -50,6 +50,8 @@ public class Sensor {
 			+ util.Constants.NEW_DELETE_SENSOR;
 	private static final String ADD_SENSOR_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_ADD_SENSOR;
+	private static final String EDIT_SENSOR_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_EDIT_SENSOR;
 
 	public String getId() {
 		return id;
@@ -156,6 +158,10 @@ public class Sensor {
 		return APICall.postAPI(ADD_SENSOR_CALL, jsonData);
 	}
 
+	public static JsonNode edit(JsonNode jsonData) {
+		return APICall.postAPI(EDIT_SENSOR_CALL, jsonData);
+	}
+	
 	/**
 	 * Method to call the API to delete a sensor with its name
 	 * 

@@ -17,10 +17,8 @@
 }
 
 .operation {
-	text-align: center;
+	display: flex;
 }
-
-.edit-btn {
+.operation .btn{
 	margin-right: 5px;
-	float: left;
 }

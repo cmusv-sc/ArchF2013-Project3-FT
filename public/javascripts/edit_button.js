@@ -2,15 +2,18 @@ $(function() {
 	$.fn.editable.defaults.mode = 'inline';
 });
 
-var makeEditable = function(event, name, callUrl) {
+var makeEditable = function(event, nameDict, callUrl) {
 	event.stopPropagation();
-	$('#' + name).editable({
-		type : 'text',
-		pk : name,
-		url : callUrl,
-		success : function() {
-			location.reload();
-		}
+	$.each(nameDict, function(key, val) {
+		
+		$('#' + key).editable({
+			type : 'text',
+			pk : val,
+			url : callUrl,
+			success : function() {
+				location.reload();
+			}
+		});
+		$('#' + key).click();
 	});
-	$('#' + name).click();
-}
+};

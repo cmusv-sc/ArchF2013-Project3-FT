@@ -39,14 +39,15 @@ public class Device {
 	private List<String> sensorTypeNames = new ArrayList<String>();
 	private List<String> sensorNames = new ArrayList<String>();
 
-	/* The following are API*/
+	/* The following are API */
 	private static final String GET_DEVICES_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_GET_DEVICES + util.Constants.FORMAT;
 	private static final String ADD_DEVICE_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_ADD_DEVICE;
 	private static final String DELETE_DEVICE_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_DELETE_DEVICE;
-
+	private static final String EDIT_DEVICE_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_EDIT_DEVICE;
 
 	public Device() {
 	}
@@ -158,13 +159,23 @@ public class Device {
 	}
 
 	/**
+	 * Method to call the API to edit a device
+	 * 
+	 * @param jsonData
+	 * @return
+	 */
+	public static JsonNode edit(String deviceUri, JsonNode jsonData) {
+		return APICall.putAPI(EDIT_DEVICE_CALL + deviceUri, jsonData);
+	}
+
+	/**
 	 * Method to call the API to delete a device
 	 * 
 	 * @param id
 	 * @return the response json node from server
 	 */
-	public static JsonNode delete(String deviceName) {
-		return APICall.deleteAPI(DELETE_DEVICE_CALL + deviceName);
+	public static JsonNode delete(String deviceUri) {
+		return APICall.deleteAPI(DELETE_DEVICE_CALL + deviceUri);
 	}
 
 	/**
@@ -207,7 +218,8 @@ public class Device {
 			JsonNode locationNode = json.findPath("location");
 			newDevice.setRepresentation(locationNode.findPath("representation")
 					.asText());
-			newDevice.setLongitude(locationNode.findPath("longitude").asDouble());
+			newDevice.setLongitude(locationNode.findPath("longitude")
+					.asDouble());
 			newDevice.setLatitude(locationNode.findPath("latitude").asDouble());
 			newDevice.setAltitude(locationNode.findPath("altitude").asDouble());
 
@@ -219,7 +231,6 @@ public class Device {
 
 		return allDevices;
 	}
-
 
 	/**
 	 * Method to display all devices' name with id

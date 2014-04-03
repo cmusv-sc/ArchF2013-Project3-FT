@@ -69,6 +69,38 @@ public class SensorController extends Controller {
 		}
 		return ok(sensors.render(Sensor.all(), sensorForm));
 	}
+	
+	public static Result editSensor() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		ObjectNode jsonData = Json.newObject();
+		try {
+			String sensorName = df.field("pk").value();
+
+			if (sensorName != null && !sensorName.isEmpty()) {
+				jsonData.put("sensorName", sensorName);
+			}
+
+			jsonData.put("sensorUserDefinedFields", df.field("value").value());
+
+			
+			// Call the edit() method
+			JsonNode response = Sensor.edit(jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return ok(sensors.render(Sensor.all(),
+				sensorForm));
+
+	}
 
 	public static Result deleteSensor() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
