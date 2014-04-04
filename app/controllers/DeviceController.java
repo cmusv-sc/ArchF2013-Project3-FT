@@ -82,7 +82,7 @@ public class DeviceController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(devices.render(Device.all(), deviceForm));
+		return redirect("/devices");
 	}
 	
 	public static Result editDevice() {
@@ -124,7 +124,7 @@ public class DeviceController extends Controller {
 
 		// flash the response message
 		Application.flashMsg(response);
-		return ok(devices.render(Device.all(), deviceForm));
+		return redirect("/devices");
 
 	}
 }

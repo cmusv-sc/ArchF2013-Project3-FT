@@ -67,7 +67,7 @@ public class SensorController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(sensors.render(Sensor.all(), sensorForm));
+		return redirect("/sensors");
 	}
 	
 	public static Result editSensor() {
@@ -113,6 +113,6 @@ public class SensorController extends Controller {
 		// flash the response message
 		Application.flashMsg(response);
 
-		return ok(sensors.render(Sensor.all(), sensorForm));
+		return redirect("/sensors");
 	}
 }

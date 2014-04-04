@@ -90,7 +90,7 @@ public class SensorTypeController extends Controller {
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
 
-		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
+		return redirect("/sensorTypes");
 	}
 
 	public static Result editSensorType() {
@@ -131,6 +131,7 @@ public class SensorTypeController extends Controller {
 
 		// flash the response message
 		Application.flashMsg(response);
-		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
+
+		return redirect("/sensorTypes");
 	}
 }

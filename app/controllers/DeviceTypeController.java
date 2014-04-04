@@ -78,7 +78,7 @@ public class DeviceTypeController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
+		return redirect("/deviceTypes");
 	}
 
 	public static Result editDeviceType() {
@@ -121,7 +121,7 @@ public class DeviceTypeController extends Controller {
 
 		// flash the response message
 		Application.flashMsg(response);
-		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
+		return redirect("/deviceTypes");
 
 	}
 }

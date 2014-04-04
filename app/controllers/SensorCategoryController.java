@@ -70,8 +70,7 @@ public class SensorCategoryController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(sensorCategories.render(SensorCategory.all(),
-				sensorCategoryForm));
+		return redirect("/sensorCategories");
 	}
 
 	public static Result editSensorCategory() {
@@ -116,8 +115,7 @@ public class SensorCategoryController extends Controller {
 		// flash the response message
 		Application.flashMsg(response);
 
-		return ok(sensorCategories.render(SensorCategory.all(),
-				sensorCategoryForm));
+		return redirect("/sensorCategories");
 	}
 
 	public static Result downloadSensorCategory() {
