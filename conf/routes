@@ -36,7 +36,7 @@ POST	/edit/deviceTypes		controllers.DeviceTypeController.editDeviceType()
 GET		/devices				controllers.DeviceController.devices()
 POST    /new/devices                controllers.DeviceController.newDevice()
 POST    /delete/devices     controllers.DeviceController.deleteDevice()
-POST	/edit/sensors		controllers.DeviceController.editDevice()
+POST	/edit/devices		controllers.DeviceController.editDevice()
 
 # sensors
 GET		/sensors				controllers.SensorController.sensors()

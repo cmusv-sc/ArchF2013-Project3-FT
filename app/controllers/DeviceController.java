@@ -84,6 +84,7 @@ public class DeviceController extends Controller {
 		}
 		return ok(devices.render(Device.all(), deviceForm));
 	}
+	
 	public static Result editDevice() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		ObjectNode jsonData = Json.newObject();
@@ -96,7 +97,6 @@ public class DeviceController extends Controller {
 
 			jsonData.put("deviceUserDefinedFields", df.field("value").value());
 			
-			System.out.println("controller: "+jsonData);
 			
 			// Call the edit() method
 			JsonNode response = Device.edit(deviceUri, jsonData);
@@ -112,8 +112,7 @@ public class DeviceController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(devices.render(Device.all(),
-				deviceForm));
+		return ok("updated");
 	}
 	
 	public static Result deleteDevice() {

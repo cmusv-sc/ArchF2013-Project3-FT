@@ -119,8 +119,7 @@ public class SensorTypeController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(sensorTypes.render(SensorType.all(),
-				sensorTypeForm));
+		return ok("updated");
 	}
 	
 	public static Result deleteSensorType() {

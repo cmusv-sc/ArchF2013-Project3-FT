@@ -10,8 +10,8 @@ var makeEditable = function(event, nameDict, callUrl) {
 			type : 'text',
 			pk : val,
 			url : callUrl,
-			success : function() {
-				location.reload();
+			success : function(response) {
+				document.location.reload(true);
 			}
 		});
 		$('#' + key).click();

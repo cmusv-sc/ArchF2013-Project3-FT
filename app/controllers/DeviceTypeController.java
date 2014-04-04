@@ -30,7 +30,7 @@ import util.APICall;
 import util.APICall.ResponseType;
 import views.html.*;
 
-@Security.Authenticated(Secured.class)
+//@Security.Authenticated(Secured.class)
 public class DeviceTypeController extends Controller {
 	final static Form<DeviceType> deviceTypeForm = Form.form(DeviceType.class);
 
@@ -49,9 +49,10 @@ public class DeviceTypeController extends Controller {
 		try {
 			ObjectNode jsonData = Json.newObject();
 			String deviceTypeName = dtFormEncoded.get("deviceTypeName")[0];
-			
+
 			// should not contain spaces
-			if (deviceTypeName != null && !deviceTypeName.isEmpty() && !deviceTypeName.contains(" ")) {
+			if (deviceTypeName != null && !deviceTypeName.isEmpty()
+					&& !deviceTypeName.contains(" ")) {
 				jsonData.put("deviceTypeName", deviceTypeName);
 			}
 			jsonData.put("manufacturer", dtFormEncoded.get("manufacturer")[0]);
@@ -79,7 +80,7 @@ public class DeviceTypeController extends Controller {
 		}
 		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
 	}
-	
+
 	public static Result editDeviceType() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		ObjectNode jsonData = Json.newObject();
@@ -90,8 +91,9 @@ public class DeviceTypeController extends Controller {
 				jsonData.put("deviceTypeName", deviceTypeName);
 			}
 
-			jsonData.put("deviceTypeUserDefinedFields", df.field("value").value());
-			
+			jsonData.put("deviceTypeUserDefinedFields", df.field("value")
+					.value());
+
 			// Call the edit() method
 			JsonNode response = DeviceType.edit(deviceTypeName, jsonData);
 
@@ -106,9 +108,10 @@ public class DeviceTypeController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(deviceTypes.render(DeviceType.all(),
-				deviceTypeForm));
+
+		return ok("updated");
 	}
+
 	public static Result deleteDeviceType() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		String deviceTypeName = df.field("idHolder").value();

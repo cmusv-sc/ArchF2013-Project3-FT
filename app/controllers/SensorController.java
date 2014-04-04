@@ -97,8 +97,7 @@ public class SensorController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(sensors.render(Sensor.all(),
-				sensorForm));
+		return ok("updated");
 
 	}
 

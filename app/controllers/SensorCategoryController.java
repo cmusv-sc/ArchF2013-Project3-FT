@@ -86,7 +86,6 @@ public class SensorCategoryController extends Controller {
 
 			jsonData.put("purpose", df.field("value").value());
 
-			System.out.println(jsonData);
 			// Call the edit() method
 			JsonNode response = SensorCategory.edit(jsonData);
 
@@ -101,8 +100,7 @@ public class SensorCategoryController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(sensorCategories.render(SensorCategory.all(),
-				sensorCategoryForm));
+		return ok("updated");
 
 	}
 
