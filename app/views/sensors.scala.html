@@ -32,7 +32,8 @@
 			<td>@sensor.getDeviceUri()</td>
 			<td>@sensor.getSensorCategoryName()</td>
 			<td>
-			 	<span id="@sensor.getSensorName()-userDefinedFields">
+			 	<span class="@sensor.getSensorName() editable" 
+			 		data-name='sensorUserDefinedFields'>
 					@sensor.getSensorUserDefinedFields()
 				</span>
 			</td>
@@ -40,9 +41,10 @@
     	@if(session.get("email")){
 			
          <td class="operation">
-			<input type="button" class="btn btn-primary" value="Edit"
-				onclick="makeEditable(event, {'@sensor.getSensorName()-userDefinedFields':'@sensor.getSensorName()'}, '@routes.SensorController.editSensor()')">
-		
+			<input type="button" class="edit-btn btn btn-primary" value="Edit" 
+				data-pk='@sensor.getSensorName()' 
+				data-url='@routes.SensorController.editSensor()' 
+			>
 
 			@form(routes.SensorController.deleteSensor()){
           		<input name="idHolder" type="hidden" value="@sensor.getSensorName()">

@@ -91,8 +91,10 @@ public class DeviceTypeController extends Controller {
 				jsonData.put("deviceTypeName", deviceTypeName);
 			}
 
-			jsonData.put("deviceTypeUserDefinedFields", df.field("value")
-					.value());
+			String editField = df.field("name").value();  
+			if (editField != null && !editField.isEmpty()) {
+				jsonData.put(editField, df.field("value").value());
+			}
 
 			// Call the edit() method
 			JsonNode response = DeviceType.edit(deviceTypeName, jsonData);

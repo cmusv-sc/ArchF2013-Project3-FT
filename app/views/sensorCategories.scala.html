@@ -25,14 +25,15 @@
 	<tr>
 		<td>@sensorCategory.getSensorCategoryName()</td>
 
-		<td><span id="@sensorCategory.getSensorCategoryName()-purpose">
+		<td><span class="@sensorCategory.getSensorCategoryName() editable" data-name='purpose'>
 				@sensorCategory.getPurpose() </span></td>
 
 		@if(session.get("email")){
 			<td class="operation">
-				<input type="button" class="edit-btn btn btn-primary" value="Edit"
-					onclick="makeEditable(event, {'@sensorCategory.getSensorCategoryName()-purpose':'@sensorCategory.getSensorCategoryName()'}, '@routes.SensorCategoryController.editSensorCategory()')">
-	
+				<input type="button" class="edit-btn btn btn-primary" value="Edit" 
+					data-pk='@sensorCategory.getSensorCategoryName()' 
+					data-url='@routes.SensorCategoryController.editSensorCategory()' 
+				>
 				@form(routes.SensorCategoryController.deleteSensorCategory()){ 
 					<input
 						name="idHolder" class="hidden" type="hidden"

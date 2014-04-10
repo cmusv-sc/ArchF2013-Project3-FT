@@ -83,7 +83,10 @@ public class SensorCategoryController extends Controller {
 				jsonData.put("sensorCategoryName", sensorCategoryName);
 			}
 
-			jsonData.put("purpose", df.field("value").value());
+			String editField = df.field("name").value();  
+			if (editField != null && !editField.isEmpty()) {
+				jsonData.put(editField, df.field("value").value());
+			}
 
 			// Call the edit() method
 			JsonNode response = SensorCategory.edit(jsonData);

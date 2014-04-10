@@ -22,3 +22,16 @@
 .operation .btn{
 	margin-right: 5px;
 }
+
+.editable-click {
+  color: blue;
+  border-color: blue;
+} 
+.editable-click.editable-disabled {
+  color: black;  
+  border-bottom: none;
+}
+.editable-empty{
+  color: gray;
+  font-style: italic;
+}

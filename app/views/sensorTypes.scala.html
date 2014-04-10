@@ -42,7 +42,8 @@
                 <td>@sensorType.getInterpreter()</td>
                 <td>@sensorType.getSensorCategoryName()</td>
                 <td>
-	                <span id="@sensorType.getSensorTypeName()-userDefinedFields">
+	                <span class="@sensorType.getSensorTypeName() editable"
+	                	data-name='sensorTypeUserDefinedFields'>
 	                	@sensorType.getSensorTypeUserDefinedFields()
 	                </span>
                 </td>
@@ -50,8 +51,12 @@
     			@if(session.get("email")){
 
 	              	<td class="operation">
-							<input type="button" class="btn btn-primary" value="Edit"
-								onclick="makeEditable(event, {'@sensorType.getSensorTypeName()-userDefinedFields':'@sensorType.getSensorTypeName()'}, '@routes.SensorTypeController.editSensorType()')">
+						
+						<input type="button" class="edit-btn btn btn-primary" value="Edit" 
+							data-pk='@sensorType.getSensorTypeName()' 
+							data-url='@routes.SensorTypeController.editSensorType()' 
+						>
+						
 						
 	               		 @form(routes.SensorTypeController.deleteSensorType()){
 	               		 	<input name="idHolder" type="hidden" value="@sensorType.getSensorTypeName()">

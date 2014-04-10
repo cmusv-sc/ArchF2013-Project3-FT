@@ -1,19 +1,18 @@
 $(function() {
 	$.fn.editable.defaults.mode = 'inline';
-});
 
-var makeEditable = function(event, nameDict, callUrl) {
-	event.stopPropagation();
-	$.each(nameDict, function(key, val) {
-		
-		$('#' + key).editable({
+	$('.edit-btn').click(function(event){
+	    var primaryKey = $(this).attr('data-pk');
+	    var callUrl = $(this).attr('data-url');
+	    
+		event.stopPropagation();
+		$('.' + primaryKey+'.editable').editable({
 			type : 'text',
-			pk : val,
+			pk : primaryKey,
 			url : callUrl,
 			success : function(response) {
 				document.location.reload(true);
 			}
-		});
-		$('#' + key).click();
+		}).click();
 	});
-};
+});

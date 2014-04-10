@@ -44,24 +44,15 @@
 
 
 <div class="actions">
-	<input type="submit" class="btn primary" name="action" value="Submit"> <a
+	<p>
+		<button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
+		 <a
 		href="@routes.Application.index" class="btn">Cancel</a>
-
+	</p>
 </div>
 
-<br>
-
-    
-<div class="actions">
-    <button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
-		
-</div>
 }
-<br>
-<br>
-<br>
-<br>
-<br>
+
 @helper.form(action = routes.SensorReadingController.getSensorReadingsAtTimestamp) {
 <fieldset>
 	<legend>Sensor Reading at a Specific Timestamp</legend>
@@ -90,24 +81,16 @@
 
 
 <div class="actions">
-	<input type="submit" class="btn primary" name="action" value="Submit"> <a
+	<p>
+		<button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
+		<a
 		href="@routes.Application.index" class="btn">Cancel</a>
-
-</div>
-
-<br>
-<div class="actions">
-    <button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
-		
+	</p>
 </div>
 }
 
 
-<br>
-<br>
-<br>
-<br>
-<br>
+
 @helper.form(action = routes.SensorReadingController.getLatestSensorReadings()) {
 <fieldset>
 	<legend>Latest Sensor Reading at a Specific Timestamp for one type in all registered devices</legend>
@@ -123,19 +106,14 @@
 
 
 <div class="actions">
-	<input type="submit" class="btn primary" name="action" value="Submit"> <a
+	<p>
+		<button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
+		<a
 		href="@routes.Application.index" class="btn">Cancel</a>
-
+	</p>
 </div>
 
-<br>
-<div class="actions">
-    <button type="submit" class="btn primary" name="action" value="Download">Download Json File</button>
-		
-</div>
 }
-
-
 
 	<script type="text/javascript">
 

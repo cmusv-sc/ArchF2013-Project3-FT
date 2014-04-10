@@ -32,16 +32,18 @@
             <td>@deviceType.getVersion()</td>
 	    	<td>@deviceType.getSensorTypeNames()</td>
             <td>
-            <span id="@deviceType.getDeviceTypeName()-userDefinedFields">
+            <span class="@deviceType.getDeviceTypeName() editable"
+            	data-name='deviceTypeUserDefinedFields'>
             	@deviceType.getDeviceTypeUserDefinedFields()
             </span>
             </td>
 	    	@if(session.get("email")){
             		
 	              	<td class="operation">
-							<input type="button" class="btn btn-primary" value="Edit"
-								onclick="makeEditable(event, {'@deviceType.getDeviceTypeName()-userDefinedFields':'@deviceType.getDeviceTypeName()'}, '@routes.DeviceTypeController.editDeviceType()')">
-						
+						<input type="button" class="edit-btn btn btn-primary" value="Edit" 
+							data-pk='@deviceType.getDeviceTypeName()' 
+							data-url='@routes.DeviceTypeController.editDeviceType()' 
+						>						
              			@form(routes.DeviceTypeController.deleteDeviceType()){
                		 		<input name="idHolder" type="hidden" value="@deviceType.getDeviceTypeName()">
         							<input type="submit"  class="btn btn-danger" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')">
