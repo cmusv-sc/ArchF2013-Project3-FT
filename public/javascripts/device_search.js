@@ -28,7 +28,7 @@ $(function() {
 				}
 				var notFound = $("." + prop).filter(function() {
 					var str = $(this).text();
-					return str.indexOf(search) == -1;
+					return str.toLowerCase().indexOf(search) == -1;
 				});
 				if (prop !== 'devices') {
 					notFound = notFound.parent();
