@@ -6,8 +6,8 @@ import views.html.estimator.*;
 
 public class EstimateController extends Controller {
 
-	public static Result estimate(String email, String vfile, String scriptFile) {
-		return ok(estimate.render(email, vfile, scriptFile));
+	public static Result estimate(String email, String vfile, String dataset) {
+		return ok(estimate.render(email, vfile, dataset));
 	}
 	
 	public static Result estimate1() {

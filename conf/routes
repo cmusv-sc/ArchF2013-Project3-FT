@@ -64,7 +64,7 @@ POST	/getLatestSensorReadings	 controllers.SensorReadingController.getLatestSens
 
 
 # recommendation
-GET		/estimator				controllers.EstimateController.estimate(email ?= null, vfile ?= null, scriptFile ?= null)
+GET		/estimator				controllers.EstimateController.estimate(email ?= null, vfile ?= null, dataset ?= null)
 GET		/estimator/1			controllers.EstimateController.estimate1()			
 GET		/estimator/2			controllers.EstimateController.estimate2()
 GET		/estimator/3			controllers.EstimateController.estimate3()

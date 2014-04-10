@@ -5,13 +5,34 @@
 
 @scripts = {
 	<script src='@routes.Assets.at("javascripts/edit_button.js")'></script>
+	<script src='@routes.Assets.at("javascripts/device_search.js")'></script>
+	
 }
 
 @main("Devices", scripts) {
     
     @flash_message()
     
-    <h1>@devices.size() Devices</h1>
+    <select id="search-criteria" name="search-criteria">
+    	 <option value=".devices" selected="selected">All</option>
+    	 <option value=".deviceUri">URI</option>
+    	 <option value=".deviceTypeName">Device Type</option>
+    	 <option value=".sensorTypeName">SensorType</option>
+    	 <option value=".sensorName">Sensor Name</option>
+    	 <option value=".longitude">Longitude</option>
+    	 <option value=".latitude">Latitude</option>
+    	 <option value=".altitude">Altitude</option>
+    	 <option value=".representation">Representation</option>
+    	 <option value=".deviceUserDefinedFields">User Defined Fields</option>
+    </select>
+    
+	<form class="filter-search navbar-form navbar-right" role="search">
+		<div class="form-group">
+			<input type="text" class="form-control" placeholder="Search" >
+		</div>
+	</form>
+
+	<h1>@devices.size() Devices</h1>
 		<table class="table table-striped table-bordered table-condensed">
 			<tr>
 	    	<td>URI</td>
@@ -32,18 +53,17 @@
 	    </tr>
 
     	@for(device <- devices) {
-    	<tr>
-            <td>@device.getDeviceUri()</td>
-            <td>@device.getDeviceTypeName()</td>
-       		<td>@device.getSensorTypeNames()</td>
-       		<td>@device.getSensorNames()</td>
+    	<tr id="@device.getDeviceUri()-row" class="devices">
+            <td class="deviceUri">@device.getDeviceUri()</td>
+            <td class="deviceTypeName">@device.getDeviceTypeName()</td>
+       		<td class="sensorTypeName">@device.getSensorTypeNames()</td>
+       		<td class="sensorName">@device.getSensorNames()</td>
+       		<td class="longitude">@device.getLongitude()</td>
+       		<td class="latitude">@device.getLatitude()</td>
+       		<td class="altitude">@device.getAltitude()</td>
+       		<td class="representation">@device.getRepresentation()</td>
        		
-       		<td>@device.getLongitude()</td>
-       		<td>@device.getLatitude()</td>
-       		<td>@device.getAltitude()</td>
-       		<td>@device.getRepresentation()</td>
-       		
-       		<td>
+       		<td class="deviceUserDefinedFields">
        			<span id="@device.getDeviceUri()-userDefinedFields">
             		@device.getDeviceUserDefinedFields()
        			</span>
@@ -116,4 +136,9 @@
         </div>
     }
     }
+    <script type="text/javascript">
+    	$(function(){
+    		searchChange.change();
+    	});
+    </script>
 }
