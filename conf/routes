@@ -54,6 +54,9 @@ POST	/edit/sensorCategories		controllers.SensorCategoryController.editSensorCate
 # dashboard
 GET		/dashboard				controllers.DashboardController.dashboard()
 
+# About Us
+GET		/aboutus				controllers.AboutusController.aboutus()
+
 # sensor reading
 GET		/sensorReading			controllers.SensorReadingController.sensorReadings()
 POST	/getSensorReadings		controllers.SensorReadingController.getSensorReadingsWithinRange() 
