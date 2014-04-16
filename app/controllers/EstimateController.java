@@ -21,4 +21,8 @@ public class EstimateController extends Controller {
 	public static Result estimate3() {
 		return ok(estimate3.render());
 	}
+	
+	public static Result tutorial() {
+		return ok(tutorial.render());
+	}
 }
