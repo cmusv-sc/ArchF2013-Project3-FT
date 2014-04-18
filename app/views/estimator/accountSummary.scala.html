@@ -1,0 +1,84 @@
+@(email: String, vfile: String, dataset: String) @import helper._
+
+@main("Estimator") {
+
+
+<ol class="breadcrumb">
+	<li><a href="/estimate/tutorial">Tutorial</a></li>
+	<li class="active">Collect Data</li>
+	<li><a href="/estimator/1">Input preference</a></li>
+	<li><a href="/estimator/2">Workflow Summary</a></li>
+	<li><a href="/estimator/3">Recommendation</a></li>
+</ol>
+
+<div class="jumbotron">
+	<div class="row">
+
+		<div class="col-lg-6">
+			<h2>User: Jane</h2>
+			<h1>Account Summary</h1>
+			<table cellspacing='0'
+				class="table table-striped table-bordered table-condensed"
+				align="center">
+				<!-- cellspacing='0' is important, must stay -->
+
+				<!-- Table Header -->
+				<thead>
+					<tr>
+						<th>Start Date</th>
+						<th>Start Time</th>
+						<th>AMI Instance</th>
+						<th>Duration</th>
+						<th>Cost</th>
+					</tr>
+				</thead>
+
+				<tbody>
+
+					<tr class="pure-table-odd">
+						<td>04/08/2014</td>
+						<td>9:34</td>
+						<td>m3.large</td>
+						<td>36 hours 5 minute</td>
+						<td>$36</td>
+					</tr>
+					<tr class="pure-table-odd">
+						<td>04/12/2014</td>
+						<td>16:26</td>
+						<td>m3.medium</td>
+						<td>24 hours 17 minute</td>
+						<td>$24</td>
+					</tr>
+					<tr class="pure-table-odd">
+						<td>04/15/2014</td>
+						<td>13:24</td>
+						<td>m3.large</td>
+						<td>10 hours 23 minute</td>
+						<td>$11</td>
+					</tr>
+					<tr class="pure-table-odd">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>Total: $89</td>
+					</tr>
+					<tr class="pure-table-odd">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>Budget left: $111</td>
+					</tr>
+				</tbody>
+			</table>
+		<button>New Task</button>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<img src="/assets/images/NASA_logo.png">
+	</div>
+</div>
+
+
+}

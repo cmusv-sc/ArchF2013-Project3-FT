@@ -15,8 +15,10 @@
 			<div class="navbar-collapse collapse" style="height:">
 				<ul class="nav navbar-nav navbar-right">
 
+					<li><a href="@routes.Application.index()">Home</a></li>
+					
 					<li class="dropdown"><a href="#"
-						class="dropdown-toggle" data-toggle="dropdown">Sensor <b
+						class="dropdown-toggle" data-toggle="dropdown">MetaData <b
 							class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="@routes.SensorController.sensors()">Sensors</a></li>
@@ -24,15 +26,8 @@
 									Types</a></li>
 							<li><a href="@routes.SensorCategoryController.sensorCategories()">Sensor
 									Categories</a></li>
-							
-						</ul></li>
-
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Device <b class="caret"></b></a>
-						<ul class="dropdown-menu">
 							<li><a href="@routes.DeviceController.devices()">Devices</a></li>
-							<li><a href="@routes.DeviceTypeController.deviceTypes()">Device Types</a></li>
-							
+							<li><a href="@routes.DeviceTypeController.deviceTypes()">Device Types</a></li>							
 						</ul></li>
 
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -42,10 +37,14 @@
 							
 						</ul></li>
 						
-					
-						
-					<li><a href="@routes.DashboardController.dashboard()">Dashboard</a></li>
-					
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown">Console Management<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="@routes.DashboardController.dashboard()">Dashboard</a></li>
+							<li><a href="http://sensorserviceplatform.github.io/VirtualSensorEditor/">Virtual Sensor Editor</a></li>
+							<li><a href="http://sensorserviceplatform.github.io/Visualization/">Virtualization</a></li>							
+						</ul></li>					
+											
 					<li><a href="@routes.AboutusController.aboutus()">About Us</a></li>
 
 					@if(!session.get("email")){
