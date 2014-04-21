@@ -11,13 +11,15 @@ import java.net.URL;
 import com.google.gson.JsonObject;
 
 public class HttpHelper {
-	public static String HttpUserReg(String urlStr, JsonObject jsonObj)
+	public static String HttpUserReg(String urlStr, JsonObject jsonObj, String operation)
 			throws Exception {
 		// String URLStr = "http://einstein.sv.cmu.edu:9000/addContestUser";
 
-		if (jsonObj.get("operation").equals("delete")) {
+		if (operation.equals("delete")) {
+			System.out.println("Reached inside delete nasa");
 			return httpDelNasaRegistration(urlStr);
 		} else {
+			System.out.println("Reached inside post nasa" + jsonObj.get("operation").toString());
 			return httpPostNasaRegistration(urlStr, jsonObj.toString());
 		}
 	}

@@ -95,7 +95,7 @@ public class NasaRegistrationController extends Controller {
 			jo.addProperty("researchArea", rAreaField);
 			jo.addProperty("goal", goalField);
 
-			HttpHelper.HttpUserReg(urlStr, jo);
+			HttpHelper.HttpUserReg(urlStr, jo, "register");
 
 			/*
 			 * jsonData.put("userName", "anubhav"); jsonData.put("password",
@@ -168,7 +168,7 @@ public class NasaRegistrationController extends Controller {
 			jo.addProperty("researchArea", rAreaField);
 			jo.addProperty("goal", goalField);
 
-			HttpHelper.HttpUserReg(urlStr, jo);
+			HttpHelper.HttpUserReg(urlStr, jo, "update");
 
 			
 			 /** jsonData.put("userName", "anubhav"); jsonData.put("password",
@@ -231,7 +231,7 @@ public class NasaRegistrationController extends Controller {
 			jsonDelete.addProperty("operation", "delete");
 			//urlStr = urlStr + '/' + jo.get("userName") + '/' + jo.get("password");
 			System.out.println("Will this show in the console" + urlStr);
-			HttpHelper.HttpUserReg(urlStr, jsonDelete);
+			HttpHelper.HttpUserReg(urlStr, jo, "delete");
 
 			
 			 /** jsonData.put("userName", "anubhav"); jsonData.put("password",
