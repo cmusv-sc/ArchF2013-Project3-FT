@@ -16,7 +16,6 @@
  * */
 package controllers;
 
-
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.*;
 
@@ -44,7 +43,10 @@ public class SensorTypeController extends Controller {
 		try {
 
 			String sensorTypeName = st.field("sensorTypeName").value();
-			if (sensorTypeName != null && !sensorTypeName.isEmpty()) {
+
+			// should not contain spaces
+			if (sensorTypeName != null && !sensorTypeName.isEmpty()
+					&& !sensorTypeName.contains(" ")) {
 				jsonData.put("sensorTypeName", sensorTypeName);
 			}
 			jsonData.put("manufacturer", st.field("manufacturer").value());
@@ -79,17 +81,50 @@ public class SensorTypeController extends Controller {
 
 			// flash the response message
 			Application.flashMsg(response);
-		} catch(IllegalStateException e){
+		} catch (IllegalStateException e) {
 			e.printStackTrace();
-			Application.flashMsg(APICall.createResponse(ResponseType.CONVERSIONERROR));	
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
 
-		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
+		return redirect("/sensorTypes");
 	}
 
+	public static Result editSensorType() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		ObjectNode jsonData = Json.newObject();
+		try {
+			String sensorTypeName = df.field("pk").value();
+
+			if (sensorTypeName != null && !sensorTypeName.isEmpty()) {
+				jsonData.put("sensorTypeName", sensorTypeName);
+			}
+
+			String editField = df.field("name").value();  
+			if (editField != null && !editField.isEmpty()) {
+				jsonData.put(editField, df.field("value").value());
+			}
+			
+			// Call the edit() method
+			JsonNode response = SensorType.edit(jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return ok("updated");
+	}
+	
 	public static Result deleteSensorType() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		String sensorTypeName = df.field("idHolder").value();
@@ -99,6 +134,7 @@ public class SensorTypeController extends Controller {
 
 		// flash the response message
 		Application.flashMsg(response);
-		return ok(sensorTypes.render(SensorType.all(), sensorTypeForm));
+
+		return redirect("/sensorTypes");
 	}
 }

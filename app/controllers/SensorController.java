@@ -42,7 +42,10 @@ public class SensorController extends Controller {
 		ObjectNode jsonData = Json.newObject();
 		try {
 			String sensorName = dc.field("sensorName").value();
-			if (sensorName != null && !sensorName.isEmpty()) {
+			
+			// should not contain spaces
+			if (sensorName != null && !sensorName.isEmpty()
+					&& !sensorName.contains(" ")) {
 				jsonData.put("sensorName", sensorName);
 			}
 
@@ -64,7 +67,40 @@ public class SensorController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(sensors.render(Sensor.all(), sensorForm));
+		return redirect("/sensors");
+	}
+	
+	public static Result editSensor() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		ObjectNode jsonData = Json.newObject();
+		try {
+			String sensorName = df.field("pk").value();
+
+			if (sensorName != null && !sensorName.isEmpty()) {
+				jsonData.put("sensorName", sensorName);
+			}
+
+			String editField = df.field("name").value();  
+			if (editField != null && !editField.isEmpty()) {
+				jsonData.put(editField, df.field("value").value());
+			}
+			
+			// Call the edit() method
+			JsonNode response = Sensor.edit(jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return ok("updated");
+
 	}
 
 	public static Result deleteSensor() {
@@ -79,6 +115,6 @@ public class SensorController extends Controller {
 		// flash the response message
 		Application.flashMsg(response);
 
-		return ok(sensors.render(Sensor.all(), sensorForm));
+		return redirect("/sensors");
 	}
 }

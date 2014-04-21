@@ -42,7 +42,7 @@ public class DeviceController extends Controller {
 		try {
 
 			String uri = dc.field("uri").value();
-			if (uri != null && !uri.isEmpty()) {
+			if (uri != null && !uri.isEmpty() && !uri.contains(" ")) {
 				jsonData.put("uri", dc.field("uri").value());
 			}
 			jsonData.put("deviceTypeName", dc.field("deviceTypeName").value());
@@ -82,9 +82,41 @@ public class DeviceController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(devices.render(Device.all(), deviceForm));
+		return redirect("/devices");
 	}
+	
+	public static Result editDevice() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		ObjectNode jsonData = Json.newObject();
+		try {
+			String deviceUri = df.field("pk").value();
 
+			if (deviceUri != null && !deviceUri.isEmpty()) {
+				jsonData.put("deviceUri", deviceUri);
+			}
+
+			String editField = df.field("name").value();  
+			if (editField != null && !editField.isEmpty()) {
+				jsonData.put(editField, df.field("value").value());
+			}
+			
+			// Call the edit() method
+			JsonNode response = Device.edit(deviceUri, jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return ok("updated");
+	}
+	
 	public static Result deleteDevice() {
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		String id = df.field("idHolder").value();
@@ -94,7 +126,7 @@ public class DeviceController extends Controller {
 
 		// flash the response message
 		Application.flashMsg(response);
-		return ok(devices.render(Device.all(), deviceForm));
+		return redirect("/devices");
 
 	}
 }

@@ -47,28 +47,63 @@ public class SensorCategoryController extends Controller {
 
 		ObjectNode jsonData = Json.newObject();
 		try {
+
+			String sensorCategoryName = dc.field("Name").value();
 			
-		
-		String sensorCategoryName = dc.field("Name").value();
-		if (sensorCategoryName!=null && !sensorCategoryName.isEmpty()) {
-			jsonData.put("sensorCategoryName", sensorCategoryName);	
-		}
-		jsonData.put("purpose", dc.field("Purpose").value());
+			// name should not contain spaces
+			if (sensorCategoryName != null && !sensorCategoryName.isEmpty()
+					&& !sensorCategoryName.contains(" ")) {
+				jsonData.put("sensorCategoryName", sensorCategoryName);
+			}
+			jsonData.put("purpose", dc.field("Purpose").value());
 
-		// create the item by calling the API
-		JsonNode response = SensorCategory.create(jsonData);
+			// create the item by calling the API
+			JsonNode response = SensorCategory.create(jsonData);
 
-		// flash the response message
-		Application.flashMsg(response);
-		} catch(IllegalStateException e){
+			// flash the response message
+			Application.flashMsg(response);
+		} catch (IllegalStateException e) {
 			e.printStackTrace();
-			Application.flashMsg(APICall.createResponse(ResponseType.CONVERSIONERROR));	
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(sensorCategories.render(SensorCategory.all(),
-				sensorCategoryForm));
+		return redirect("/sensorCategories");
+	}
+
+	public static Result editSensorCategory() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		ObjectNode jsonData = Json.newObject();
+		try {
+			String sensorCategoryName = df.field("pk").value();
+
+			if (sensorCategoryName != null && !sensorCategoryName.isEmpty()) {
+				jsonData.put("sensorCategoryName", sensorCategoryName);
+			}
+
+			String editField = df.field("name").value();  
+			if (editField != null && !editField.isEmpty()) {
+				jsonData.put(editField, df.field("value").value());
+			}
+
+			// Call the edit() method
+			JsonNode response = SensorCategory.edit(jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return ok("updated");
+
 	}
 
 	public static Result deleteSensorCategory() {
@@ -83,26 +118,24 @@ public class SensorCategoryController extends Controller {
 		// flash the response message
 		Application.flashMsg(response);
 
-		return ok(sensorCategories.render(SensorCategory.all(),
-				sensorCategoryForm));
+		return redirect("/sensorCategories");
 	}
-	
-	public static Result downloadSensorCategory(){
-		Form<SensorCategory> dc = sensorCategoryForm.bindFromRequest();
-		SensorCategory sc = new SensorCategory();
-		List<SensorCategory> user = sc.all();
-		//1. Convert Java object to JSON format
+
+	public static Result downloadSensorCategory() {
+		List<SensorCategory> user = SensorCategory.all();
+		// 1. Convert Java object to JSON format
 		ObjectMapper mapper = new ObjectMapper();
-		File file = new File("user.json"); 
+		File file = new File("user.json");
 		try {
 			mapper.writeValue(file, user);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		response().setContentType("application/x-download");  
-		response().setHeader("Content-disposition","attachment; filename=user.json"); 
+
+		response().setContentType("application/x-download");
+		response().setHeader("Content-disposition",
+				"attachment; filename=user.json");
 		return ok(file);
 	}
 }

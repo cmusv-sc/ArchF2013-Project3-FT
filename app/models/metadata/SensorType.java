@@ -18,7 +18,6 @@ package models.metadata;
 
 import java.util.*;
 
-import play.libs.Json;
 import util.APICall;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -49,7 +48,8 @@ public class SensorType {
 			+ util.Constants.NEW_ADD_SENSOR_TYPE;
 	private static final String DELETE_SENSOR_TYPE_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_DELETE_SENSOR_TYPE;
-	private static List<SensorType> sensorTypeFoundList = new ArrayList<SensorType>();
+	private static final String EDIT_SENSOR_TYPE_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_EDIT_SENSOR_TYPE;
 
 	public SensorType() {
 		// TODO Auto-generated constructor stub
@@ -186,19 +186,11 @@ public class SensorType {
 			allSensorTypes.add(newSensorType);
 		}
 
-		// need to update the sensorTypeFoundList
-		updateSensorTypeFoundList(allSensorTypes);
 
 		return allSensorTypes;
 
 	}
 
-	public static void updateSensorTypeFoundList(List<SensorType> newList) {
-		sensorTypeFoundList.clear();
-		for (SensorType element : newList) {
-			sensorTypeFoundList.add(element);
-		}
-	}
 
 	/**
 	 * Method to display all sensor types' name
@@ -224,6 +216,16 @@ public class SensorType {
 	 */
 	public static JsonNode create(JsonNode jsonData) {
 		return APICall.postAPI(ADD_SENSOR_TYPE_CALL, jsonData);
+	}
+	
+	/**
+	 * Method to call the API to edit the sensor type
+	 * 
+	 * @param jsonData
+	 * @return the response json from the API server
+	 */
+	public static JsonNode edit(JsonNode jsonData){
+		return APICall.postAPI(EDIT_SENSOR_TYPE_CALL, jsonData);
 	}
 
 	/**

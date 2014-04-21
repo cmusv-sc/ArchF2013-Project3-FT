@@ -3,7 +3,11 @@
 
 @import helper._
 
-@main("DeviceTypes") {
+@scripts = {
+	<script src='@routes.Assets.at("javascripts/edit_button.js")'></script>
+}
+
+@main("DeviceTypes", scripts) {
     
     @flash_message()
     
@@ -27,9 +31,19 @@
             <td>@deviceType.getManufacturer()</td>
             <td>@deviceType.getVersion()</td>
 	    	<td>@deviceType.getSensorTypeNames()</td>
-            <td>@deviceType.getDeviceTypeUserDefinedFields()</td>
+            <td>
+            <span class="@deviceType.getDeviceTypeName() editable"
+            	data-name='deviceTypeUserDefinedFields'>
+            	@deviceType.getDeviceTypeUserDefinedFields()
+            </span>
+            </td>
 	    	@if(session.get("email")){
-            		<td>
+            		
+	              	<td class="operation">
+						<input type="button" class="edit-btn btn btn-primary" value="Edit" 
+							data-pk='@deviceType.getDeviceTypeName()' 
+							data-url='@routes.DeviceTypeController.editDeviceType()' 
+						>						
              			@form(routes.DeviceTypeController.deleteDeviceType()){
                		 		<input name="idHolder" type="hidden" value="@deviceType.getDeviceTypeName()">
         							<input type="submit"  class="btn btn-danger" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')">
@@ -44,45 +58,45 @@
     @if(session.get("email")){
     <h2>Add a new device type</h2>
 
-    @form(action = routes.DeviceTypeController.newDeviceType()) {
-        
-            @inputText(
-                deviceTypeForm("deviceTypeName"), 
-                '_label -> "Device Type Name * (Please DO NOT contain spaces)",                 
-                '_error -> deviceTypeForm.globalError                                
-            )
-            @inputText(
-                deviceTypeForm("manufacturer"), 
-                '_label -> "Manufacturer", 
-                '_error -> deviceTypeForm.globalError                                
-            )
-            @inputText(
-                deviceTypeForm("version"), 
-                '_label -> "Version",
-                '_error -> deviceTypeForm.globalError                                
-            )
-            @inputText(
-            	deviceTypeForm("deviceTypeUserDefinedFields"),
-            	'_label -> "User Defined Fields",
-            	'_error -> deviceTypeForm.globalError
-            )
-            <dt>
-            	<label>Sensor Type Name</label>
-            </dt>
-            <dd>
-	            <select id="sensorTypeNames" name="sensorTypeNames" multiple>
-	            	@for(sensorTypeName <- metadata.SensorType.allSensorTypeName()) {
-	            		<option value="@sensorTypeName">@sensorTypeName</option>
-	            	}
-	            </select>
-            </dd>
-           
-      
-        <div class="actions">
-            <input type="submit" class="btn primary" value="Register">
-            <a href="@routes.DeviceTypeController.deviceTypes()" class="btn">Cancel</a>
-        </div>
-        
-    }
-		}
+	    @form(action = routes.DeviceTypeController.newDeviceType()) {
+	        
+	            @inputText(
+	                deviceTypeForm("deviceTypeName"), 
+	                '_label -> "Device Type Name * (Please DO NOT contain spaces)",                 
+	                '_error -> deviceTypeForm.globalError                                
+	            )
+	            @inputText(
+	                deviceTypeForm("manufacturer"), 
+	                '_label -> "Manufacturer", 
+	                '_error -> deviceTypeForm.globalError                                
+	            )
+	            @inputText(
+	                deviceTypeForm("version"), 
+	                '_label -> "Version",
+	                '_error -> deviceTypeForm.globalError                                
+	            )
+	            @inputText(
+	            	deviceTypeForm("deviceTypeUserDefinedFields"),
+	            	'_label -> "User Defined Fields",
+	            	'_error -> deviceTypeForm.globalError
+	            )
+	            <dt>
+	            	<label>Sensor Type Name</label>
+	            </dt>
+	            <dd>
+		            <select id="sensorTypeNames" name="sensorTypeNames" multiple>
+		            	@for(sensorTypeName <- metadata.SensorType.allSensorTypeName()) {
+		            		<option value="@sensorTypeName">@sensorTypeName</option>
+		            	}
+		            </select>
+	            </dd>
+	           
+	      
+	        <div class="actions">
+	            <input type="submit" class="btn primary" value="Register">
+	            <a href="@routes.DeviceTypeController.deviceTypes()" class="btn">Cancel</a>
+	        </div>
+	        
+	    }
+	}
 }

@@ -1,9 +1,13 @@
+@(email: String, vfile: String, dataset: String)
+
+
 @import helper._ 
 
 @main("Estimator") {
 
 
 <ol class="breadcrumb">
+	<li><a href="/estimate/tutorial">Tutorial</a></li>
 	<li class="active">Collect Data</li>
 	<li><a href="/estimator/1">Input preference</a></li>
 	<li><a href="/estimator/2">Workflow Summary</a></li>
@@ -21,6 +25,10 @@
 	<p>We have collected your workflow and datasets. Based on those
 		files, we can help you decide which virtual machine option is best for
 		you to use at Amazon EC2.</p>
+	<p>
+		<a class="btn btn-lg btn-default"
+						href="/estimate/tutorial" role="button">Getting Started &raquo;</a>
+	</p>
 	</div>
 </div>
 </div>
@@ -31,27 +39,37 @@
 	<fieldset>
 		<legend>Estimator</legend>
 
-		<div class="clearfix  " id="name_field">
+		<div class="clearfix" id="name_field">
 			<label for="name">Scripting file</label>
-			<div class="input">
-
-				<input type="text" id="name" name="name" value=""> <span
-					class="help-inline"></span> <span class="help-block">Required</span>
+			<div class="row">
+				<div class="input col-lg-2">
+					<input type="text" id="name" name="name" value="@vfile" placeholder="/Downloads/Workflowfiles"> <span
+						class="help-inline"></span> <span class="help-block">Required</span>
+				</div>
+				<div class="upload col-lg-2">
+					<input type="button" class="btn" id="upload-script" name="upload-script" value="upload">
+				</div>
 			</div>
 		</div>
 		<div class="clearfix  " id="title_field">
 			<label for="title">Dataset</label>
-			<div class="input">
-
-				<input type="text" id="title" name="title" value=""> <span
-					class="help-inline"></span> <span class="help-block">Required</span>
+			<div class="row">
+				<div class="input col-lg-2">
+	 
+					<input type="text" id="title" name="title" value="@dataset" placeholder="/Downloads/Datasets"> <span
+						class="help-inline"></span> <span class="help-block">Required</span>
+				</div>
+			
+				<div class="upload col-lg-2">
+					<input type="button" class="btn" id="upload-dataset" name="upload-dataset" value="upload">
+				</div>
 			</div>
 		</div>
 		<div class="clearfix  " id="email_field">
 			<label for="email">Email</label>
 			<div class="input">
 
-				<input type="text" id="email" name="email" value=""> <span
+				<input type="text" id="email" name="email" value="@email"> <span
 					class="help-inline"></span> <span class="help-block">Required</span>
 			</div>
 		</div>

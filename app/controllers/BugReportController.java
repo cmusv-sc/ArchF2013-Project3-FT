@@ -62,7 +62,7 @@ public class BugReportController extends Controller {
 	public static Result list() {
 		BugReport bugReport = new BugReport();
 		List<Object[]> list = BugReport.getAll();
-		LinkedList<BugReport> bugList = new LinkedList();
+		LinkedList<BugReport> bugList = new LinkedList<BugReport>();
 		// title VARCHAR(255), organization_name VARCHAR(255), email
 		// VARCHAR(255), description
 		for (Object[] e : list) {

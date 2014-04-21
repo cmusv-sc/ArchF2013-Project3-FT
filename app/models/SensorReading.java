@@ -1,9 +1,5 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import models.metadata.DeviceType;
 import util.APICall;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -13,8 +9,14 @@ public class SensorReading {
 	private String startTime;
 	private String endTime;
 
-	private static final String GET_SENSOR_READING_CALL = util.Constants.NEW_API_URL
+	private static final String GET_SENSOR_READING_INRANGE_CALL = util.Constants.NEW_API_URL
 			+ util.Constants.NEW_GET_SENSOR_READING_IN_RANGE;
+	
+	private static final String GET_SENSOR_READING_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_GET_SENSOR_READING;
+	
+	private static final String GET_LATEST_SENSOR_READING_CALL = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_GET_LATEST_SENSOR_READING_IN_ALL_DEVICES;
 
 	public String getSensorName() {
 		return sensorName;
@@ -43,16 +45,36 @@ public class SensorReading {
 	public static JsonNode getReadingsWithinRange(String sensorName,
 			String startTime, String endTime) {
 
-		System.out.println(wrapTimeRangeURL(sensorName,
-				startTime, endTime));
 		JsonNode readingsNode = APICall.callAPI(wrapTimeRangeURL(sensorName,
 				startTime, endTime));
+		return readingsNode;
+	}
+	
+
+	public static JsonNode getReadingsAtTimestamp(String sensorName,
+			String time) {
+		System.out.println(wrapTimeURL(sensorName,time));
+		JsonNode readingsNode = APICall.callAPI(wrapTimeURL(sensorName,
+				time));
+		return readingsNode;
+	}
+	
+	public static JsonNode getLatestSensorReading(String sensorTypeName) {
+		JsonNode readingsNode = APICall.callAPI(wrapLatestURL(sensorTypeName));
 		return readingsNode;
 	}
 
 	private static String wrapTimeRangeURL(String sensorName, String startTime,
 			String endTime) {
-		return GET_SENSOR_READING_CALL + sensorName + "/" + startTime + "/"
+		return GET_SENSOR_READING_INRANGE_CALL + sensorName + "/" + startTime + "/"
 				+ endTime + "/json";
+	}
+	
+	private static String wrapTimeURL(String sensorName, String time) {
+		return GET_SENSOR_READING_CALL + sensorName + "/" + time + "/json";
+	}
+	
+	private static String wrapLatestURL(String sensorTypeName) {
+		return GET_LATEST_SENSOR_READING_CALL + sensorTypeName + "/json";
 	}
 }

@@ -3,7 +3,11 @@
 
 @import helper._
 
-@main("Sensor Categories") {
+@scripts = {
+	<script src='@routes.Assets.at("javascripts/edit_button.js")'></script>
+}
+
+@main("Sensor Categories", scripts) {
 	
 	@flash_message()    
 
@@ -11,76 +15,62 @@
 		<table class="table table-striped table-bordered table-condensed">
 	<tr>
 		<td>Sensor Category Name</td>
-		<td>Purpose</td> @if(session.get("email")){
-		<td>Operation</td> }
+		<td>Purpose</td> 
+		@if(session.get("email")){
+			<td>Operation</td> 
+		}
 	</tr>
 
 	@for(sensorCategory <- sensorCategories) {
 	<tr>
 		<td>@sensorCategory.getSensorCategoryName()</td>
 
-		<td><span id="@sensorCategory.getSensorCategoryName()">
+		<td><span class="@sensorCategory.getSensorCategoryName() editable" data-name='purpose'>
 				@sensorCategory.getPurpose() </span></td>
 
-		<td>@if(session.get("email")){
-			<div class="edit-btn">
-				<input type="button" class="btn btn-primary" value="Edit"
-					onclick="makeEditable(event, $('#@sensorCategory.getSensorCategoryName()'))">
-			</div>
-
-			<div>
-				@form(routes.SensorCategoryController.deleteSensorCategory()){ <input
-					name="idHolder" class="hidden" type="hidden"
-					value="@sensorCategory.getSensorCategoryName()"> <input
-					type="submit" class="btn btn-danger delete-btn" value="Delete"
-					onclick="return confirm('Are you sure you want to delete this item?')">
+		@if(session.get("email")){
+			<td class="operation">
+				<input type="button" class="edit-btn btn btn-primary" value="Edit" 
+					data-pk='@sensorCategory.getSensorCategoryName()' 
+					data-url='@routes.SensorCategoryController.editSensorCategory()' 
+				>
+				@form(routes.SensorCategoryController.deleteSensorCategory()){ 
+					<input
+						name="idHolder" class="hidden" type="hidden"
+						value="@sensorCategory.getSensorCategoryName()"> 
+					<input
+						type="submit" class="btn btn-danger delete-btn" value="Delete"
+						onclick="return confirm('Are you sure you want to delete this item?')">
 				}
-			</div>
-		</td> }
+			</td> 
+		}
 	</tr>
 	}
     </table>
     
      @if(session.get("email")){
-    <h2>Add a new sensor category</h2>
-    
-    @form(routes.SensorCategoryController.newSensorCategory()) {
-        
-        @inputText(
-        	sensorCategoryForm("Name"),
-        	'_label -> "Name * (Please DO NOT contain spaces)"
-        )
-        @inputText(
-        	sensorCategoryForm("Purpose"),
-        	'_label -> "Purpose"
-        ) 
-
-        <input class="btn" type="submit" value="Create">
-        <a href="@routes.SensorCategoryController.sensorCategories()" class="btn">Cancel</a>
-    }
-
-	<br>
+	    <h2>Add a new sensor category</h2>
 	    
-    @form(routes.SensorCategoryController.downloadSensorCategory(), 'class -> "form-horizontal", 'role -> "form") {
-
-        <button type="submit" name="action" value="download">Download</button>
+	    @form(routes.SensorCategoryController.newSensorCategory()) {
+	        
+	        @inputText(
+	        	sensorCategoryForm("Name"),
+	        	'_label -> "Name * (Please DO NOT contain spaces)"
+	        )
+	        @inputText(
+	        	sensorCategoryForm("Purpose"),
+	        	'_label -> "Purpose"
+	        ) 
+	
+	        <input class="btn" type="submit" value="Create">
+	        <a href="@routes.SensorCategoryController.sensorCategories()" class="btn">Cancel</a>
+	    }
+	
+		<br>
+		    
+	    @form(routes.SensorCategoryController.downloadSensorCategory(), 'class -> "form-horizontal", 'role -> "form") {
+	
+	        <button type="submit" name="action" value="download">Download</button>
+	    }
     }
-    
-    }
-   <script>
-
-				$(function() {
-					$.fn.editable.defaults.mode = 'inline';
-				});
-
-				var makeEditable = function(e, button) {
-					e.stopPropagation();
-					button.editable({
-
-						type : 'text',
-						toggle: 'click',
-						title : 'Enter Purpose'
-					});
-				}
-			</script>
 }

@@ -16,18 +16,19 @@
  * */
 package controllers;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import models.Dashboard;
-import play.data.Form;
 import play.mvc.*;
 import views.html.*;
 
 public class DashboardController extends Controller {
-	
-	final static Form<Dashboard> dashboardForm = Form.form(Dashboard.class);	
-	
-    public static Result dashboard() {
-    	return ok(dashboard.render(Dashboard.status(),dashboardForm));
-    }
+
+	public static Result dashboard() {
+		Dashboard board = Dashboard.status();
+		return ok(dashboard.render(board, new Timestamp(new Date().getTime()).toString()));
+	}
 
 
 }

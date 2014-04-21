@@ -30,7 +30,7 @@ import util.APICall;
 import util.APICall.ResponseType;
 import views.html.*;
 
-@Security.Authenticated(Secured.class)
+//@Security.Authenticated(Secured.class)
 public class DeviceTypeController extends Controller {
 	final static Form<DeviceType> deviceTypeForm = Form.form(DeviceType.class);
 
@@ -49,7 +49,10 @@ public class DeviceTypeController extends Controller {
 		try {
 			ObjectNode jsonData = Json.newObject();
 			String deviceTypeName = dtFormEncoded.get("deviceTypeName")[0];
-			if (deviceTypeName != null && !deviceTypeName.isEmpty()) {
+
+			// should not contain spaces
+			if (deviceTypeName != null && !deviceTypeName.isEmpty()
+					&& !deviceTypeName.contains(" ")) {
 				jsonData.put("deviceTypeName", deviceTypeName);
 			}
 			jsonData.put("manufacturer", dtFormEncoded.get("manufacturer")[0]);
@@ -75,7 +78,40 @@ public class DeviceTypeController extends Controller {
 			e.printStackTrace();
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
-		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
+		return redirect("/deviceTypes");
+	}
+
+	public static Result editDeviceType() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		ObjectNode jsonData = Json.newObject();
+		try {
+			String deviceTypeName = df.field("pk").value();
+
+			if (deviceTypeName != null && !deviceTypeName.isEmpty()) {
+				jsonData.put("deviceTypeName", deviceTypeName);
+			}
+
+			String editField = df.field("name").value();  
+			if (editField != null && !editField.isEmpty()) {
+				jsonData.put(editField, df.field("value").value());
+			}
+
+			// Call the edit() method
+			JsonNode response = DeviceType.edit(deviceTypeName, jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+
+		return ok("updated");
 	}
 
 	public static Result deleteDeviceType() {
@@ -87,7 +123,7 @@ public class DeviceTypeController extends Controller {
 
 		// flash the response message
 		Application.flashMsg(response);
-		return ok(deviceTypes.render(DeviceType.all(), deviceTypeForm));
+		return redirect("/deviceTypes");
 
 	}
 }

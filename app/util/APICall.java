@@ -54,8 +54,6 @@ public class APICall {
 	}
 
 	public static JsonNode postAPI(String apiString, JsonNode jsonData) {
-		System.out.println("call API POST: " + apiString);
-		System.out.println("POST Json Data: " + jsonData);
 		Promise<WS.Response> responsePromise = WS.url(apiString).post(jsonData);
 		final Promise<JsonNode> bodyPromise = responsePromise
 				.map(new Function<WS.Response, JsonNode>() {
@@ -76,11 +74,35 @@ public class APICall {
 		} catch (Exception e) {
 			return createResponse(ResponseType.TIMEOUT);
 		}
-
 	}
 
+	/* Right now, only deviceType and device use PUT HTTP request*/
+	public static JsonNode putAPI(String apiString, JsonNode jsonData) {
+		System.out.println(apiString);
+		Promise<WS.Response> responsePromise = WS.url(apiString).put(jsonData);
+		final Promise<JsonNode> bodyPromise = responsePromise
+				.map(new Function<WS.Response, JsonNode>() {
+					@Override
+					public JsonNode apply(WS.Response response)
+							throws Throwable {
+						System.out.println(response.getBody());
+						if ((response.getStatus() == 201 || response
+								.getStatus() == 200)
+								&& !response.getBody().contains("not")) {
+							return createResponse(ResponseType.SUCCESS);
+						} else { // other response status from the server
+							return createResponse(ResponseType.SAVEERROR);
+						}
+					}
+				});
+		try {
+			return bodyPromise.get(10000L);
+		} catch (Exception e) {
+			return createResponse(ResponseType.TIMEOUT);
+		}
+	}
+	
 	public static JsonNode deleteAPI(String apiString) {
-		System.out.println("call API DELETE: " + apiString);
 		Promise<WS.Response> responsePromise = WS.url(apiString).delete();
 		final Promise<JsonNode> bodyPromise = responsePromise
 				.map(new Function<WS.Response, JsonNode>() {
@@ -114,7 +136,7 @@ public class APICall {
 			jsonData.put("error", "Cannot get data from server");
 			break;
 		case SAVEERROR:
-			jsonData.put("error", "Cannot be saved on server");
+			jsonData.put("error", "Cannot be saved. The data must be invalid!");
 			break;
 		case DELETEERROR:
 			jsonData.put("error", "Cannot be deleted on server");

@@ -1,6 +1,12 @@
 .jumbotron {
 	background-color: transparent;
 }
+.jumbotron img{
+	margin-top: -40px;
+}
+.jumbotron h1{
+	font-size: 3em;
+}
 
 .footer {
 	border-top: 1px solid #eee;
@@ -11,10 +17,21 @@
 }
 
 .operation {
-	text-align: center;
+	display: flex;
+}
+.operation .btn{
+	margin-right: 5px;
 }
 
-.edit-btn {
-	margin-right: 5px;
-	float: left;
+.editable-click {
+  color: blue;
+  border-color: blue;
+} 
+.editable-click.editable-disabled {
+  color: black;  
+  border-bottom: none;
+}
+.editable-empty{
+  color: gray;
+  font-style: italic;
 }
