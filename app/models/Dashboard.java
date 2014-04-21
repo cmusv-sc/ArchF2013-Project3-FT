@@ -17,10 +17,16 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import util.APICall;
+
 import com.fasterxml.jackson.databind.JsonNode;
+
 import models.metadata.Device;
+import models.metadata.Sensor;
 
 
 public class Dashboard {
@@ -29,10 +35,9 @@ public class Dashboard {
 	private int totalCount;
 	private int activeCount;
 	
-	private static final String GET_LATEST_DEVICE_READINGS = util.Constants.NEW_API_URL
-			+ util.Constants.NEW_GET_LATEST_DEVICE_READINGS + util.Constants.FORMAT;
+	private static final String GET_LAST_MINUTE_DEVICE_READINGS = util.Constants.NEW_API_URL
+			+ util.Constants.NEW_GET_LAST_MINUTE_DEVICE_READINGS + util.Constants.FORMAT;
 	
-	private static final String[] DEVICE_IDS = util.Constants.DEVICE_IDS;
 	
 	
 	public Dashboard() {
@@ -69,54 +74,44 @@ public class Dashboard {
 		Dashboard dashboard = new Dashboard();
 		
 		ArrayList<DashboardItem> dashboardItems = new ArrayList<DashboardItem>();
-		int totalCount = DEVICE_IDS.length;
+		int totalCount = 0;
 		int activeCount = 0;
 		
 
 		// API call for "active" devices
-		JsonNode devicesNode = APICall.callAPI(GET_LATEST_DEVICE_READINGS);
-		
+		JsonNode devicesNode = APICall.callAPI(GET_LAST_MINUTE_DEVICE_READINGS);
+		ArrayList<String> activeSensorNames = new ArrayList<String>();		
+
 		if (devicesNode == null || !devicesNode.isArray()) {
-			dashboard.setItems(dashboardItems);
 			dashboard.setTotalCount(0);
-			dashboard.setActiveCount(0);
-			return dashboard;			
+			dashboard.setActiveCount(0);			
+		}else{
+			for (int i=0; i < devicesNode.size(); i++) {
+				JsonNode json = devicesNode.path(i);			
+				activeSensorNames.add(json.findPath("sensorName").asText());
+			}
 		}
 				
-		 // Parse json and find active device ids
-		ArrayList<String> activeDeviceIds = new ArrayList<String>();		
 		
-		for (int i=0; i < devicesNode.size(); i++) {
-			
-			JsonNode json = devicesNode.path(i);			
-			activeDeviceIds.add(json.findPath("device_id").asText());
-						
-		}
+		List<Device> allDevices = Device.all(); 
 		
-		// The ids for all devices are hard-coded
-		for (int i=0; i < DEVICE_IDS.length; i++) {
-			
-			String deviceId = DEVICE_IDS[i].split("#")[0];
-			String location = DEVICE_IDS[i].split("#")[1];
-			
+		// build up the hashmap for sensorName and deviceUri
+		Map<String, String> sensorDeviceMap = sensorDeviceMap(activeSensorNames, Sensor.all());
+		
+		for (Device device : allDevices) {
 			DashboardItem dashboardItem = new DashboardItem();			
-			Device dashboardItemDevice = new Device();
-			dashboardItemDevice.setId(deviceId);
-			//dashboardItemDevice.setRegTimestamp(location); // put location information instead of timestamp
-			dashboardItem.setDevice(dashboardItemDevice);
-			
-			// Set status
-			if (activeDeviceIds.contains(deviceId)) {
+			dashboardItem.setDevice(device);
+
+			if (sensorDeviceMap.containsKey(device.getDeviceUri())) {
 				dashboardItem.setStatus(1);
 				activeCount++;
-			}
-			else {
+			}else {
 				dashboardItem.setStatus(0);
 			}
-			
+			totalCount++;
 			dashboardItems.add(dashboardItem);
-			
 		}
+		
 		
 		dashboard.setItems(dashboardItems);
 		dashboard.setTotalCount(totalCount);
@@ -126,4 +121,16 @@ public class Dashboard {
 				
 	}
 
+	private static Map<String, String> sensorDeviceMap(List<String> activeSensorNames, List<Sensor> allSensors){
+		Map<String, String> map = new HashMap<String, String>();
+		for (String sensorName : activeSensorNames) {
+			for (Sensor sensor : allSensors) {
+				if (sensor.getSensorName().equals(sensorName)) {
+					map.put(sensor.getDeviceUri(), sensorName);
+					break;
+				}
+			}
+		}
+		return map;
+	}
 }

@@ -1,5 +1,5 @@
 
-@(dashboard: Dashboard, dashboardForm: play.data.Form[Dashboard],devices: List[metadata.Device]) 
+@(dashboard: Dashboard, currentTime: String) 
 @import helper._ 
 
 @main("Dashboard") {
@@ -35,6 +35,9 @@
 	@flash_message()
 	<input id="activeCount" type="hidden" value="@dashboard.getActiveCount()" />
 	<input id="totalCount" type="hidden" value="@dashboard.getTotalCount()" />
+	<div class="row">
+		<h2>Last Check time : @currentTime</h2>
+	</div>
 	
 	<div class="row">
 		<h2>Device status</h2>
@@ -62,17 +65,21 @@
 		
 			<tbody>
 			
-			
-				@for(device <- devices) {		
-				
-				<tr>
-						<td>@device.getDeviceUri()</td>
+
+				@for(boardItem <- dashboard.getItems()) {		
+					<tr>
+						<td>@boardItem.getDevice().getDeviceUri()</td>
 						
-						<td>Longitude: @device.getLongitude(), Latitude: @device.getLatitude(), Altitude: @device.getAltitude()</td>
-						<td>Inactive</td>
+						<td>Longitude: @boardItem.getDevice().getLongitude(), Latitude: @boardItem.getDevice().getLatitude(), Altitude: @boardItem.getDevice().getAltitude()</td>
+						@if(boardItem.getStatus() == 1){
+						<td>Active</td>
+						}else{
+							<td>Inactive</td>
+						}
 						
 					</tr>				
-			}
+				}
+			
 			</tbody>				
 		</table>
 	</div>
