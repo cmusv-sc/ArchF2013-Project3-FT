@@ -1,35 +1,24 @@
-@(form: Form[Application.Login]) 
+@(form: Form[EstimateController.Login]){
 
-@main("Login") {    
+@main("Estimator") {    
     
-    @helper.form(routes.Application.authenticate) {
+    @helper.form(routes.EstimateController.authenticate) {
         
         <h1>Sign in</h1>
-        
-        @if(form.hasGlobalErrors) { 
-            <p class="error">
-                @form.globalError.message
-            </p>
-        }
-        
-        @if(flash.contains("success")) {
-            <p class="success">
-                @flash.get("success")
-            </p>
-        }
+
         
         <p>
-            <input type="email" name="email" placeholder="Email" value="@form("email").value">
+            <input type="email" name="email" placeholder="Email">
         </p>
         <p>
             <input type="password" name="password" placeholder="Password">
         </p>
         <p>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-primary">Login</button>    
         </p>
         
     }
             
 }
     
-
+}
