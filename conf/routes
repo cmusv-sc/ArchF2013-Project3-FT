@@ -59,6 +59,12 @@ GET		/estimator/1			controllers.EstimateController.estimate1()
 GET		/estimator/2			controllers.EstimateController.estimate2()
 GET		/estimator/3			controllers.EstimateController.estimate3()
 
-#LoginForm
-GET /estimator/nasaLogin controllers.LoginFormController.loginNasa()
+#Registration
+GET 	/estimator/nasaRegister controllers.NasaRegistrationController.registrationForm()
+POST     /estimator/nasaRegister/publish controllers.NasaRegistrationController.submit()
+GET     /estimator/updateUser controllers.NasaRegistrationController.updateForm()
+POST     /estimator/updateUser/update controllers.NasaRegistrationController.update()
+GET     /estimator/deleteUser controllers.NasaRegistrationController.deleteForm()
+POST     /estimator/deleteUser/delete controllers.NasaRegistrationController.delete()
+GET     /estimator/adminPage controllers.NasaRegistrationController.adminPage()
 
