@@ -15,11 +15,11 @@ public class HttpHelper {
 			throws Exception {
 		// String URLStr = "http://einstein.sv.cmu.edu:9000/addContestUser";
 
-		//if (jsonObj.isJsonNull()) {
+		if (jsonObj.get("operation").equals("delete")) {
 			return httpDelNasaRegistration(urlStr);
-		//} else {
-		//	return httpPostNasaRegistration(urlStr, jsonObj.toString());
-		//}
+		} else {
+			return httpPostNasaRegistration(urlStr, jsonObj.toString());
+		}
 	}
 
 	public static String httpPostNasaRegistration(String urlStr,

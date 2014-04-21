@@ -56,14 +56,20 @@ public class EstimateController extends Controller {
 	
     
     /**  Handle login form submission. */
-    public static Result authenticate() {
-        Form<Login> loginForm = form(Login.class).bindFromRequest();
-        if(loginForm.hasErrors())
-            return badRequest(nlogin.render(loginForm));
-        else {
-            session("email", loginForm.get().email);
-            return redirect( routes.EstimateController.accountSummary() );
-        }
-    }
-	
+
+/** Handle login form submission. */
+	public static Result authenticate() {
+		Form<Login> loginForm = form(Login.class).bindFromRequest();
+			if(loginForm.hasErrors())
+				return badRequest(nlogin.render(loginForm));
+			else {
+				session("email", loginForm.get().email);
+				if(loginForm.get().email.equals("admin@admin.com")){
+					return redirect( routes.NasaRegistrationController.adminPage());
+				}else{
+					return redirect( routes.EstimateController.accountSummary());
+}
+
+}	
+}
 }

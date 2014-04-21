@@ -116,7 +116,7 @@ public class NasaRegistrationController extends Controller {
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
 
-		return ok(estimate.render());
+		return ok(estimate1.render());
 	}
 	
 	public static Result update() {
@@ -189,7 +189,7 @@ public class NasaRegistrationController extends Controller {
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
 
-		return ok(estimate.render());
+		return ok(estimate1.render());
 	}
 	
 	public static Result delete() {
@@ -228,6 +228,7 @@ public class NasaRegistrationController extends Controller {
 			
 			urlStr = urlStr + '/' + userNameField.toString() + '/' + passwordField.toString();
 			
+			jsonDelete.addProperty("operation", "delete");
 			//urlStr = urlStr + '/' + jo.get("userName") + '/' + jo.get("password");
 			System.out.println("Will this show in the console" + urlStr);
 			HttpHelper.HttpUserReg(urlStr, jsonDelete);
@@ -251,7 +252,7 @@ public class NasaRegistrationController extends Controller {
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
 
-		return ok(estimate.render());
+		return ok(estimate1.render());
 	}
 	
 
