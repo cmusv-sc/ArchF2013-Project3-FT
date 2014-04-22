@@ -116,7 +116,7 @@ public class NasaRegistrationController extends Controller {
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
 
-		return ok(estimate1.render());
+		return ok(tutorial.render());
 	}
 	
 	public static Result update() {
@@ -189,7 +189,7 @@ public class NasaRegistrationController extends Controller {
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
 
-		return ok(estimate1.render());
+		return ok(tutorial.render());
 	}
 	
 	public static Result delete() {
@@ -252,7 +252,7 @@ public class NasaRegistrationController extends Controller {
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
 
-		return ok(estimate1.render());
+		return redirect(routes.NasaRegistrationController.registrationForm());
 	}
 	
 

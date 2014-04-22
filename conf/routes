@@ -77,8 +77,8 @@ POST    /estimator/nlogin       controllers.EstimateController.authenticate()
 GET		/estimator/accountSummary		controllers.EstimateController.accountSummary()
 
 #Registration
-GET 	/estimator/nasaRegister controllers.NasaRegistrationController.registrationForm()
-POST     /estimator/nasaRegister/publish controllers.NasaRegistrationController.submit()
+GET 	/estimator/register controllers.NasaRegistrationController.registrationForm()
+POST     /estimator/register/publish controllers.NasaRegistrationController.submit()
 GET     /estimator/updateUser controllers.NasaRegistrationController.updateForm()
 POST     /estimator/updateUser/update controllers.NasaRegistrationController.update()
 GET     /estimator/deleteUser controllers.NasaRegistrationController.deleteForm()

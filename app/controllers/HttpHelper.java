@@ -19,7 +19,7 @@ public class HttpHelper {
 			System.out.println("Reached inside delete nasa");
 			return httpDelNasaRegistration(urlStr);
 		} else {
-			System.out.println("Reached inside post nasa" + jsonObj.get("operation").toString());
+			System.out.println("Reached inside post nasa");
 			return httpPostNasaRegistration(urlStr, jsonObj.toString());
 		}
 	}
