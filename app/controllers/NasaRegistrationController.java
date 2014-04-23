@@ -116,7 +116,7 @@ public class NasaRegistrationController extends Controller {
 			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
 		}
 
-		return ok(tutorial.render());
+		return redirect(routes.EstimateController.login());
 	}
 	
 	public static Result update() {

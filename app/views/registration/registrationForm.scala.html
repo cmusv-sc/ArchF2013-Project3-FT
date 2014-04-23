@@ -3,9 +3,7 @@
 @import helper.twitterBootstrap._
 @main("Nasa User Registration Form"){
 
-<form class="navbar-form navbar-right" action="@routes.EstimateController.login()">
-    <button type="submit" class="btn btn-success">Sign in</button>
-</form>
+
 
     <div class="clearfix  " id="name_field">
        
@@ -24,7 +22,7 @@
                 '_label -> "Affliation", 'cols -> 50, 'rows -> 5
             )
     @helper.inputText(userForm("emailField"), '_label -> "Email")
-    @helper.inputText(userForm("rAreaField"),  '_label -> "Research Area"))
+    @helper.inputText(userForm("rAreaField"),  '_label -> "Research Area")
     @textarea(
                 userForm("goalField"), 
                 '_label -> "Goal", 'cols -> 50, 'rows -> 5
