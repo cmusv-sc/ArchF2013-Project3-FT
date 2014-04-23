@@ -20,12 +20,13 @@ public class EstimateController extends Controller {
 
 	public static Result estimate1() {
 		MultipartFormData body = request().body().asMultipartFormData();
-		FilePart picture = body.getFile("picture");
+		FilePart picture = body.getFile("file");
+		String workingDir = System.getProperty("user.dir");
 		if (picture != null) {
 			String fileName = picture.getFilename();
 			String contentType = picture.getContentType();
 			File file = picture.getFile();
-			File newfile = new File("./tmpfiles/" + fileName);
+			File newfile = new File(workingDir+"/tmpfiles/" + fileName);
 			InputStream inStream;
 			try {
 				inStream = new FileInputStream(file);
