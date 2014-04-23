@@ -33,7 +33,7 @@
 </div>
 </div>
 
-<form method="GET" action="estimator/1">
+<form method="POST" action="estimator/1" enctype="multipart/form-data">
 
 
 	<fieldset>
@@ -43,11 +43,11 @@
 			<label for="name">Scripting file</label>
 			<div class="row">
 				<div class="input col-lg-2">
-					<input type="text" id="name" name="name" value="@vfile" placeholder="/Downloads/Workflowfiles"> <span
+					<input type="file" id="name" name="file" value="@vfile" placeholder="/Downloads/Workflowfiles"> <span
 						class="help-inline"></span> <span class="help-block">Required</span>
 				</div>
 				<div class="upload col-lg-2">
-					<input type="button" class="btn" id="upload-script" name="upload-script" value="upload">
+					
 				</div>
 			</div>
 		</div>

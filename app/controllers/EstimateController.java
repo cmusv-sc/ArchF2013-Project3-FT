@@ -1,9 +1,13 @@
 package controllers;
 
 import static play.data.Form.form;
+import java.io.*;
+
 import controllers.Application.Login;
 import play.data.Form;
 import play.mvc.Controller;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import views.html.estimator.*;
 
@@ -14,7 +18,44 @@ public class EstimateController extends Controller {
 	}
 
 	public static Result estimate1() {
-		return ok(estimate1.render());
+		MultipartFormData body = request().body().asMultipartFormData();
+		FilePart picture = body.getFile("picture");
+		if (picture != null) {
+			String fileName = picture.getFilename();
+			String contentType = picture.getContentType();
+			File file = picture.getFile();
+			File newfile = new File("./tmpfiles/" + fileName);
+			InputStream inStream;
+			try {
+				inStream = new FileInputStream(file);
+
+				OutputStream outStream = new FileOutputStream(newfile);
+
+				byte[] buffer = new byte[1024];
+
+				int length;
+				// copy the file content in bytes
+				while ((length = inStream.read(buffer)) > 0) {
+
+					outStream.write(buffer, 0, length);
+
+				}
+
+				inStream.close();
+				outStream.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ok(estimate1.render());
+		} else {
+			flash("error", "Missing file");
+			return ok(estimate.render("", "", ""));
+		}
+
 	}
 
 	public static Result estimate2() {
