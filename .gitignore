@@ -21,3 +21,4 @@ dist
 #ignore any files inside tmpfiles/
 tmpfiles/*
 !tmpfiles/.gitkeep
+AwsCredentials.properties
