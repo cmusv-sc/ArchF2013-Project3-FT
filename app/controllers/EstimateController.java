@@ -3,8 +3,6 @@ package controllers;
 import static play.data.Form.form;
 import java.io.*;
 
-import models.AWSClient;
-
 import controllers.Application.Login;
 import play.data.Form;
 import play.mvc.Controller;
@@ -21,7 +19,6 @@ public class EstimateController extends Controller {
 	}
 
 	public static Result estimate1() {
-		//get the file from the user's upload
 		MultipartFormData body = request().body().asMultipartFormData();
 		FilePart picture = body.getFile("file");
 		String workingDir = System.getProperty("user.dir");
@@ -29,23 +26,25 @@ public class EstimateController extends Controller {
 			String fileName = picture.getFilename();
 			String contentType = picture.getContentType();
 			File file = picture.getFile();
-			//create new file with the same name under tmpfiles/
 			File newfile = new File(workingDir+"/tmpfiles/" + fileName);
 			InputStream inStream;
 			try {
-				//copy files
 				inStream = new FileInputStream(file);
+
 				OutputStream outStream = new FileOutputStream(newfile);
+
 				byte[] buffer = new byte[1024];
+
 				int length;
 				// copy the file content in bytes
 				while ((length = inStream.read(buffer)) > 0) {
+
 					outStream.write(buffer, 0, length);
+
 				}
+
 				inStream.close();
 				outStream.close();
-				//upload the new file to s3
-				AWSClient.upload(newfile,fileName);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
