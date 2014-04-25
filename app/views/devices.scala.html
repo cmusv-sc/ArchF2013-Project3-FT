@@ -41,10 +41,26 @@
        		<td class="sensorTypeNames">@device.getSensorTypeNames()</td>
        		<td class="sensorNames">@device.getSensorNames()</td>
        		
-       		<td class="longitude">@device.getLongitude()</td>
-       		<td class="latitude">@device.getLatitude()</td>
-       		<td class="altitude">@device.getAltitude()</td>
-       		<td class="representation">@device.getRepresentation()</td>
+       		<td class="longitude">
+	       		<span class="@device.getDeviceUri() editable" data-name="longitude">
+	       		@device.getLongitude()
+	       		</span>
+       		</td>
+       		<td class="latitude">
+       			<span class="@device.getDeviceUri() editable" data-name="latitude">
+       			@device.getLatitude()
+       			</span>
+       		</td>
+       		<td class="altitude">
+       			<span class="@device.getDeviceUri() editable" data-name="altitude">
+       			@device.getAltitude()
+       			</span>
+       		</td>
+       		<td class="representation">
+       			<span class="@device.getDeviceUri() editable" data-name="representation">
+       			@device.getRepresentation()
+       			</span>
+       		</td>
        		
        		<td class="deviceUserDefinedFields">
        			<span class="@device.getDeviceUri() editable"
@@ -55,7 +71,9 @@
 
 			@if(session.get("email")){
 				<td class="operation">
-						
+						<input type="button" class="edit-btn btn btn-primary" value="Edit" 
+							data-pk='@device.getDeviceUri()' 
+							data-url='@routes.DeviceController.editDevice()'>		
 					@form(routes.DeviceController.deleteDevice()){
               		 	<input name="idHolder" type="hidden" value="@device.getDeviceUri()">
        					<input type="submit"  class="btn btn-danger" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')">
