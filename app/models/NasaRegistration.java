@@ -139,7 +139,7 @@ public class NasaRegistration {
 
 	public static List<NasaRegistration> all() {
 		List<NasaRegistration> allUsers = new ArrayList<NasaRegistration>();
-
+		
 		// Call the API to get the json string
 		JsonNode usersNode = APICall.callAPI(GET_ALL_USER_DATA);
 		// if no value is returned or error or is not json array
@@ -187,9 +187,8 @@ public class NasaRegistration {
 			System.out.println("inside userNode check");
 			return null;
 		}
-
-		System.out.println("useName response:" + usersNode.get("userName"));
-		System.out.println("useName:" + userName);
+		System.out.println("userName response:" + usersNode.get("userName"));
+		System.out.println("userName:" + userName);
 		System.out.println("password:" + usersNode.get("password"));
 
 		if (usersNode.get("userName").textValue().equals(userName)

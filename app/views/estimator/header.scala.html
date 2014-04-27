@@ -22,7 +22,7 @@
 						<ul class="dropdown-menu">
 							<li><a href="@routes.NasaRegistrationController.updateForm()">Update User Details</a></li>
 							<li><a href="@routes.NasaRegistrationController.deleteForm()">Delete User</a></li>
-							<li><a href="@routes.EstimateController.accountSummary()">Account Summary</a></li>
+							<li><a href="@routes.EstimateController.accountSummary(session.get("username"))">Account Summary</a></li>
 						</ul>
 						</li>
 
