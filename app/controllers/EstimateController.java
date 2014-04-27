@@ -53,7 +53,7 @@ public class EstimateController extends Controller {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return ok(estimate1.render());
+			return ok(estimate2.render());
 		} else {
 			flash("error", "Missing file");
 			return ok(estimate.render("", "", ""));
