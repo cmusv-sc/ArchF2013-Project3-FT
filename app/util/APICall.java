@@ -78,14 +78,12 @@ public class APICall {
 
 	/* Right now, only deviceType and device use PUT HTTP request*/
 	public static JsonNode putAPI(String apiString, JsonNode jsonData) {
-		System.out.println(apiString);
 		Promise<WS.Response> responsePromise = WS.url(apiString).put(jsonData);
 		final Promise<JsonNode> bodyPromise = responsePromise
 				.map(new Function<WS.Response, JsonNode>() {
 					@Override
 					public JsonNode apply(WS.Response response)
 							throws Throwable {
-						System.out.println(response.getBody());
 						if ((response.getStatus() == 201 || response
 								.getStatus() == 200)
 								&& !response.getBody().contains("not")) {

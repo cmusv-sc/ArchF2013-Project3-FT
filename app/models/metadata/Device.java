@@ -247,4 +247,20 @@ public class Device {
 		}
 		return resultList;
 	}
+	
+	/**
+	 * find a device by its URI
+	 * 
+	 * @param deviceUri
+	 * @return the founded result. If not found, return an empty device
+	 */
+	public static Device findDeviceByUri(String deviceUri){
+		List<Device> allList = all();
+		for (Device element : allList) {
+			String elementUri = element.getDeviceUri();
+			if (elementUri.equals(deviceUri))
+				return element;
+		}
+		return new Device();
+	}
 }
