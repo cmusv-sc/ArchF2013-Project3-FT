@@ -16,6 +16,8 @@
  * */
 package controllers;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -90,15 +92,43 @@ public class DeviceController extends Controller {
 		ObjectNode jsonData = Json.newObject();
 		try {
 			String deviceUri = df.field("pk").value();
-
-			if (deviceUri != null && !deviceUri.isEmpty()) {
-				jsonData.put("deviceUri", deviceUri);
+			
+			if (deviceUri == null || deviceUri.isEmpty()) {
+				Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+				return notFound("not found device uri "+deviceUri);
 			}
+			// if not found, it is an empty device
+			Device originalDevice = Device.findDeviceByUri(deviceUri);
+			if (originalDevice == null) {
+				Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+				return notFound("not found original device uri "+deviceUri);
+			}
+			
 
-			String editField = df.field("name").value();  
-			if (editField != null && !editField.isEmpty()) {
+			String editField = df.field("name").value();
+			if (editField == null || editField.isEmpty()) {
+				Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+				return notFound("not found edit field");
+			}
+			
+			jsonData.put("deviceUri", deviceUri);
+			
+			// put the original location data
+			ObjectNode location = Json.newObject();
+			location.put("longitude", originalDevice.getLongitude());
+			location.put("latitude", originalDevice.getLatitude());
+			location.put("altitude", originalDevice.getAltitude());
+			location.put("representation", originalDevice.getRepresentation());
+			
+			if (editField.equals("deviceUserDefinedFields")) {
 				jsonData.put(editField, df.field("value").value());
+			}else{
+				jsonData.put("deviceUserDefinedFields", originalDevice.getDeviceUserDefinedFields());
+				location.put(editField, df.field("value").value());
 			}
+			
+			// put the location
+			jsonData.put("location", location);
 			
 			// Call the edit() method
 			JsonNode response = Device.edit(deviceUri, jsonData);
