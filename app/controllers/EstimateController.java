@@ -1,12 +1,11 @@
 package controllers;
 
 import static play.data.Form.form;
-import controllers.Application.Login;
+import models.NasaRegistration;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.estimator.*;
-
 
 public class EstimateController extends Controller {
 
@@ -30,19 +29,19 @@ public class EstimateController extends Controller {
 		return ok(tutorial.render());
 	}
 
-	public static Result accountSummary() {
-		return ok(accountSummary.render());
+	public static Result accountSummary(String userName) {
+		return ok(accountSummary.render(userName));
 	}
 
 	// -- Authentication
 	public static class Login {
 
-		public String email;
+		public String username;
 		public String password;
 
 		public String validate() {
-			if (email == null || password == null)
-				return "Invalid user or password";
+			if (username == null || password == null)
+				return "Invalid username or password";
 
 			return null;
 		}
@@ -59,16 +58,38 @@ public class EstimateController extends Controller {
 	/** Handle login form submission. */
 	public static Result authenticate() {
 		Form<Login> loginForm = form(Login.class).bindFromRequest();
-		if (loginForm.hasErrors())
-			return badRequest(login.render(loginForm));
-		else {
-			session("email", loginForm.get().email);
-			if (loginForm.get().email.equals("admin@admin.com")) {
-				return redirect(routes.NasaRegistrationController.adminPage());
-			} else {
-				return redirect(routes.EstimateController.accountSummary());
-			}
+		/*
+		 * if (loginForm.hasErrors()){ System.out.println("Test"); return
+		 * badRequest(login.render(loginForm)); } else {
+		 */
+		session("username", loginForm.get().username);
+		System.out.println("Email:" + loginForm.field("username").value());
+		if (loginForm.get().username.equals("admin")) {
+			System.out.println("Admin arena");
+			//session("username", loginForm.field("username").value());
+			return redirect(routes.NasaRegistrationController.adminPage());
+		} else {
+			//session("username", loginForm.field("username").value());
+			String userName = NasaRegistration.getUserInfo(
+					loginForm.field("username").value(),
+					loginForm.field("password").value());
+			System.out.println("Value:" + userName);
+			if (userName != null) {
+				System.out.println("passed get User info");
+				return redirect(routes.EstimateController
+						.accountSummary(userName));
+			} else
+				return redirect(routes.EstimateController.authenticate());
+			// Retrieve value from API and check against userName and password.
 
 		}
+
+		// }
 	}
+	
+	public static Result logout() {
+        session().clear();
+        flash("success", "You've been logged out");
+        return redirect( routes.EstimateController.estimate(null, null,null) );
+    }
 }

@@ -8,9 +8,12 @@ import play.mvc.Result;
 import util.APICall;
 import util.APICall.ResponseType;
 import views.html.index;
+import views.html.sensors;
 import views.html.registration.*;
 import views.html.estimator.*;
 import controllers.HttpHelper;
+import models.metadata.NasaRMdata;
+import models.metadata.Sensor;
 
 import java.util.*;
 
@@ -18,7 +21,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.JsonObject;
 
 public class NasaRegistrationController extends Controller {
-
+	//final static Form<Sensor> sensorForm = Form.form(Sensor.class);
 	final static Form<NasaRegistration> userForm = Form
 			.form(NasaRegistration.class);
 
@@ -35,7 +38,7 @@ public class NasaRegistrationController extends Controller {
 	}
 	
 	public static Result adminPage(){
-		return ok(adminPage.render());
+		return ok(adminPage.render(NasaRegistration.all()));
 	}
 
 
@@ -254,6 +257,8 @@ public class NasaRegistrationController extends Controller {
 
 		return redirect(routes.NasaRegistrationController.registrationForm());
 	}
+	
+	
 	
 
 	

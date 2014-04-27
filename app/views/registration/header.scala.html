@@ -28,9 +28,16 @@
 
 										<li><a>About Us</a></li>
 
-					<form class="navbar-form navbar-right" action="@routes.EstimateController.login()">
+					@if(!session.get("username")){
+					
+						<form class="navbar-form navbar-right" action="@routes.EstimateController.login()">
 							<button type="submit" class="btn btn-success">Log in</button>
 						</form>
+					}else{
+						<form class="navbar-form navbar-right" action="@routes.EstimateController.logout()">
+							<button type="submit" class="btn btn-success">Log out</button>
+						</form>
+					}	
 					
 				</ul>
 			</div>

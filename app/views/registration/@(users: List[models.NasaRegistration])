@@ -50,17 +50,7 @@
 						<tr>
 						<td>@user.getUserNameField</td>
 						<td>@user.getfNameField()</td>
-						<td>Last Name</td>
-						<td>Organization</td>
-						<td>Occupation</td>
-						<td>Occupation</td>
-						<td>@user.getEmail()</td>
-						<td>Registration Date</td>
-						<td>@user.getGoal()</td>
-						<td>Usage</td>
-						<td>
-                            <button type="button" class="btn" onclick="" method="POST" action = "">Cease</button>
-                            </td>
+                        <td>@user.getlNameField()</td>
 						</tr>
 						}
                         

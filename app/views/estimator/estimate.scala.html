@@ -29,7 +29,7 @@
 		<a class="btn btn-lg btn-default"
 						href="/estimate/tutorial" role="button">Getting Started &raquo;</a>
 	</p>
-	
+	@if(!session.get("username")){
 		<p>Nasa Provides 200 AWS accounts with $150 credit each. First come first serve for contest participants.
 		Remaining slots: 150.
 		If you would like to get a credited account please register here.</p>
@@ -37,6 +37,7 @@
 		<a class="btn btn-primary"
 						href="estimator/register" role="button">Register &raquo;</a>
 	</p>
+	}
 	</div>
 </div>
 </div>
