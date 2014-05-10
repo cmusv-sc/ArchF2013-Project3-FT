@@ -22,7 +22,7 @@ public class EstimateController extends Controller {
 	}
 
 	public static Result estimate1() {
-		//get the file from the user's upload
+		// get the file from the user's upload
 		MultipartFormData body = request().body().asMultipartFormData();
 		FilePart picture = body.getFile("file");
 		String workingDir = System.getProperty("user.dir");
@@ -30,11 +30,11 @@ public class EstimateController extends Controller {
 			String fileName = picture.getFilename();
 			String contentType = picture.getContentType();
 			File file = picture.getFile();
-			//create new file with the same name under tmpfiles/
-			File newfile = new File(workingDir+"/tmpfiles/" + fileName);
+			// create new file with the same name under tmpfiles/
+			File newfile = new File(workingDir + "/tmpfiles/" + fileName);
 			InputStream inStream;
 			try {
-				//copy files
+				// copy files
 				inStream = new FileInputStream(file);
 				OutputStream outStream = new FileOutputStream(newfile);
 				byte[] buffer = new byte[1024];
@@ -45,8 +45,8 @@ public class EstimateController extends Controller {
 				}
 				inStream.close();
 				outStream.close();
-				//upload the new file to s3
-				AWSClient.upload(newfile,fileName);
+				// upload the new file to s3
+				AWSClient.upload(newfile, fileName);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -111,10 +111,10 @@ public class EstimateController extends Controller {
 		System.out.println("Email:" + loginForm.field("username").value());
 		if (loginForm.get().username.equals("admin")) {
 			System.out.println("Admin arena");
-			//session("username", loginForm.field("username").value());
+			// session("username", loginForm.field("username").value());
 			return redirect(routes.NasaRegistrationController.adminPage());
 		} else {
-			//session("username", loginForm.field("username").value());
+			// session("username", loginForm.field("username").value());
 			String userName = NasaRegistration.getUserInfo(
 					loginForm.field("username").value(),
 					loginForm.field("password").value());
@@ -131,10 +131,10 @@ public class EstimateController extends Controller {
 
 		// }
 	}
-	
+
 	public static Result logout() {
-        session().clear();
-        flash("success", "You've been logged out");
-        return redirect( routes.EstimateController.estimate(null, null,null) );
-    }
+		session().clear();
+		flash("success", "You've been logged out");
+		return redirect(routes.EstimateController.estimate(null, null, null));
+	}
 }

@@ -11,7 +11,7 @@ import views.html.index;
 import views.html.sensors;
 import views.html.registration.*;
 import views.html.estimator.*;
-import controllers.HttpHelper;
+import util.*;
 import models.metadata.NasaRMdata;
 import models.metadata.Sensor;
 
@@ -98,7 +98,7 @@ public class NasaRegistrationController extends Controller {
 			jo.addProperty("researchArea", rAreaField);
 			jo.addProperty("goal", goalField);
 
-			HttpHelper.HttpUserReg(urlStr, jo, "register");
+			EstimatorAPICalls.HttpUserReg(urlStr, jo, "register");
 
 			/*
 			 * jsonData.put("userName", "anubhav"); jsonData.put("password",
@@ -110,7 +110,7 @@ public class NasaRegistrationController extends Controller {
 		}
 
 		/*
-		 * try { HttpHelper.HttpUserReg(urlStr, jo);
+		 * try { EstimatorAPICalls.HttpUserReg(urlStr, jo);
 		 * Application.flashMsg(APICall.createResponse(ResponseType.SUCCESS)); }
 		 */
 		catch (Exception e) {
@@ -171,7 +171,7 @@ public class NasaRegistrationController extends Controller {
 			jo.addProperty("researchArea", rAreaField);
 			jo.addProperty("goal", goalField);
 
-			HttpHelper.HttpUserReg(urlStr, jo, "update");
+			EstimatorAPICalls.HttpUserReg(urlStr, jo, "update");
 
 			
 			 /** jsonData.put("userName", "anubhav"); jsonData.put("password",
@@ -183,7 +183,7 @@ public class NasaRegistrationController extends Controller {
 		}
 
 		
-		/* * try { HttpHelper.HttpUserReg(urlStr, jo);
+		/* * try { EstimatorAPICalls.HttpUserReg(urlStr, jo);
 		 * Application.flashMsg(APICall.createResponse(ResponseType.SUCCESS)); }*/
 		 
 		catch (Exception e) {
@@ -234,7 +234,7 @@ public class NasaRegistrationController extends Controller {
 			jsonDelete.addProperty("operation", "delete");
 			//urlStr = urlStr + '/' + jo.get("userName") + '/' + jo.get("password");
 			System.out.println("Will this show in the console" + urlStr);
-			HttpHelper.HttpUserReg(urlStr, jo, "delete");
+			EstimatorAPICalls.HttpUserReg(urlStr, jo, "delete");
 
 			
 			 /** jsonData.put("userName", "anubhav"); jsonData.put("password",
@@ -246,7 +246,7 @@ public class NasaRegistrationController extends Controller {
 		}
 
 		/*
-		 * try { HttpHelper.HttpUserReg(urlStr, jo);
+		 * try { EstimatorAPICalls.HttpUserReg(urlStr, jo);
 		 * Application.flashMsg(APICall.createResponse(ResponseType.SUCCESS)); }
 		 */
 		catch (Exception e) {
