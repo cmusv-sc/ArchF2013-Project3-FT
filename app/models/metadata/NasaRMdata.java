@@ -17,10 +17,7 @@
 package models.metadata;
 
 import java.util.*;
-
 import util.APICall;
-
-//import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.*;
 
 public class NasaRMdata {

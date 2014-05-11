@@ -1,7 +1,3 @@
-package util;
-
-public class NasaConstants {
-
 /*
  * Copyright (c) 2013 Carnegie Mellon University Silicon Valley. 
  * All rights reserved. 
@@ -18,6 +14,12 @@ public class NasaConstants {
  * questions.
  * 
  * */
+
+
+
+package util;
+
+public class NasaConstants {
 
 
 

@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2013 Carnegie Mellon University Silicon Valley. 
+ * All rights reserved. 
+ * 
+ * This program and the accompanying materials are made available
+ * under the terms of dual licensing(GPL V2 for Research/Education
+ * purposes). GNU Public License v2.0 which accompanies this distribution
+ * is available at http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ * 
+ * Please contact http://www.cmu.edu/silicon-valley/ if you have any 
+ * questions.
+ * 
+ * */
+
 package controllers;
 
 import models.NasaRegistration;
@@ -12,6 +29,7 @@ import views.html.sensors;
 import views.html.registration.*;
 import views.html.estimator.*;
 import util.*;
+import util.EstimatorAPICalls;
 import models.metadata.NasaRMdata;
 import models.metadata.Sensor;
 
@@ -42,77 +60,24 @@ public class NasaRegistrationController extends Controller {
 	}
 
 
-	/*
-	 * public static Result submit(){ Form<NasaRegistration> filledForm =
-	 * userForm.bindFromRequest(); NasaRegistration created = filledForm.get();
-	 * return ok(submit.render(created)); }
-	 */
+	
 
 	// Registration
 	public static Result submit() {
 
-		Form<NasaRegistration> filledForm = userForm.bindFromRequest();
 		Map<String, String[]> regFormEncoded = request().body().asFormUrlEncoded();
-		String userNameField = regFormEncoded.get("userNameField")[0];
-		String passwordField = regFormEncoded.get("passwordField")[0];
-		String fNameField = regFormEncoded.get("fNameField")[0];
 		
-		String lNameField = regFormEncoded.get("lNameField")[0];
-		String mNameField = regFormEncoded.get("mNameField")[0];
-		String affliationField = regFormEncoded.get("affliationField")[0];
-		String emailField = regFormEncoded.get("emailField")[0];
-		String goalField = regFormEncoded.get("goalField")[0];
-		String algoField = regFormEncoded.get("algoField")[0];
-		String bConcernsField = regFormEncoded.get("bConcernsField")[0];
-		String awsFamiliarityField = regFormEncoded.get("awsFamiliarityField")[0];
-		String rAreaField = regFormEncoded.get("rAreaField")[0];
-		
-		
-
-		/*
-		 * String usernameField =
-		 * String.valueOf(filledForm.field("usernameField").value()); String
-		 * passwordField = String.valueOf(filledForm.field("password").value());
-		 * String fNameField =
-		 * String.valueOf(filledForm.field("firstName").value());
-		 */
+		//Calling method to get values from the form
+		JsonObject getJsonValues = new JsonObject();
+		getJsonValues  = util.EstimatorGetValues.getMode(regFormEncoded, "submit");
 
 		String urlStr = "http://einstein.sv.cmu.edu:9000/addContestUser";
-		JsonObject jo = new JsonObject();
-		//ObjectNode jsonData = Json.newObject();
 		// Sample data
 		try {
-
-			/*
-			 * jo.addProperty("userName", "anubhav"); jo.addProperty("password",
-			 * "anubhav"); jo.addProperty("firstName","anubhav");
-			 */
-
-			jo.addProperty("userName", userNameField);
-			jo.addProperty("password", passwordField);
-			jo.addProperty("firstName", fNameField);
-			jo.addProperty("lastName", lNameField);
-			jo.addProperty("middleName", mNameField);
-			jo.addProperty("affiliation", affliationField);
-			jo.addProperty("email", emailField);
-			jo.addProperty("researchArea", rAreaField);
-			jo.addProperty("goal", goalField);
-
-			EstimatorAPICalls.HttpUserReg(urlStr, jo, "register");
-
-			/*
-			 * jsonData.put("userName", "anubhav"); jsonData.put("password",
-			 * "anubhav"); jsonData.put("firstName", "anubhav");
-			 * 
-			 * // create the item by calling the API JsonNode response =
-			 * NasaRMdata.create(jsonData); Application.flashMsg(response);
-			 */
+			EstimatorAPICalls.HttpUserReg(urlStr, getJsonValues, "register");
 		}
 
-		/*
-		 * try { EstimatorAPICalls.HttpUserReg(urlStr, jo);
-		 * Application.flashMsg(APICall.createResponse(ResponseType.SUCCESS)); }
-		 */
+		
 		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -126,65 +91,15 @@ public class NasaRegistrationController extends Controller {
 
 		Form<NasaRegistration> filledForm = userForm.bindFromRequest();
 		Map<String, String[]> regFormEncoded = request().body().asFormUrlEncoded();
-		String userNameField = regFormEncoded.get("userNameField")[0];
-		String passwordField = regFormEncoded.get("passwordField")[0];
-		String fNameField = regFormEncoded.get("fNameField")[0];
+		JsonObject getJsonValues = new JsonObject();
 		
-		String lNameField = regFormEncoded.get("lNameField")[0];
-		String mNameField = regFormEncoded.get("mNameField")[0];
-		String affliationField = regFormEncoded.get("affliationField")[0];
-		String emailField = regFormEncoded.get("emailField")[0];
-		String goalField = regFormEncoded.get("goalField")[0];
-		String algoField = regFormEncoded.get("algoField")[0];
-		String bConcernsField = regFormEncoded.get("bConcernsField")[0];
-		String awsFamiliarityField = regFormEncoded.get("awsFamiliarityField")[0];
-		String rAreaField = regFormEncoded.get("rAreaField")[0];
+		getJsonValues  = util.EstimatorGetValues.getMode(regFormEncoded, "update");
 		
-		
-
-		
-		 /** String usernameField =
-		 * String.valueOf(filledForm.field("usernameField").value()); String
-		 * passwordField = String.valueOf(filledForm.field("password").value());
-		 * String fNameField =
-		 * String.valueOf(filledForm.field("firstName").value());*/
-		 
-
 		String urlStr = "http://einstein.sv.cmu.edu:9000/updateContestUser";
-		JsonObject jo = new JsonObject();
-		//ObjectNode jsonData = Json.newObject();
-		// Sample data
+
 		try {
-
-			/*
-			 * jo.addProperty("userName", "anubhav"); jo.addProperty("password",
-			 * "anubhav"); jo.addProperty("firstName","anubhav");*/
-			 
-
-			jo.addProperty("userName", userNameField);
-			jo.addProperty("password", passwordField);
-			jo.addProperty("firstName", fNameField);
-			jo.addProperty("lastName", lNameField);
-			jo.addProperty("middleName", mNameField);
-			jo.addProperty("affiliation", affliationField);
-			jo.addProperty("email", emailField);
-			jo.addProperty("researchArea", rAreaField);
-			jo.addProperty("goal", goalField);
-
-			EstimatorAPICalls.HttpUserReg(urlStr, jo, "update");
-
-			
-			 /** jsonData.put("userName", "anubhav"); jsonData.put("password",
-			 * "anubhav"); jsonData.put("firstName", "anubhav");
-			 * 
-			 * // create the item by calling the API JsonNode response =
-			 * NasaRMdata.create(jsonData); Application.flashMsg(response);*/
-			 
+			EstimatorAPICalls.HttpUserReg(urlStr, getJsonValues, "update");
 		}
-
-		
-		/* * try { EstimatorAPICalls.HttpUserReg(urlStr, jo);
-		 * Application.flashMsg(APICall.createResponse(ResponseType.SUCCESS)); }*/
 		 
 		catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -199,56 +114,23 @@ public class NasaRegistrationController extends Controller {
 
 		Form<NasaRegistration> filledForm = userForm.bindFromRequest();
 		Map<String, String[]> regFormEncoded = request().body().asFormUrlEncoded();
-		String userNameField = regFormEncoded.get("userNameField")[0];
-		String passwordField = regFormEncoded.get("passwordField")[0];
+	
+		JsonObject getJsonValues = new JsonObject();
 		
-		
-		
-
-		/*
-		 * String usernameField =
-		 * String.valueOf(filledForm.field("usernameField").value()); String
-		 * passwordField = String.valueOf(filledForm.field("password").value());
-		 * String fNameField =
-		 * String.valueOf(filledForm.field("firstName").value());
-		 */
+		getJsonValues  = util.EstimatorGetValues.getMode(regFormEncoded, "delete");
 
 		String urlStr = "http://einstein.sv.cmu.edu:9000/deleteContestUser";
-		JsonObject jo = new JsonObject();
-		JsonObject jsonDelete = new JsonObject();
 		
-		//ObjectNode jsonData = Json.newObject();
-		// Sample data
 		try {
 
 			
-			/* * jo.addProperty("userName", "anubhav"); jo.addProperty("password",
-			 * "anubhav"); jo.addProperty("firstName","anubhav");*/
-			 
-
-			jo.addProperty("userName", userNameField);
-			jo.addProperty("password", passwordField);
 			
-			urlStr = urlStr + '/' + userNameField.toString() + '/' + passwordField.toString();
+			urlStr = urlStr + '/' + getJsonValues.get("userName").getAsString() + '/'
+			       		+ getJsonValues.get("password").getAsString();
 			
-			jsonDelete.addProperty("operation", "delete");
-			//urlStr = urlStr + '/' + jo.get("userName") + '/' + jo.get("password");
-			System.out.println("Will this show in the console" + urlStr);
-			EstimatorAPICalls.HttpUserReg(urlStr, jo, "delete");
-
-			
-			 /** jsonData.put("userName", "anubhav"); jsonData.put("password",
-			 * "anubhav"); jsonData.put("firstName", "anubhav");
-			 * 
-			 * // create the item by calling the API JsonNode response =
-			 * NasaRMdata.create(jsonData); Application.flashMsg(response);*/
-			 
+			EstimatorAPICalls.HttpUserReg(urlStr, getJsonValues, "delete");
+						 		 
 		}
-
-		/*
-		 * try { EstimatorAPICalls.HttpUserReg(urlStr, jo);
-		 * Application.flashMsg(APICall.createResponse(ResponseType.SUCCESS)); }
-		 */
 		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -257,10 +139,4 @@ public class NasaRegistrationController extends Controller {
 
 		return redirect(routes.NasaRegistrationController.registrationForm());
 	}
-	
-	
-	
-
-	
-
 }
