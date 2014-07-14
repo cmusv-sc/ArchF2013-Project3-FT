@@ -46,10 +46,8 @@ public class APICall {
 				});
 
 		try {
-			System.out.println("Reaced inside try of callAPI");
 			return bodyPromise.get(10000L);
 		} catch (Exception e) {
-			System.out.println("Reaced inside catch of callAPI");
 			return createResponse(ResponseType.TIMEOUT);
 		}
 

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -179,7 +180,21 @@ public class Sensor {
 	 * 
 	 * @return a list of all sensor names
 	 */
-	public static HashMap<String, Sensor> allSensorNamesMap() {
+	public static List<String> allSensorNames(){
+		List<String> res = new ArrayList<String>();
+		for (Sensor sensor : all()) {
+			res.add(sensor.getSensorName());
+		}
+		return res;
+	}
+	
+	
+	
+	/**
+	 * Generate a map between all sensor names and sensor object
+	 * @return a map
+	 */
+	public static Map<String, Sensor> allSensorNamesMap() {
 		List<Sensor> allList = all();
 		
 		HashMap<String, Sensor> result = new HashMap<String, Sensor>();

@@ -130,7 +130,7 @@ public class Dashboard {
 
 	private static HashSet<String> getActiveDevices(
 			HashSet<String> activeSensorNames,
-			HashMap<String, Sensor> allSensorNamesMap) {
+			Map<String, Sensor> allSensorNamesMap) {
 		HashSet<String> set = new HashSet<String>();
 		for (String sensorName : activeSensorNames) {
 			if (allSensorNamesMap.containsKey(sensorName)) {
