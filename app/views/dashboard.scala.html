@@ -58,6 +58,7 @@
 			<thead>
 				<tr>
 					<th>Device Uri</th>
+					<th>Device Type</th>
 					<th>Location</th>
 					<th>Status</th>
 				</tr>
@@ -90,6 +91,7 @@
 						<tr class='inactiveLine'>
 					}
 						<td>@boardItem.getDevice().getDeviceUri()</td>
+						<td>@boardItem.getDevice().getDeviceTypeName()</td>
 						
 						<td>Longitude: @boardItem.getDevice().getLongitude(), Latitude: @boardItem.getDevice().getLatitude(), Altitude: @boardItem.getDevice().getAltitude()</td>
 						
