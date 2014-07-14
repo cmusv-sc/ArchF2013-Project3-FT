@@ -18,6 +18,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -87,6 +88,7 @@ public class Dashboard {
 			dashboard.setActiveCount(0);			
 		}else{
 			for (int i=0; i < devicesNode.size(); i++) {
+				
 				JsonNode json = devicesNode.path(i);			
 				activeSensorNames.add(json.findPath("sensorName").asText());
 			}
@@ -96,13 +98,13 @@ public class Dashboard {
 		List<Device> allDevices = Device.all(); 
 		
 		// build up the hashmap for sensorName and deviceUri
-		Map<String, String> sensorDeviceMap = sensorDeviceMap(activeSensorNames, Sensor.all());
+		HashSet<String> activeDevices = getActiveDevices(activeSensorNames, Sensor.all());
 		
 		for (Device device : allDevices) {
 			DashboardItem dashboardItem = new DashboardItem();			
 			dashboardItem.setDevice(device);
 
-			if (sensorDeviceMap.containsKey(device.getDeviceUri())) {
+			if (activeDevices.contains(device.getDeviceUri())) {
 				dashboardItem.setStatus(1);
 				activeCount++;
 			}else {
@@ -121,16 +123,16 @@ public class Dashboard {
 				
 	}
 
-	private static Map<String, String> sensorDeviceMap(List<String> activeSensorNames, List<Sensor> allSensors){
-		Map<String, String> map = new HashMap<String, String>();
+	private static HashSet<String> getActiveDevices(List<String> activeSensorNames, List<Sensor> allSensors){
+		HashSet<String> set = new HashSet<String>();
 		for (String sensorName : activeSensorNames) {
 			for (Sensor sensor : allSensors) {
 				if (sensor.getSensorName().equals(sensorName)) {
-					map.put(sensor.getDeviceUri(), sensorName);
+					set.add(sensor.getDeviceUri());
 					break;
 				}
 			}
 		}
-		return map;
+		return set;
 	}
 }
