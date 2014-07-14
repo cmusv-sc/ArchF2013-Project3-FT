@@ -17,6 +17,8 @@
 package models.metadata;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -177,14 +179,15 @@ public class Sensor {
 	 * 
 	 * @return a list of all sensor names
 	 */
-	public static List<String> allSensorName() {
+	public static HashMap<String, Sensor> allSensorNamesMap() {
 		List<Sensor> allList = all();
-		List<String> resultList = new ArrayList<String>();
+		
+		HashMap<String, Sensor> result = new HashMap<String, Sensor>();
 		for (Sensor element : allList) {
 			String elementName = element.getSensorName();
 			if (elementName != null)
-				resultList.add(elementName);
+				result.put(elementName, element);
 		}
-		return resultList;
+		return result;
 	}
 }

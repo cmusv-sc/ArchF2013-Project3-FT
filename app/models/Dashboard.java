@@ -29,108 +29,112 @@ import com.fasterxml.jackson.databind.JsonNode;
 import models.metadata.Device;
 import models.metadata.Sensor;
 
-
 public class Dashboard {
-	
+
 	private ArrayList<DashboardItem> items;
 	private int totalCount;
 	private int activeCount;
-	
+
 	private static final String GET_LAST_MINUTE_DEVICE_READINGS = util.Constants.NEW_API_URL
-			+ util.Constants.NEW_GET_LAST_MINUTE_DEVICE_READINGS + util.Constants.FORMAT;
-	
-	
-	
+			+ util.Constants.NEW_GET_LAST_MINUTE_DEVICE_READINGS
+			+ util.Constants.FORMAT;
+
 	public Dashboard() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Dashboard(ArrayList<DashboardItem> items, int totalCount, int activeCount) {
+
+	public Dashboard(ArrayList<DashboardItem> items, int totalCount,
+			int activeCount) {
 		this.items = items;
 		this.totalCount = totalCount;
-		this.activeCount = activeCount;		
+		this.activeCount = activeCount;
 	}
-	
+
 	public int getActiveCount() {
 		return activeCount;
 	}
+
 	public ArrayList<DashboardItem> getItems() {
 		return items;
 	}
+
 	public int getTotalCount() {
 		return totalCount;
 	}
+
 	public void setActiveCount(int activeCount) {
 		this.activeCount = activeCount;
 	}
+
 	public void setItems(ArrayList<DashboardItem> items) {
 		this.items = items;
 	}
+
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
-	
+
 	public static Dashboard status() {
-		
+
 		Dashboard dashboard = new Dashboard();
-		
+
 		ArrayList<DashboardItem> dashboardItems = new ArrayList<DashboardItem>();
 		int totalCount = 0;
 		int activeCount = 0;
-		
 
 		// API call for "active" devices
 		JsonNode devicesNode = APICall.callAPI(GET_LAST_MINUTE_DEVICE_READINGS);
-		ArrayList<String> activeSensorNames = new ArrayList<String>();		
+		HashSet<String> activeSensorNames = new HashSet<String>();
 
 		if (devicesNode == null || !devicesNode.isArray()) {
 			dashboard.setTotalCount(0);
-			dashboard.setActiveCount(0);			
-		}else{
-			for (int i=0; i < devicesNode.size(); i++) {
-				
-				JsonNode json = devicesNode.path(i);			
+			dashboard.setActiveCount(0);
+		} else {
+			for (int i = 0; i < devicesNode.size(); i++) {
+
+				JsonNode json = devicesNode.path(i);
 				activeSensorNames.add(json.findPath("sensorName").asText());
+
 			}
 		}
-				
-		
-		List<Device> allDevices = Device.all(); 
-		
+
+		List<Device> allDevices = Device.all();
+
 		// build up the hashmap for sensorName and deviceUri
-		HashSet<String> activeDevices = getActiveDevices(activeSensorNames, Sensor.all());
-		
+
+		HashSet<String> activeDevices = getActiveDevices(activeSensorNames,
+				Sensor.allSensorNamesMap());
+
 		for (Device device : allDevices) {
-			DashboardItem dashboardItem = new DashboardItem();			
+			DashboardItem dashboardItem = new DashboardItem();
 			dashboardItem.setDevice(device);
 
 			if (activeDevices.contains(device.getDeviceUri())) {
+
 				dashboardItem.setStatus(1);
 				activeCount++;
-			}else {
+			} else {
 				dashboardItem.setStatus(0);
 			}
 			totalCount++;
 			dashboardItems.add(dashboardItem);
 		}
-		
-		
+
 		dashboard.setItems(dashboardItems);
 		dashboard.setTotalCount(totalCount);
 		dashboard.setActiveCount(activeCount);
-		
+
 		return dashboard;
-				
+
 	}
 
-	private static HashSet<String> getActiveDevices(List<String> activeSensorNames, List<Sensor> allSensors){
+	private static HashSet<String> getActiveDevices(
+			HashSet<String> activeSensorNames,
+			HashMap<String, Sensor> allSensorNamesMap) {
 		HashSet<String> set = new HashSet<String>();
 		for (String sensorName : activeSensorNames) {
-			for (Sensor sensor : allSensors) {
-				if (sensor.getSensorName().equals(sensorName)) {
-					set.add(sensor.getDeviceUri());
-					break;
-				}
+			if (allSensorNamesMap.containsKey(sensorName)) {
+				set.add(allSensorNamesMap.get(sensorName).getDeviceUri());
 			}
 		}
 		return set;
