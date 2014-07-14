@@ -120,7 +120,7 @@ public class Constants {
 	
 	// get last minute reading from all devices
 	// Caution! Now it calls System.currentTimeMillis(), it is not a pure constant
-	public static final String NEW_GET_LAST_MINUTE_DEVICE_READINGS = "getLastMinuteReadingsFromAllDevices/"+System.currentTimeMillis()+"/";
+	public static final String NEW_GET_LAST_MINUTE_DEVICE_READINGS = "getLastMinuteReadingsFromAllDevices/";
 
 	// get sensor reading 
 	public static final String NEW_GET_SENSOR_READING_IN_RANGE = "getSensorReadingInRange/"; 

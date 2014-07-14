@@ -29,8 +29,9 @@ public class APICall {
 	}
 
 	public static JsonNode callAPI(String apiString) {
-
-		Promise<WS.Response> responsePromise = WS.url(apiString).get();
+		Promise<WS.Response> responsePromise = WS
+				.url(apiString).get();
+		
 		final Promise<JsonNode> bodyPromise = responsePromise
 				.map(new Function<WS.Response, JsonNode>() {
 					@Override

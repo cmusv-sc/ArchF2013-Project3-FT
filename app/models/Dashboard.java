@@ -35,10 +35,6 @@ public class Dashboard {
 	private int totalCount;
 	private int activeCount;
 
-	private static final String GET_LAST_MINUTE_DEVICE_READINGS = util.Constants.NEW_API_URL
-			+ util.Constants.NEW_GET_LAST_MINUTE_DEVICE_READINGS
-			+ util.Constants.FORMAT;
-
 	public Dashboard() {
 		// TODO Auto-generated constructor stub
 	}
@@ -83,7 +79,7 @@ public class Dashboard {
 		int activeCount = 0;
 
 		// API call for "active" devices
-		JsonNode devicesNode = APICall.callAPI(GET_LAST_MINUTE_DEVICE_READINGS);
+		JsonNode devicesNode = APICall.callAPI(formatAPIUrlWithCurrentTimestamp());
 		HashSet<String> activeSensorNames = new HashSet<String>();
 
 		if (devicesNode == null || !devicesNode.isArray()) {
@@ -138,5 +134,11 @@ public class Dashboard {
 			}
 		}
 		return set;
+	}
+	
+	private static String formatAPIUrlWithCurrentTimestamp(){
+		return util.Constants.NEW_API_URL
+				+ util.Constants.NEW_GET_LAST_MINUTE_DEVICE_READINGS + System.currentTimeMillis() + "/"
+				+ util.Constants.FORMAT;
 	}
 }
