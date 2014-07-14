@@ -1,17 +1,12 @@
 package controllers;
 
 import static play.data.Form.form;
-<<<<<<< HEAD
-import java.io.*;
-
-=======
 
 import models.NasaRegistration;
 import java.io.*;
 
 import models.AWSClient;
 
->>>>>>> estimator
 import controllers.Application.Login;
 import play.data.Form;
 import play.mvc.Controller;
