@@ -7,7 +7,7 @@
 
 
 <ol class="breadcrumb">
-	<li><a href="/estimate/tutorial">Tutorial</a></li>
+	<li><a href="/estimator/tutorial">Tutorial</a></li>
 	<li class="active">Collect Data</li>
 	<li><a href="/estimator/1">Input preference</a></li>
 	<li><a href="/estimator/2">Workflow Summary</a></li>
@@ -27,13 +27,22 @@
 		you to use at Amazon EC2.</p>
 	<p>
 		<a class="btn btn-lg btn-default"
-						href="/estimate/tutorial" role="button">Getting Started &raquo;</a>
+						href="/estimator/tutorial" role="button">Getting Started &raquo;</a>
 	</p>
+	@if(!session.get("username")){
+		<p>Nasa Provides 200 AWS accounts with $150 credit each. First come first serve for contest participants.
+		Remaining slots: 150.
+		If you would like to get a credited account please register here.</p>
+		<p>
+		<a class="btn btn-primary"
+						href="estimator/register" role="button">Register &raquo;</a>
+	</p>
+	}
 	</div>
 </div>
 </div>
 
-<form method="POST" action="estimator/1" enctype="multipart/form-data">
+<form method="POST" action="/estimator/1" enctype="multipart/form-data">
 
 
 	<fieldset>
@@ -43,7 +52,8 @@
 			<label for="name">Scripting file</label>
 			<div class="row">
 				<div class="input col-lg-2">
-					<input type="file" name="scriptname" value="@vfile" placeholder="/Downloads/Workflowfiles"> <span
+
+					<input type="file" id="name" name="file" value="@vfile" placeholder="/Downloads/Workflowfiles"> <span
 						class="help-inline"></span> <span class="help-block">Required</span>
 				</div>
 				<div class="upload col-lg-2">

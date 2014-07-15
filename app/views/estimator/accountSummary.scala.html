@@ -1,4 +1,5 @@
-@import helper._
+@(userName: String)
+<br>@import helper._
 
 @main("Estimator") {
 
@@ -7,7 +8,7 @@
 	<div class="row">
 
 		<div class="col-lg-6">
-			<h2>User: Jane</h2>
+			<h2>User: @userName</h2>
 			<h1>Account Summary</h1>
 			<table cellspacing='0'
 				class="table table-striped table-bordered table-condensed"

@@ -15,7 +15,7 @@
 
 	@select( 
 		sensorReadingForm("sensorName"),
-		options(metadata.Sensor.allSensorName()),
+		options(metadata.Sensor.allSensorNames()),
 	 	'_label -> "Sensor Name",
 		'_error -> sensorReadingForm.globalError
 	)
@@ -60,7 +60,7 @@
 
 	@select( 
 		sensorReadingForm("sensorName2"),
-		options(metadata.Sensor.allSensorName()),
+		options(metadata.Sensor.allSensorNames()),
 	 	'_label -> "Sensor Name",
 		'_error -> sensorReadingForm.globalError
 	)
