@@ -124,8 +124,14 @@
 			return local.toJSON().slice(0, 10);
 		});
 		
-		$('.startDate').val(new Date(2014,2,24).toDateInputValue());
-		$('.endDate').val(new Date(2014,2,24).toDateInputValue());
+		
+		var curTimestamp = new Date();
+		$('.startDate').val(curTimestamp.toDateInputValue());
+		$('.endDate').val(curTimestamp.toDateInputValue());
+		$('.startTime').val("09:00:00");
+		$('.endTime').val("18:00:00");
+		
+		
 		});
 	</script>
 
