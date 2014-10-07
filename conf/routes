@@ -87,4 +87,25 @@ GET             /estimator/deleteUser controllers.NasaRegistrationController.del
 POST            /estimator/deleteUser/delete controllers.NasaRegistrationController.delete()
 GET             /estimator/adminPage controllers.NasaRegistrationController.adminPage()
 
+# Climate Model
+GET		/ClimateModelAnalytics				controllers.EstimateController.estimate(email ?= null, vfile ?= null, dataset ?= null)
+POST	        /ClimateModelAnalytics/1			controllers.EstimateController.estimate1()
+GET		/ClimateModelAnalytics/1			controllers.EstimateController.estimate1()			
+GET		/ClimateModelAnalytics/2			controllers.EstimateController.estimate2()
+GET		/ClimateModelAnalytics/3			controllers.EstimateController.estimate3()
+GET		/ClimateModelAnalytics/tutorial		controllers.EstimateController.tutorial()
+GET		/ClimateModelAnalytics/login		controllers.EstimateController.login()
+POST            /ClimateModelAnalytics/login        controllers.EstimateController.authenticate()
+GET             /ClimateModelAnalytics/logout       controllers.EstimateController.logout()
+GET		/ClimateModelAnalytics/accountSummary		controllers.EstimateController.accountSummary(userName ?= null)
 
+
+
+#Climate Model Registration
+GET 	        /ClimateModelAnalytics/register controllers.NasaRegistrationController.registrationForm()
+POST            /ClimateModelAnalytics/register/publish controllers.NasaRegistrationController.submit()
+GET             /ClimateModelAnalytics/updateUser controllers.NasaRegistrationController.updateForm()
+POST            /ClimateModelAnalytics/updateUser/update controllers.NasaRegistrationController.update()
+GET             /ClimateModelAnalytics/deleteUser controllers.NasaRegistrationController.deleteForm()
+POST            /ClimateModelAnalytics/deleteUser/delete controllers.NasaRegistrationController.delete()
+GET             /ClimateModelAnalytics/adminPage controllers.NasaRegistrationController.adminPage()
