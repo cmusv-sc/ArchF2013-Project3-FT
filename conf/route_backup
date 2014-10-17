@@ -66,7 +66,7 @@ POST	/getLatestSensorReadings	 controllers.SensorReadingController.getLatestSens
 
 
 
-# Estimator recommendation
+# recommendation
 GET		/estimator				controllers.EstimateController.estimate(email ?= null, vfile ?= null, dataset ?= null)
 POST	        /estimator/1			controllers.EstimateController.estimate1()
 GET		/estimator/1			controllers.EstimateController.estimate1()			
@@ -78,7 +78,7 @@ POST            /estimator/login        controllers.EstimateController.authentic
 GET             /estimator/logout       controllers.EstimateController.logout()
 GET		/estimator/accountSummary		controllers.EstimateController.accountSummary(userName ?= null)
 
-# Estimator Registration
+#Registration
 GET 	        /estimator/register controllers.NasaRegistrationController.registrationForm()
 POST            /estimator/register/publish controllers.NasaRegistrationController.submit()
 GET             /estimator/updateUser controllers.NasaRegistrationController.updateForm()
@@ -88,21 +88,20 @@ POST            /estimator/deleteUser/delete controllers.NasaRegistrationControl
 GET             /estimator/adminPage controllers.NasaRegistrationController.adminPage()
 
 # Climate Model
-GET		/climate				controllers.ClimateController.estimate(email ?= null, vfile ?= null, dataset ?= null)
-POST	        /climate/1			controllers.ClimateController.estimate1()
-GET		/climate/1			controllers.ClimateController.estimate1()			
-GET		/climate/2			controllers.ClimateController.estimate2()
-GET		/climate/3			controllers.ClimateController.estimate3()
-GET		/climate/services		controllers.ClimateController.services()
-GET		/climate/tutorial		controllers.ClimateController.tutorial()
-GET		/climate/login		controllers.ClimateController.login()
-POST            /climate/login        controllers.ClimateController.authenticate()
-GET             /climate/logout       controllers.ClimateController.logout()
-GET		/climate/accountSummary		controllers.ClimateController.accountSummary(userName ?= null)
+GET		/climate				controllers.EstimateController.estimate(email ?= null, vfile ?= null, dataset ?= null)
+POST	        /climate/1			controllers.EstimateController.estimate1()
+GET		/climate/1			controllers.EstimateController.estimate1()			
+GET		/climate/2			controllers.EstimateController.estimate2()
+GET		/climate/3			controllers.EstimateController.estimate3()
+GET		/climate/tutorial		controllers.EstimateController.tutorial()
+GET		/climate/login		controllers.EstimateController.login()
+POST            /climate/login        controllers.EstimateController.authenticate()
+GET             /climate/logout       controllers.EstimateController.logout()
+GET		/climate/accountSummary		controllers.EstimateController.accountSummary(userName ?= null)
 
 
 
-#Climate Registration
+#Climate Model Registration
 GET 	        /climate/register controllers.NasaRegistrationController.registrationForm()
 POST            /climate/register/publish controllers.NasaRegistrationController.submit()
 GET             /climate/updateUser controllers.NasaRegistrationController.updateForm()

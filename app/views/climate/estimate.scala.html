@@ -7,42 +7,43 @@
 
 
 <ol class="breadcrumb">
-	<li><a href="/estimator/tutorial">Tutorial</a></li>
-	<li class="active">Collect Data</li>
-	<li><a href="/estimator/1">Input preference</a></li>
-	<li><a href="/estimator/2">Workflow Summary</a></li>
-	<li><a href="/estimator/3">Recommendation</a></li>
+	<li><a href="/climate/tutorial">Tutorials</a></li>
+	<li><a href="/climate/services">Model Analytics Services</a></li>
+	<li><a href="/climate/datasets">Datasets</a></li>
+	<li><a href="/climate/workflows">Workflows</a></li>
+	<li><a href="/climate/recommendation">Recommendation</a></li>
+	<li><a href="/climate/user">User Management</a></li>
 </ol>
 
 <div class="jumbotron">
 <div class="row">
 
 	<div class="col-lg-6">
-		<img src="/assets/images/NASA_logo.png">
+		<img src="/assets/images/NASA_JPL_logo.png" height="150" width="430">
 	</div>
 	<div class="col-lg-6">
-	<h1>We are ready to help you</h1>
-	<p>We have collected your workflow and datasets. Based on those
-		files, we can help you decide which virtual machine option is best for
-		you to use at Amazon EC2.</p>
+	<h1>Climate Model Analysis</h1>
+	<p>JPL has provided a repository of web services for multi-aspect physics-based and phenomenon-oriented
+	   phenomenon-oriented climate model performance evaluation and diagnosis through the comprehensive and 
+	   synergistic use of multiple observational data, reanalysis data, and model outputs.</p>
 	<p>
 		<a class="btn btn-lg btn-default"
-						href="/estimator/tutorial" role="button">Getting Started &raquo;</a>
+						href="/climate/tutorial" role="button">Getting Started &raquo;</a>
 	</p>
 	@if(!session.get("username")){
-		<p>Nasa Provides 200 AWS accounts with $150 credit each. First come first serve for contest participants.
-		Remaining slots: 150.
-		If you would like to get a credited account please register here.</p>
+		<p>
+		    We will help you learn the available web services, how to use them, and help you to design 
+		    your climate analytics workflows.
 		<p>
 		<a class="btn btn-primary"
-						href="estimator/register" role="button">Register &raquo;</a>
+						href="climate/register" role="button">Register &raquo;</a>
 	</p>
 	}
 	</div>
 </div>
 </div>
 
-<form method="POST" action="/estimator/1" enctype="multipart/form-data">
+<form method="POST" action="/climate/1" enctype="multipart/form-data">
 
 
 	<fieldset>
