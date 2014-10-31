@@ -118,6 +118,12 @@ public class Constants {
 	public static final String NEW_DELETE_SENSOR_CATEGORY = "deleteSensorCategory/";
 	public static final String NEW_EDIT_SENSOR_CATEGORY = "updateSensorCategory";
 	
+	// climate service
+	public static final String NEW_GET_CLIMATE_SERVICE = "getAllClimateServices/";
+	public static final String NEW_ADD_CLIMATE_SERVICE = "addClimateService";
+	public static final String NEW_DELETE_CLIMATE_SERVICE = "deleteClimateService/";
+	public static final String NEW_EDIT_CLIMATE_SERVICE = "updateClimateService";
+	
 	// get last minute reading from all devices
 	// Caution! Now it calls System.currentTimeMillis(), it is not a pure constant
 	public static final String NEW_GET_LAST_MINUTE_DEVICE_READINGS = "getLastMinuteReadingsFromAllDevices/";

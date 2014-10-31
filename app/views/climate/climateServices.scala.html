@@ -1,62 +1,84 @@
 
+@(climateServices: List[metadata.ClimateService], climateServiceForm: play.data.Form[metadata.ClimateService])
+
 @import helper._
 
-@main("Estimator") {
+@scripts = {
+	<script src='@routes.Assets.at("javascripts/edit_button.js")'></script>
+}
 
-<ol class="breadcrumb">
-	<li><a href="/climate/tutorial">Tutorial</a></li>
-	<li><a href="/climate/services">Model Analytics Services</a></li>
-	<li><a href="/climate/datasets">Datasets</a></li>
-	<li><a href="/climate/workflows">Workflows</a></li>
-	<li><a href="/climate/recommendation">Recommendation</a></li>
-</ol>
-
-
-	<p>
-	<img src="/assets/images/service.jpeg" alt="service" height="60" width="60">
-	<a href="http://cmacws4.jpl.nasa.gov:8080/cmac/web/twoDimMap.html">2D Variable Map Service</a>.
-	</p>
-	<p>
-	<img src="/assets/images/service.jpeg" alt="service" height="60" width="60">
-	<a href="http://cmacws4.jpl.nasa.gov:8080/cmac/web/twoDimZonalMean.html">2D Variable Zonal Mean Service</a>.
-	</p>
-	<p>
-<img src="/assets/images/service.jpeg" alt="service" height="60" width="60">
-<a href="http://cmacws4.jpl.nasa.gov:8080/cmac/web/twoDimTimeSeries.html">2D Variable Time Series Service</a>.
-</p>
-<p>
-<img src="/assets/images/service.jpeg" alt="service" height="60" width="60">
-<a href="http://cmacws4.jpl.nasa.gov:8080/cmac/web/twoDimSlice3D.html">3D Variable 2D Slice Service</a>.
-</p>
-<p>
-<img src="/assets/images/service.jpeg" alt="service" height="60" width="60">
-<a href="http://cmacws4.jpl.nasa.gov:8080/cmac/web/threeDimZonalMean.html">3D Variable Zonal Mean Service</a>.
-</p>
-<p>
-<img src="/assets/images/service.jpeg" alt="service" height="60" width="60">
-<a href="http://cmacws4.jpl.nasa.gov:8080/cmac/web/threeDimVarVertical.html">3D Variable Average Vertical Profile Service</a>.
-</p>
-<p>
-<img src="/assets/images/service.jpeg" alt="service" height="60" width="60">
-<a href="http://cmacws4.jpl.nasa.gov:8080/cmac/web/scatterPlot2Vars.html">Scatter and Histogram Plots of Two Variables Service</a>.
-</p>
-<p>
-<img src="/assets/images/service.jpeg" alt="service" height="60" width="60">
-<a href="http://cmacws4.jpl.nasa.gov:8080/cmac/web/diffPlot2Vars.html">Difference Plot of Two Variables Service</a>.
-</p>
-<p>
-<img src="/assets/images/service.jpeg" alt="service" height="60" width="60">
-<a href="http://cmacws4.jpl.nasa.gov:8080/cmac/web/conditionalSampling.html">Conditional Sampling Service</a>.
-</p>
-
-
-<form method="GET" role="form" action="/climate/recommendation">
+@main("Climate Services", scripts) {
 	
-	<div class="actions">
-		<input type="submit" class="btn btn-primary" value="See Recommendation" action="/climate/recommendation" style="position: relative; left: 15px">
-	</div>
-    
-</form>           
+	@flash_message()    
+
+    <h1>@climateServices.size() Climate Services</h1>
+		<table class="table table-striped table-bordered table-condensed">
+	<tr>
+		<td>Climate Service Name</td>
+		<td>Purpose</td> 
+		<td>Url</td>
+		@if(session.get("email")){
+			<td>Operation</td> 
+		}
+	</tr>
+
+	@for(climateService <- climateServices){
+	<tr>
+		<td>@climateService.getClimateServiceName()</td>
+
+		<td><span class="@climateService.getClimateServiceName() editable" data-name='purpose'>
+				@climateService.getPurpose() </span></td>
 		
-	
+		<td><span class="@climateService.getClimateServiceName() editable" data-name='url'>
+				@climateService.getUrl() </span></td>
+
+		@if(session.get("email")){
+			<td class="operation">
+				<input type="button" class="edit-btn btn btn-primary" value="Edit" 
+					data-pk='@climateService.getClimateServiceName()' 
+					data-url='@routes.ClimateServiceController.editClimateService()' 
+				>
+				@form(routes.ClimateServiceController.deleteClimateService()){ 
+					<input
+						name="idHolder" class="hidden" type="hidden"
+						value="@climateService.getClimateServiceName()"> 
+					<input
+						type="submit" class="btn btn-danger delete-btn" value="Delete"
+						onclick="return confirm('Are you sure you want to delete this item?')">
+				}
+			</td> 
+		}
+	</tr>
 	}
+    </table>
+    
+     @if(session.get("email")){
+	    <h2>Add a new climate service</h2>
+	    
+	    @form(routes.ClimateServiceController.newClimateService()) {
+	        
+	        @inputText(
+	        	climateServiceForm("Name"),
+	        	'_label -> "Name * (Please DO NOT contain spaces)"
+	        )
+	        @inputText(
+	        	climateServiceForm("Purpose"),
+	        	'_label -> "Purpose"
+	        )
+	        @inputText(
+	        	climateServiceForm("Url"),
+	        	'_label -> "Url"
+	        ) 
+	
+	        <input class="btn" type="submit" value="Create">
+	        <a href="@routes.ClimateServiceController.climateServices()" class="btn">Cancel</a>
+	    }
+	
+		<br>
+		    
+	    @form(routes.ClimateServiceController.downloadClimateService(), 'class -> "form-horizontal", 'role -> "form") {
+	
+	        <button type="submit" name="action" value="download">Download</button>
+	    }
+    }
+}
