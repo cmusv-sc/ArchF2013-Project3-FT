@@ -88,17 +88,21 @@ POST            /estimator/deleteUser/delete controllers.NasaRegistrationControl
 GET             /estimator/adminPage controllers.NasaRegistrationController.adminPage()
 
 # Climate Model
-GET		/climate				controllers.ClimateController.estimate(email ?= null, vfile ?= null, dataset ?= null)
-POST	        /climate/1			controllers.ClimateController.estimate1()
-GET		/climate/1			controllers.ClimateController.estimate1()			
-GET		/climate/2			controllers.ClimateController.estimate2()
-GET		/climate/3			controllers.ClimateController.estimate3()
-GET		/climate/services		controllers.ClimateController.services()
-GET		/climate/tutorial		controllers.ClimateController.tutorial()
-GET		/climate/login		controllers.ClimateController.login()
-POST            /climate/login        controllers.ClimateController.authenticate()
-GET             /climate/logout       controllers.ClimateController.logout()
-GET		/climate/accountSummary		controllers.ClimateController.accountSummary(userName ?= null)
+GET		/climate			controllers.ClimateServiceController.estimate(email ?= null, vfile ?= null, dataset ?= null)
+POST	/climate/1			controllers.ClimateServiceController.estimate1()
+GET		/climate/1			controllers.ClimateServiceController.estimate1()			
+GET		/climate/2			controllers.ClimateServiceController.estimate2()
+GET		/climate/3			controllers.ClimateServiceController.estimate3()
+GET		/climate/tutorial		controllers.ClimateServiceController.tutorial()
+GET		/climate/login		controllers.ClimateServiceController.login()
+POST    /climate/login        controllers.ClimateServiceController.authenticate()
+GET     /climate/logout       controllers.ClimateServiceController.logout()
+GET		/climate/accountSummary		controllers.ClimateServiceController.accountSummary(userName ?= null)
+GET		/climate/climateServices	controllers.ClimateServiceController.climateServices()
+POST    /climate/new/climateServices    controllers.ClimateServiceController.newClimateService()
+POST    /climate/delete/climateServices   controllers.ClimateServiceController.deleteClimateService()
+POST	/climate/download/climateServices	 controllers.ClimateServiceController.downloadClimateService()
+POST	/climate/edit/climateServices		controllers.ClimateServiceController.editClimateService()
 
 
 

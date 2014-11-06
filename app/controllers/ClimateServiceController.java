@@ -1,22 +1,43 @@
 package controllers;
 
 import static play.data.Form.form;
-
 import models.NasaRegistration;
+
 import java.io.*;
 
-import models.AWSClient;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.JsonNode;
 
+import models.AWSClient;
+import models.metadata.ClimateService;
+import models.metadata.SensorCategory;
 import controllers.Application.Login;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
+import util.APICall;
+import util.APICall.ResponseType;
+import views.html.sensorCategories;
 import views.html.climate.*;
+import play.data.DynamicForm;
 
-public class ClimateController extends Controller {
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import play.mvc.*;
+
+public class ClimateServiceController extends Controller {
+	
+	final static Form<ClimateService> climateServiceForm = Form
+			.form(ClimateService.class);
+	
 	public static Result estimate(String email, String vfile, String dataset) {
 		return ok(estimate.render(email, vfile, dataset));
 	}
@@ -81,11 +102,110 @@ public class ClimateController extends Controller {
 	public static Result accountSummary(String userName) {
 		return ok(accountSummary.render(userName));
 	}
+	
+	public static Result climateServices() {
+		return ok(climateServices.render(ClimateService.all(),
+				climateServiceForm));
+	}
+	
+	public static Result newClimateService() {
+		Form<ClimateService> dc = climateServiceForm.bindFromRequest();
 
-	public static Result services() {
-                return ok(services.render());
-        } 
+		ObjectNode jsonData = Json.newObject();
+		try {
 
+			String climateServiceName = dc.field("Name").value();
+			
+			// name should not contain spaces
+			if (climateServiceName != null && !climateServiceName.isEmpty()
+					&& !climateServiceName.contains(" ")) {
+				jsonData.put("climateServiceName", climateServiceName);
+			}
+			jsonData.put("purpose", dc.field("Purpose").value());
+			jsonData.put("url", dc.field("Url").value());
+
+			// create the item by calling the API
+			JsonNode response = ClimateService.create(jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return redirect("/climateServices");
+	}
+	
+	public static Result editClimateService() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		ObjectNode jsonData = Json.newObject();
+		try {
+			String climateServiceName = df.field("pk").value();
+
+			if (climateServiceName != null && !climateServiceName.isEmpty()) {
+				jsonData.put("climateServiceName", climateServiceName);
+			}
+
+			String editField = df.field("name").value();  
+			if (editField != null && !editField.isEmpty()) {
+				jsonData.put(editField, df.field("value").value());
+			}
+
+			// Call the edit() method
+			JsonNode response = ClimateService.edit(jsonData);
+
+			// flash the response message
+			Application.flashMsg(response);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall
+					.createResponse(ResponseType.CONVERSIONERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Application.flashMsg(APICall.createResponse(ResponseType.UNKNOWN));
+		}
+		return ok("updated");
+
+	}
+	
+	public static Result deleteClimateService() {
+		DynamicForm df = DynamicForm.form().bindFromRequest();
+		String climateServiceName = df.field("idHolder").value();
+
+		// return a text message
+
+		// Call the delete() method
+		JsonNode response = ClimateService.delete(climateServiceName);
+
+		// flash the response message
+		Application.flashMsg(response);
+
+		return redirect("/climateServices");
+	}
+	
+	public static Result downloadClimateService() {
+		List<ClimateService> user = ClimateService.all();
+		// 1. Convert Java object to JSON format
+		ObjectMapper mapper = new ObjectMapper();
+		File file = new File("user.json");
+		try {
+			mapper.writeValue(file, user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		response().setContentType("application/x-download");
+		response().setHeader("Content-disposition",
+				"attachment; filename=user.json");
+		return ok(file);
+	}
+	
 	// -- Authentication
 	public static class Login {
 
